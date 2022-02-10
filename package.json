@@ -12,7 +12,9 @@
   "dependencies": {
     "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
-    "silent-error": "^1.1.1"
+    "fs-extra": "^10.0.0",
+    "silent-error": "^1.1.1",
+    "sort-package-json": "^1.54.0"
   },
   "engines": {
     "node": "12.* || >= 14.*"

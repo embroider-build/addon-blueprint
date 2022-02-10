@@ -1,29 +1,31 @@
-'use strict';
+"use strict";
 
-// const fs = require('fs-extra');
-// const path = require('path');
+const fs = require("fs-extra");
+const path = require("path");
 // const walkSync = require('walk-sync');
 // const chalk = require('chalk');
-const stringUtil = require('ember-cli-string-utils');
+const stringUtil = require("ember-cli-string-utils");
 // const uniq = require('ember-cli-lodash-subset').uniq;
-const SilentError = require('silent-error');
-// const sortPackageJson = require('sort-package-json');
+const SilentError = require("silent-error");
+const sortPackageJson = require("sort-package-json");
 
 let date = new Date();
 
-const normalizeEntityName = require('ember-cli-normalize-entity-name');
+const normalizeEntityName = require("ember-cli-normalize-entity-name");
 // const stringifyAndNormalize = require('../../lib/utilities/stringify-and-normalize');
 // const FileInfo = require('../../lib/models/file-info');
 
 // const replacers = {
-//   'package.json'(content) {
+//   "package.json"(content) {
 //     return this.updatePackageJson(content);
 //   },
 // };
 
 // const ADDITIONAL_DEV_DEPENDENCIES = require('./additional-dev-dependencies.json').devDependencies;
 
-const description = 'The default blueprint for Embroider v2 addons.';
+const TEST_APP_NAME = "test-app";
+
+const description = "The default blueprint for Embroider v2 addons.";
 module.exports = {
   description,
 
@@ -40,36 +42,38 @@ module.exports = {
   //
   //   // npm doesn't like it when we have something in both deps and devDeps
   //   // and dummy app still uses it when in deps
-  //   contents.dependencies['ember-cli-babel'] = contents.devDependencies['ember-cli-babel'];
-  //   delete contents.devDependencies['ember-cli-babel'];
+  //   contents.dependencies["ember-cli-babel"] =
+  //     contents.devDependencies["ember-cli-babel"];
+  //   delete contents.devDependencies["ember-cli-babel"];
   //
   //   // Move ember-cli-htmlbars into the dependencies of the addon blueprint by default
   //   // to prevent error:
   //   // `Addon templates were detected but there are no template compilers registered for (addon-name)`
-  //   contents.dependencies['ember-cli-htmlbars'] = contents.devDependencies['ember-cli-htmlbars'];
-  //   delete contents.devDependencies['ember-cli-htmlbars'];
+  //   contents.dependencies["ember-cli-htmlbars"] =
+  //     contents.devDependencies["ember-cli-htmlbars"];
+  //   delete contents.devDependencies["ember-cli-htmlbars"];
   //
   //   // 95% of addons don't need ember-data or ember-fetch, make them opt-in instead
-  //   delete contents.devDependencies['ember-data'];
-  //   delete contents.devDependencies['ember-fetch'];
+  //   delete contents.devDependencies["ember-data"];
+  //   delete contents.devDependencies["ember-fetch"];
   //
   //   // 100% of addons don't need ember-cli-app-version, make it opt-in instead
-  //   delete contents.devDependencies['ember-cli-app-version'];
+  //   delete contents.devDependencies["ember-cli-app-version"];
   //
   //   // addons should test _without_ jquery by default
-  //   delete contents.devDependencies['@ember/jquery'];
+  //   delete contents.devDependencies["@ember/jquery"];
   //
-  //   if (contents.keywords.indexOf('ember-addon') === -1) {
-  //     contents.keywords.push('ember-addon');
+  //   if (contents.keywords.indexOf("ember-addon") === -1) {
+  //     contents.keywords.push("ember-addon");
   //   }
   //
   //   Object.assign(contents.devDependencies, ADDITIONAL_DEV_DEPENDENCIES);
   //
   //   // add `ember-compatibility` script in addons
-  //   contents.scripts['test:ember-compatibility'] = 'ember try:each';
+  //   contents.scripts["test:ember-compatibility"] = "ember try:each";
   //
-  //   contents['ember-addon'] = contents['ember-addon'] || {};
-  //   contents['ember-addon'].configPath = 'tests/dummy/config';
+  //   contents["ember-addon"] = contents["ember-addon"] || {};
+  //   contents["ember-addon"].configPath = "tests/dummy/config";
   //
   //   return stringifyAndNormalize(sortPackageJson(contents));
   // },
@@ -102,17 +106,47 @@ module.exports = {
   //   this.ui.writeLine(prependEmoji('✨', `Creating a new Ember addon in ${chalk.yellow(process.cwd())}:`));
   // },
 
-  // afterInstall() {
-  //   let packagePath = path.join(this.path, 'files', 'package.json');
-  //   let bowerPath = path.join(this.path, 'files', 'bower.json');
-  //
-  //   [packagePath, bowerPath].forEach((filePath) => {
-  //     fs.removeSync(filePath);
-  //   });
-  // },
+  async afterInstall(options) {
+    const appBlueprint = this.lookupBlueprint("app");
+    if (!appBlueprint) {
+      throw new SilentError(
+        "Cannot find app blueprint for generating test-app!"
+      );
+    }
+    const target = path.join(options.target, "packages", TEST_APP_NAME);
+    const appOptions = {
+      ...options,
+      target,
+      skipNpm: true,
+      skipGit: true,
+      entity: { name: TEST_APP_NAME },
+      name: TEST_APP_NAME,
+      rawName: TEST_APP_NAME,
+      ciProvider: "travis", // we will delete this anyway below...
+    };
+
+    console.log(options);
+
+    await appBlueprint.install(appOptions);
+    await Promise.all([
+      this.addAddonToTestApp(path.join(target, "package.json")),
+      fs.unlink(path.join(target, ".travis.yml")),
+    ]);
+  },
+
+  async addAddonToTestApp(packageJsonPath) {
+    const pkg = require(packageJsonPath);
+
+    pkg.devDependencies[this.locals(this.options).addonName] = "^0.0.0";
+
+    return fs.writeFile(
+      packageJsonPath,
+      JSON.stringify(sortPackageJson(pkg), undefined, 2)
+    );
+  },
 
   locals(options) {
-    let entity = { name: 'dummy' };
+    let entity = { name: "dummy" };
     let rawName = entity.name;
     let name = stringUtil.dasherize(rawName);
     let namespace = stringUtil.classify(rawName);
@@ -123,7 +157,7 @@ module.exports = {
     let addonNamespace = stringUtil.classify(addonRawName);
 
     let hasOptions = options.welcome || options.yarn || options.ciProvider;
-    let blueprintOptions = '';
+    let blueprintOptions = "";
     if (hasOptions) {
       let indent = `\n            `;
       let outdent = `\n          `;
@@ -136,7 +170,7 @@ module.exports = {
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
         ]
           .filter(Boolean)
-          .join(',\n            ') +
+          .join(",\n            ") +
         outdent;
     }
 
@@ -151,7 +185,7 @@ module.exports = {
       yarn: true, // only yarn is supported for now
       // yarn: options.yarn,
       welcome: options.welcome,
-      blueprint: 'addon',
+      blueprint: "addon",
       blueprintOptions,
       ciProvider: options.ciProvider,
     };
@@ -181,13 +215,13 @@ module.exports = {
     // '^addon-config/environment.js': 'config/environment.js',
     // '^addon-config/ember-try.js': 'config/ember-try.js',
 
-    '^npmignore': '.npmignore',
+    "^npmignore": ".npmignore",
   },
 
   fileMapper(path) {
     for (let pattern in this.fileMap) {
       if (new RegExp(pattern).test(path)) {
-        return this.fileMap[pattern].replace(':path', path);
+        return this.fileMap[pattern].replace(":path", path);
       }
     }
 
@@ -198,7 +232,9 @@ module.exports = {
     entityName = normalizeEntityName(entityName);
 
     if (this.project.isEmberCLIProject() && !this.project.isEmberCLIAddon()) {
-      throw new SilentError('Generating an addon in an existing ember-cli project is not supported.');
+      throw new SilentError(
+        "Generating an addon in an existing ember-cli project is not supported."
+      );
     }
 
     return entityName;
