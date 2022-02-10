@@ -197,8 +197,7 @@ module.exports = {
       addonNamespace,
       // emberCLIVersion: require('../../package').version,
       year: date.getFullYear(),
-      yarn: true, // only yarn is supported for now
-      // yarn: options.yarn,
+      yarn: options.yarn,
       welcome: options.welcome,
       blueprint: "addon",
       blueprintOptions,
