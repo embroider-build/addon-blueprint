@@ -1,0 +1,1 @@
+# @embroider/addon-blueprint
