@@ -129,20 +129,35 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
     await Promise.all([
-      this.addAddonToTestApp(path.join(target, "package.json")),
+      this.addDependenciesToTestApp(path.join(target, "package.json")),
+      this.updateEmberCliBuildFile(path.join(target, "ember-cli-build.js")),
       fs.unlink(path.join(target, ".travis.yml")),
     ]);
   },
 
-  async addAddonToTestApp(packageJsonPath) {
+  async addDependenciesToTestApp(packageJsonPath) {
     const pkg = require(packageJsonPath);
 
     pkg.devDependencies[this.locals(this.options).addonName] = "^0.0.0";
+    pkg.devDependencies["@embroider/test-setup"] = "^1.0.0";
 
     return fs.writeFile(
       packageJsonPath,
       JSON.stringify(sortPackageJson(pkg), undefined, 2)
     );
+  },
+
+  async updateEmberCliBuildFile(buildPath) {
+    let contents = await fs.readFile(buildPath, { encoding: "utf8" });
+
+    contents = contents.replace(
+      "return app.toTree();",
+      "const { maybeEmbroider } = require('@embroider/test-setup');\n" +
+        "\n" +
+        "  return maybeEmbroider(app);"
+    );
+
+    await fs.writeFile(buildPath, contents);
   },
 
   locals(options) {
