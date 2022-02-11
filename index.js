@@ -41,17 +41,21 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
     await Promise.all([
-      this.addDependenciesToTestApp(path.join(target, 'package.json')),
+      this.updateTestAppPackageJson(path.join(target, 'package.json')),
       this.updateEmberCliBuildFile(path.join(target, 'ember-cli-build.js')),
       fs.unlink(path.join(target, '.travis.yml')),
     ]);
   },
 
-  async addDependenciesToTestApp(packageJsonPath) {
+  async updateTestAppPackageJson(packageJsonPath) {
     const pkg = require(packageJsonPath);
 
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
     pkg.devDependencies['@embroider/test-setup'] = '^1.0.0';
+
+    pkg.scripts['test:watch'] = 'ember test --server';
+
+    pkg.private = true;
 
     return fs.writeFile(
       packageJsonPath,
