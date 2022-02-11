@@ -73,5 +73,5 @@ jobs:
       - name: Install Dependencies
         run: <%= yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
       - name: Run Tests
-        run: ../node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
         working-directory: packages/test-app

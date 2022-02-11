@@ -9,7 +9,7 @@
     "start": "npm-run-all --parallel start:*",
     "start:addon": "yarn workspace <%= addonName %> run start",
     "start:test-app": "yarn workspace test-app run start",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:addon": "yarn workspace <%= addonName %> run lint",
     "lint:test-app": "yarn workspace test-app run lint",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:fix:*",
