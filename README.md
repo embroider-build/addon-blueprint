@@ -1,4 +1,4 @@
-ember-v2-addon-blueprint
+@embroider/addon-blueprint
 ==============================================================================
 
 Blueprint for scaffolding ember v2 addons
@@ -13,19 +13,17 @@ WIP
 
 This is still work in progress. 
 
-The blueprint contains a number of assumptions, e.g. using a monorepo using `yarn` workspaces, with a `packages/` folder
-for both the v2 addon and the separate test app. But there is plenty of room for bikeshedding here, so if you have 
-suggestions about better ways to set this up, then please file an issue to discuss!
+The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with a 
+`packages/` folder for both the v2 addon and the separate test app. But there is plenty of room for bikeshedding here, 
+so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
 
 Usage
 ------------------------------------------------------------------------------
 
 ```bash
-ember addon my-addon -b ember-v2-addon-blueprint --yarn
+ember addon my-addon -b @embroider/addon-blueprint --yarn
 ```
-
-> Note: this sets up a monorepo using `yarn` workspaces. Package managers other than `yarn` have not been tested yet! 
 
 
 License
