@@ -26,10 +26,10 @@ module.exports = {
         'Cannot find app blueprint for generating test-app!'
       );
     }
-    const target = path.join(options.target, 'packages', TEST_APP_NAME);
+    const testAppPath = path.join(options.target, 'packages', TEST_APP_NAME);
     const appOptions = {
       ...options,
-      target,
+      target: testAppPath,
       skipNpm: true,
       skipGit: true,
       entity: { name: TEST_APP_NAME },
@@ -41,9 +41,12 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
     await Promise.all([
-      this.updateTestAppPackageJson(path.join(target, 'package.json')),
-      this.updateEmberCliBuildFile(path.join(target, 'ember-cli-build.js')),
-      fs.unlink(path.join(target, '.travis.yml')),
+      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
+      this.overrideTestAppFiles(
+        testAppPath,
+        path.join(options.target, 'test-app-overrides')
+      ),
+      fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
   },
 
@@ -66,17 +69,13 @@ module.exports = {
     );
   },
 
-  async updateEmberCliBuildFile(buildPath) {
-    let contents = await fs.readFile(buildPath, { encoding: 'utf8' });
-
-    contents = contents.replace(
-      'return app.toTree();',
-      "const { maybeEmbroider } = require('@embroider/test-setup');\n" +
-        '\n' +
-        '  return maybeEmbroider(app);'
-    );
-
-    await fs.writeFile(buildPath, contents);
+  async overrideTestAppFiles(testAppPath, overridesPath) {
+    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprint
+    // but fs.copy works as we need it. Just have to remove the overrides directory afterwards.
+    await fs.copy(overridesPath, testAppPath, {
+      overwrite: true,
+    });
+    await fs.remove(overridesPath);
   },
 
   locals(options) {
