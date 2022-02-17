@@ -1,0 +1,29 @@
+{
+  "name": "ember-v2-addon-blueprint",
+  "version": "0.0.0",
+  "description": "Blueprint for scaffolding ember v2 addons",
+  "keywords": [
+    "ember-addon",
+    "ember-blueprint"
+  ],
+  "repository": "https://github.com/simonihmig/ember-v2-addon-blueprint.git",
+  "author": "simonihmig <simon.ihmig@kaliber5.de>",
+  "license": "MIT",
+  "dependencies": {
+    "ember-cli-normalize-entity-name": "^1.0.0",
+    "ember-cli-string-utils": "^1.1.0",
+    "fs-extra": "^10.0.0",
+    "silent-error": "^1.1.1",
+    "sort-package-json": "^1.54.0"
+  },
+  "engines": {
+    "node": "12.* || >= 14.*"
+  },
+  "volta": {
+    "node": "12.22.10",
+    "yarn": "1.22.17"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}

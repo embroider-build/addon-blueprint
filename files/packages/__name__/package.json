@@ -1,0 +1,66 @@
+{
+  "name": "<%= addonName %>",
+  "version": "0.0.0",
+  "description": "The default blueprint for Embroider v2 addons.",
+  "keywords": [
+    "ember-addon"
+  ],
+  "repository": "",
+  "license": "MIT",
+  "author": "",
+  "files": [
+    "addon-main.js",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
+    "prepare": "yarn build"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.17.0",
+    "@babel/plugin-syntax-decorators": "^7.17.0",
+    "@embroider/addon-dev": "^1.0.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "babel-eslint": "^10.1.0",
+    "ember-template-lint": "^4.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-ember": "^10.5.8",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.67.0"
+  },
+  "engines": {
+    "node": "12.* || >= 14"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*",
+    "./addon-main.js": "./addon-main.js"
+  }
+}
