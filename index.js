@@ -2,16 +2,13 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-// const walkSync = require('walk-sync');
-// const chalk = require('chalk');
 const stringUtil = require('ember-cli-string-utils');
-// const uniq = require('ember-cli-lodash-subset').uniq;
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
+const normalizeEntityName = require('ember-cli-normalize-entity-name');
+const execa = require('execa');
 
 let date = new Date();
-
-const normalizeEntityName = require('ember-cli-normalize-entity-name');
 
 const TEST_APP_NAME = 'test-app';
 
@@ -47,6 +44,7 @@ module.exports = {
         path.join(options.target, 'test-app-overrides')
       ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
+      this.setupReleaseIt(options.target),
     ]);
   },
 
@@ -76,6 +74,12 @@ module.exports = {
       overwrite: true,
     });
     await fs.remove(overridesPath);
+  },
+
+  async setupReleaseIt(rootPath) {
+    await execa('create-rwjblue-release-it-setup', ['--no-install'], {
+      cwd: rootPath,
+    });
   },
 
   locals(options) {
