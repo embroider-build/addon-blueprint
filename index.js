@@ -79,6 +79,8 @@ module.exports = {
   async setupReleaseIt(rootPath) {
     await execa('create-rwjblue-release-it-setup', ['--no-install'], {
       cwd: rootPath,
+      preferLocal: true,
+      localDir: __dirname,
     });
   },
 
