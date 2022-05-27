@@ -9,6 +9,7 @@ Compatibility
 
 * Ember.js v3.24 or above
 * Embroider or ember-auto-import v2
+* Node.js v14 or above
 
 
 Installation
