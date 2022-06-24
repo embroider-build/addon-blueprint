@@ -5,7 +5,6 @@
   "license": "MIT",
   "author": "",
   "scripts": {
-    "prepare": "yarn workspace <%= addonName %> run prepare",
     "start": "npm-run-all --parallel start:*",
     "start:addon": "yarn workspace <%= addonName %> run start",
     "start:test-app": "yarn workspace test-app run start",
