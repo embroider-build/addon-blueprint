@@ -77,7 +77,7 @@ jobs:
         run: <%= yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
       - name: Build Addon
         run: <%= yarn ? 'yarn' : 'npm run' %> build
-        working-directory: <%= name %>
+        working-directory: packages/<%= name %>
       - name: Run Tests
         run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
         working-directory: packages/test-app
