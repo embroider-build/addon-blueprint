@@ -1,14 +1,13 @@
 {
-  "name": "ember-v2-addon-blueprint",
-  "version": "0.0.0",
+  "name": "@embroider/addon-blueprint",
+  "version": "0.1.0",
   "description": "Blueprint for scaffolding ember v2 addons",
   "keywords": [
-    "ember-addon",
     "ember-blueprint"
   ],
-  "repository": "https://github.com/simonihmig/ember-v2-addon-blueprint.git",
-  "author": "simonihmig <simon.ihmig@kaliber5.de>",
+  "repository": "https://github.com/embroider-build/addon-blueprint.git",
   "license": "MIT",
+  "author": "simonihmig <simon.ihmig@kaliber5.de>",
   "dependencies": {
     "create-rwjblue-release-it-setup": "^3.1.1",
     "ember-cli-normalize-entity-name": "^1.0.0",
@@ -18,14 +17,34 @@
     "silent-error": "^1.1.1",
     "sort-package-json": "^1.54.0"
   },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "release-it": "^14.2.1",
+    "release-it-lerna-changelog": "^3.1.0"
+  },
   "engines": {
     "node": "14.* || 16.* || >= 18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    }
   },
   "volta": {
     "node": "14.19.3",
     "yarn": "1.22.18"
-  },
-  "devDependencies": {
-    "prettier": "^2.5.1"
   }
 }
