@@ -37,15 +37,21 @@ module.exports = {
     };
 
     await appBlueprint.install(appOptions);
-    await Promise.all([
+
+    let tasks = [
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
       this.overrideTestAppFiles(
         testAppPath,
         path.join(options.target, 'test-app-overrides')
       ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
-      this.setupReleaseIt(options.target),
-    ]);
+    ];
+
+    if (options.releaseIt) {
+      tasks.push(this.setupReleaseIt(options.target));
+    }
+
+    await Promise.all(tasks);
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
