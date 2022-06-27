@@ -22,7 +22,7 @@ Usage
 ------------------------------------------------------------------------------
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --yarn
+ember addon my-addon -b embroider-build/addon-blueprint --yarn
 ```
 
 
