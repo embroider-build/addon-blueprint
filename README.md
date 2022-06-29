@@ -76,7 +76,9 @@ ember addon my-addon -b embroider/addon-blueprint --yarn --release-it
 ### In existing monorepos
 
 In existing monorepos, it may be helpful to establish a convention for generating v2 addons as sub-monorepos
-within your monorepo. To do this, you'll need to use many of the above options all at once.
+within your monorepo.
+To do this, you'll need to use many of the above options all at once (remembering that all packages in a monorepo must have a unique "name" in their package.json).
+
 For example:
 ```bash
 ember addon my-addon-name -b embroider/addon-blueprint \
