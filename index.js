@@ -172,7 +172,7 @@ function addonInfoFromOptions(options) {
       raw: addonRawName,
     },
     entity: addonEntity,
-    location: options.addonLocation || addonRawName,
+    location: options.addonLocation || path.join('packages', addonRawName),
   }
 }
 
@@ -181,7 +181,7 @@ function testAppInfoFromOptions(options) {
 
   return {
     name,
-    location: options.testAppLocation || name,
+    location: options.testAppLocation || path.join('packages', name),
   }
 }
 

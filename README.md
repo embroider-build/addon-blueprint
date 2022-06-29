@@ -30,12 +30,12 @@ The location / folder name of the addon can be customized via `--addon-location`
 
 Examples:
 ```bash
-ember addon my-addon -b embroider/addon-blueprint --addon-location=packages/the-addon
+ember addon my-addon -b embroider/addon-blueprint --addon-location=the-addon
 # generates
-#   my-addon/packages/the-addon
+#   my-addon/the-addon
 ```
 
-By default, the addon name will be used. `ember addon <addon-name>`
+By default, the addon name will be used inside a packages directory. `ember addon <addon-name>`
 
 ### `--test-app-location`
 
@@ -44,12 +44,12 @@ The location / folder name of the addon can be customized via `--test-app-locati
 
 Examples:
 ```bash
-ember addon my-addon -b embroider/addon-blueprint --test-app-location=packages/test-app
+ember addon my-addon -b embroider/addon-blueprint --test-app-location=test-app
 # generates
-#   my-addon/packages/test-app
+#   my-addon/test-app
 ```
 
-By default, the `--test-app-name` will be used.
+By default, `packages/{test app name}` will be used.
 
 ### `--test-app-name`
 
@@ -62,7 +62,7 @@ ember addon my-addon -b embroider/addon-blueprint --test-app-name=test-app-for-m
 #   my-addon/test-app-for-my-addon
 ```
 
-By default, 'test-app' will be used.
+By default, `test-app` will be used.
 
 #### `--release-it`
 
