@@ -30,11 +30,39 @@ The location / folder name of the addon can be customized via `--addon-location`
 
 Examples:
 ```bash
-ember addon my-addon -b embroider/addon-blueprint --addon-location=packages/my-addon
+ember addon my-addon -b embroider/addon-blueprint --addon-location=packages/the-addon
 # generates
-#   my-addon/packages/my-addon
+#   my-addon/packages/the-addon
 ```
 
+By default, the addon name will be used. `ember addon <addon-name>`
+
+### `--test-app-location`
+
+
+The location / folder name of the addon can be customized via `--test-app-location`.
+
+Examples:
+```bash
+ember addon my-addon -b embroider/addon-blueprint --test-app-location=packages/test-app
+# generates
+#   my-addon/packages/test-app
+```
+
+By default, the `--test-app-name` will be used.
+
+### `--test-app-name`
+
+The name of the test-app can be customized via `--test-app-name`.
+
+Examples:
+```bash
+ember addon my-addon -b embroider/addon-blueprint --test-app-name=test-app-for-my-addon
+# generates
+#   my-addon/test-app-for-my-addon
+```
+
+By default, 'test-app' will be used.
 
 #### `--release-it`
 
@@ -43,6 +71,41 @@ use the `--release-it` flag
 
 ```bash
 ember addon my-addon -b embroider/addon-blueprint --yarn --release-it
+```
+
+### In existing monorepos
+
+In existing monorepos, it may be helpful to establish a convention for generating v2 addons as sub-monorepos
+within your monorepo. To do this, you'll need to use many of the above options all at once.
+For example:
+```bash
+ember addon my-addon-name -b embroider/addon-blueprint \
+  --skip-git \
+  --skip-npm \
+  --addon-location="package" \
+  --test-app-name="test-app-for-my-addon-name" \
+  --test-app-location="test-app"
+# generates
+#   my-addon-name/
+#     package/
+#     test-app/
+```
+
+Then, your workspace search globs can be defined as (for example):
+```js
+# all ember apps in the top level "apps directory"
+apps/*
+# all ember v2 addons share the same structure
+# example:
+#   addons/
+#     my-awesome-addon/
+#       package/
+#       test-app/
+#       docs/
+#       etc/
+addons/*/package
+addons/*/test-app
+addons/*/docs
 ```
 
 
