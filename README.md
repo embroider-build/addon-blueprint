@@ -11,10 +11,10 @@ in the blog post [Migrating an Ember addon to the next-gen v2 format
 WIP
 ------------------------------------------------------------------------------
 
-This is still work in progress. 
+This is still work in progress.
 
-The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with a 
-`packages/` folder for both the v2 addon and the separate test app. But there is plenty of room for bikeshedding here, 
+The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with a
+`packages/` folder for both the v2 addon and the separate test app. But there is plenty of room for bikeshedding here,
 so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
 
@@ -23,6 +23,13 @@ Usage
 
 ```bash
 ember addon my-addon -b embroider-build/addon-blueprint --yarn
+```
+
+If you want release-it behavior, (specifically provided by `create-rwjblue-release-it-setup`),
+use the `--release-it` flag
+
+```bash
+ember addon my-addon -b embroider/addon-blueprint --yarn --release-it
 ```
 
 
