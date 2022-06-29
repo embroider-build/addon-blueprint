@@ -7,6 +7,7 @@ const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const execa = require('execa');
+const { merge } = require('lodash');
 
 let date = new Date();
 
@@ -50,16 +51,12 @@ module.exports = {
 
   async updateTestAppPackageJson(packageJsonPath) {
     const pkg = require(packageJsonPath);
+    const additions = require('./additional-test-app-package.json');
 
+    merge(pkg, additions);
+
+    // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
-    pkg.devDependencies['@embroider/test-setup'] = '^1.0.0';
-    pkg.devDependencies['ember-source-channel-url'] = '^3.0.0';
-    pkg.devDependencies['ember-try'] = '^2.0.0';
-
-    pkg.scripts['test:watch'] = 'ember test --server';
-    pkg.scripts['test'] = 'npm-run-all lint \\"test:!(watch)\\"';
-
-    pkg.private = true;
 
     return fs.writeFile(
       packageJsonPath,
