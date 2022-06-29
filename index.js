@@ -87,18 +87,23 @@ module.exports = {
     });
   },
 
+  fileMapTokens(options) {
+    let { addonInfo } = options.locals;
+
+    return {
+      __addonLocation__: () => addonInfo.location,
+    }
+  },
+
   locals(options) {
-    let entity = { name: 'dummy' };
+    let entity = { name: 'my-addon' };
     let rawName = entity.name;
     let name = stringUtil.dasherize(rawName);
     let namespace = stringUtil.classify(rawName);
-
-    let addonEntity = options.entity;
-    let addonRawName = addonEntity.name;
-    let addonName = stringUtil.dasherize(addonRawName);
-    let addonNamespace = stringUtil.classify(addonRawName);
+    let addonInfo = infoFromOptions(options);
 
     let hasOptions = options.welcome || options.yarn || options.ciProvider;
+
     let blueprintOptions = '';
     if (hasOptions) {
       let indent = `\n            `;
@@ -116,12 +121,14 @@ module.exports = {
         outdent;
     }
 
+
     return {
       name,
       modulePrefix: name,
       namespace,
-      addonName,
-      addonNamespace,
+      addonInfo,
+      addonName: addonInfo.name.dashed,
+      addonNamespace: addonInfo.name.classified,
       // emberCLIVersion: require('../../package').version,
       year: date.getFullYear(),
       yarn: options.yarn,
@@ -144,3 +151,22 @@ module.exports = {
     return entityName;
   },
 };
+
+/**
+  * Custom info derived from CLI options for use within this blueprint.
+  * Nothing in this object is expected from the blueprint system.
+  */
+function infoFromOptions(options) {
+  let addonEntity = options.entity;
+  let addonRawName = addonEntity.name;
+
+  return {
+    name: {
+      dashed: stringUtil.dasherize(addonRawName),
+      classified: stringUtil.classify(addonRawName),
+      raw: addonRawName,
+    },
+    entity: addonEntity,
+    location: options.addonLocation || addonRawName,
+  }
+}

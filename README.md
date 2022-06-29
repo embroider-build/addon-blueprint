@@ -1,5 +1,4 @@
-@embroider/addon-blueprint
-==============================================================================
+# @embroider/addon-blueprint
 
 Blueprint for scaffolding ember v2 addons
 
@@ -8,8 +7,7 @@ in the blog post [Migrating an Ember addon to the next-gen v2 format
 ](https://www.kaliber5.de/de/blog/v2-addon_en).
 
 
-WIP
-------------------------------------------------------------------------------
+## WIP
 
 This is still work in progress.
 
@@ -18,12 +16,27 @@ The blueprint contains a number of assumptions, e.g. using a monorepo using (`ya
 so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
 
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 ```bash
 ember addon my-addon -b embroider-build/addon-blueprint --yarn
 ```
+
+### Options
+
+#### `--addon-location`
+
+The location / folder name of the addon can be customized via `--addon-location`.
+
+Examples:
+```bash
+ember addon my-addon -b embroider/addon-blueprint --addon-location=packages/my-addon
+# generates
+#   my-addon/packages/my-addon
+```
+
+
+#### `--release-it`
 
 If you want release-it behavior, (specifically provided by `create-rwjblue-release-it-setup`),
 use the `--release-it` flag
@@ -33,7 +46,6 @@ ember addon my-addon -b embroider/addon-blueprint --yarn --release-it
 ```
 
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
