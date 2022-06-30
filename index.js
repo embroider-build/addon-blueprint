@@ -32,9 +32,9 @@ module.exports = {
       target: testAppPath,
       skipNpm: true,
       skipGit: true,
-      entity: { name: testAppInfo.name },
-      name: testAppInfo.name,
-      rawName: testAppInfo.name,
+      entity: { name: testAppInfo.name.raw },
+      name: testAppInfo.name.raw,
+      rawName: testAppInfo.name.raw,
       ciProvider: 'travis', // we will delete this anyway below, as the CI config goes into the root folder
       welcome: false,
     };
@@ -164,24 +164,29 @@ module.exports = {
 function addonInfoFromOptions(options) {
   let addonEntity = options.entity;
   let addonRawName = addonEntity.name;
+  let dashedName = stringUtil.dasherize(addonRawName);
 
   return {
     name: {
-      dashed: stringUtil.dasherize(addonRawName),
+      dashed: dashedName,
       classified: stringUtil.classify(addonRawName),
       raw: addonRawName,
     },
     entity: addonEntity,
-    location: options.addonLocation || path.join('packages', addonRawName),
+    location: options.addonLocation || path.join('packages', dashedName),
   }
 }
 
 function testAppInfoFromOptions(options) {
   let name = options.testAppName || 'test-app';
+  let dashedName = stringUtil.dasherize(name);
 
   return {
-    name,
-    location: options.testAppLocation || path.join('packages', name),
+    name: {
+      dashed: dashedName,
+      raw: name,
+    },
+    location: options.testAppLocation || path.join('packages', dashedName),
   }
 }
 
