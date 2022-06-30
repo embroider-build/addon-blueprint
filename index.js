@@ -11,7 +11,6 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
-const TEST_APP_NAME = 'test-app';
 
 const description = 'The default blueprint for Embroider v2 addons.';
 module.exports = {
@@ -24,15 +23,18 @@ module.exports = {
         'Cannot find app blueprint for generating test-app!'
       );
     }
-    const testAppPath = path.join(options.target, 'packages', TEST_APP_NAME);
+
+    let testAppInfo = testAppInfoFromOptions(options);
+    let testAppPath = path.join(options.target, testAppInfo.location);
+
     const appOptions = {
-      ...options,
+      ...withoutAddonOptions(options),
       target: testAppPath,
       skipNpm: true,
       skipGit: true,
-      entity: { name: TEST_APP_NAME },
-      name: TEST_APP_NAME,
-      rawName: TEST_APP_NAME,
+      entity: { name: testAppInfo.name.raw },
+      name: testAppInfo.name.raw,
+      rawName: testAppInfo.name.raw,
       ciProvider: 'travis', // we will delete this anyway below, as the CI config goes into the root folder
       welcome: false,
     };
@@ -42,7 +44,7 @@ module.exports = {
     let tasks = [
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
       this.overrideTestAppFiles(
-        testAppPath,
+        testAppInfo.location,
         path.join(options.target, 'test-app-overrides')
       ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
@@ -87,18 +89,25 @@ module.exports = {
     });
   },
 
+  fileMapTokens(options) {
+    let { addonInfo, testAppInfo } = options.locals;
+
+    return {
+      __addonLocation__: () => addonInfo.location,
+      __testAppLocation__: () => testAppInfo.location,
+    }
+  },
+
   locals(options) {
-    let entity = { name: 'dummy' };
+    let entity = { name: 'my-addon' };
     let rawName = entity.name;
     let name = stringUtil.dasherize(rawName);
     let namespace = stringUtil.classify(rawName);
-
-    let addonEntity = options.entity;
-    let addonRawName = addonEntity.name;
-    let addonName = stringUtil.dasherize(addonRawName);
-    let addonNamespace = stringUtil.classify(addonRawName);
+    let addonInfo = addonInfoFromOptions(options);
+    let testAppInfo = testAppInfoFromOptions(options);
 
     let hasOptions = options.welcome || options.yarn || options.ciProvider;
+
     let blueprintOptions = '';
     if (hasOptions) {
       let indent = `\n            `;
@@ -116,12 +125,15 @@ module.exports = {
         outdent;
     }
 
+
     return {
       name,
       modulePrefix: name,
       namespace,
-      addonName,
-      addonNamespace,
+      addonInfo,
+      testAppInfo,
+      addonName: addonInfo.name.dashed,
+      addonNamespace: addonInfo.name.classified,
       // emberCLIVersion: require('../../package').version,
       year: date.getFullYear(),
       yarn: options.yarn,
@@ -144,3 +156,49 @@ module.exports = {
     return entityName;
   },
 };
+
+/**
+  * Custom info derived from CLI options for use within this blueprint.
+  * Nothing in this object is expected from the blueprint system.
+  */
+function addonInfoFromOptions(options) {
+  let addonEntity = options.entity;
+  let addonRawName = addonEntity.name;
+  let dashedName = stringUtil.dasherize(addonRawName);
+
+  return {
+    name: {
+      dashed: dashedName,
+      classified: stringUtil.classify(addonRawName),
+      raw: addonRawName,
+    },
+    entity: addonEntity,
+    location: options.addonLocation || path.join('packages', dashedName),
+  }
+}
+
+function testAppInfoFromOptions(options) {
+  let name = options.testAppName || 'test-app';
+  let dashedName = stringUtil.dasherize(name);
+
+  return {
+    name: {
+      dashed: dashedName,
+      raw: name,
+    },
+    location: options.testAppLocation || path.join('packages', dashedName),
+  }
+}
+
+const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'releaseIt', 'testAppName'];
+
+function withoutAddonOptions(options) {
+  let result = {};
+
+  for (let [key, value] of Object.entries(options)) {
+    if (ADDON_OPTIONS.includes(key)) continue;
+    result[key] = value;
+  }
+
+  return result;
+}
