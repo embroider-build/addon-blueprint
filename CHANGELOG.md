@@ -1,6 +1,15 @@
 
 
 
+
+## v1.1.2 (2022-07-01)
+
+#### :bug: Bug Fix
+* [#29](https://github.com/embroider-build/addon-blueprint/pull/29) volta pin npm ([@ef4](https://github.com/ef4))
+
+#### Committers: 1
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+
 ## v1.1.1 (2022-07-01)
 
 #### :bug: Bug Fix
