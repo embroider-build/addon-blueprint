@@ -26,6 +26,7 @@
     "prettier": "^2.5.1"
   },
   "workspaces": [
-    "packages/*"
+    "<%= addonInfo.location %>",
+    "<%= testAppInfo.location %>"
   ]
 }
