@@ -1,5 +1,14 @@
 
 
+
+## v1.1.1 (2022-07-01)
+
+#### :bug: Bug Fix
+* [#28](https://github.com/embroider-build/addon-blueprint/pull/28) Followup fixes for changed addon location ([@ef4](https://github.com/ef4))
+
+#### Committers: 1
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+
 ## v1.1.0 (2022-07-01)
 
 #### :rocket: Enhancement
