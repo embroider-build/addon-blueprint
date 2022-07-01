@@ -11,9 +11,7 @@ in the blog post [Migrating an Ember addon to the next-gen v2 format
 
 This is still work in progress.
 
-The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with a
-`packages/` folder for both the v2 addon and the separate test app. But there is plenty of room for bikeshedding here,
-so if you have suggestions about better ways to set this up, then please file an issue to discuss!
+The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with separate workspaces for the addon and the test-app. But there is plenty of room for bikeshedding here, so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
 
 ## Usage
@@ -30,12 +28,10 @@ The location / folder name of the addon can be customized via `--addon-location`
 
 Examples:
 ```bash
-ember addon my-addon -b embroider/addon-blueprint --addon-location=the-addon
+ember addon my-addon -b embroider/addon-blueprint --addon-location=packages/the-addon
 # generates
-#   my-addon/the-addon
+#   my-addon/packages/the-addon
 ```
-
-By default, the addon name will be used inside a packages directory. `ember addon <addon-name>`
 
 ### `--test-app-location`
 
@@ -49,7 +45,7 @@ ember addon my-addon -b embroider/addon-blueprint --test-app-location=test-app
 #   my-addon/test-app
 ```
 
-By default, `packages/{test app name}` will be used.
+By default, `{test app name}` will be used.
 
 ### `--test-app-name`
 
