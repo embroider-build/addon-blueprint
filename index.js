@@ -64,7 +64,8 @@ module.exports = {
     merge(pkg, additions);
 
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
-    pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
+    pkg.dependencies = pkg.dependencies || {};
+    pkg.dependencies[this.locals(this.options).addonName] = '^0.0.0';
 
     return fs.writeFile(
       packageJsonPath,
