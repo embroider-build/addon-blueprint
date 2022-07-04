@@ -51,7 +51,6 @@ let scripts = {
       prepare: 'npm run build',
       build: `npm run build --workspace ${addonName}`,
 
-
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
       "start:tests": `npm start --workspace ${testAppName}`,
       "start:addon": `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
