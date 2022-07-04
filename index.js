@@ -2,7 +2,6 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const stringUtil = require('ember-cli-string-utils');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
@@ -12,8 +11,7 @@ const { merge } = require('lodash');
 let date = new Date();
 
 const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
-
-const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName', 'releaseIt'];
+const { scripts } = require('./src/root-package-json');
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
@@ -27,6 +25,7 @@ module.exports = {
       throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
+    let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
     let testAppPath = path.join(options.target, testAppInfo.location);
 
@@ -42,6 +41,7 @@ module.exports = {
       welcome: false,
     };
 
+
     await appBlueprint.install(appOptions);
 
     let tasks = [
@@ -49,6 +49,27 @@ module.exports = {
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ];
+
+    /**
+     * Setup root package.json scripts based on the packager
+     */
+    tasks.push(
+      (async () => {
+        let packageJson = path.join(options.target, 'package.json');
+        let json = await fs.readJSON(packageJson);
+
+        json.scripts = scripts(options);
+
+        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
+      })()
+    );
+
+    if (options.pnpm) {
+      let content =
+        `packages:\n` + `  - '${addonInfo.location}'\n` + `  - '${testAppInfo.location}'\n`;
+
+      await fs.writeFile(path.join(options.target, 'pnpm-workspace.yaml'), content);
+    }
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));
@@ -70,7 +91,7 @@ module.exports = {
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
-    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprint
+    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprin
     // but fs.copy works as we need it. Just have to remove the overrides directory afterwards.
     await fs.copy(overridesPath, testAppPath, {
       overwrite: true,
@@ -112,6 +133,7 @@ module.exports = {
         [
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
+          options.pnpm && '"--pnpm"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
           options.addonLocation && `"--addon-location=${options.addonLocation}"`,
           options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
@@ -136,6 +158,8 @@ module.exports = {
       blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       yarn: options.yarn,
+      pnpm: options.pnpm,
+      npm: options.npm,
       welcome: options.welcome,
       blueprint: 'addon',
       blueprintOptions,

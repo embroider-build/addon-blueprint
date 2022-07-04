@@ -12,9 +12,18 @@ env:
   CI: true
 
 jobs:
+  install_deps:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+
+
   lint_js:
     name: Lint JS
     runs-on: ubuntu-latest
+    needs: ['install_deps']
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
@@ -23,6 +32,7 @@ jobs:
 
   test_type_checking:
     name: "Tests: Type Check"
+    needs: ['install_deps']
     timeout-minutes: 5
     runs-on: ubuntu-latest
 
@@ -36,19 +46,22 @@ jobs:
     name: Tests
     timeout-minutes: 5
     runs-on: ubuntu-latest
+    needs: ['install_deps']
     strategy:
       matrix:
         # how to say "not these" so we don't miss anything?
         # waiting on a an api from vitest for querying
         # the list of tests ahead of time before running them.
         slow-test:
-          - defaults
+          - defaults with npm
+          - defaults with yarn
+          - defaults with pnpm
           - addon-location
           - test-app-location
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
       - run: pnpm add --global ember-cli yarn
-      - run: pnpm vitest --testNamePattern ${{ matrix.slow-test }}
+      - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
 
