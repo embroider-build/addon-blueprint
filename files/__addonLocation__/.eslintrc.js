@@ -9,6 +9,9 @@ module.exports = {
     ecmaFeatures: {
       legacyDecorators: true,
     },
+    babelOptions: {
+      root: __dirname,
+    },
   },
   plugins: ['ember'],
   extends: [
