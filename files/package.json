@@ -15,7 +15,7 @@
     "lint": "yarn workspaces run lint",
     "lint:fix": "yarn workspaces run lint:fix",
 
-    "test": "yarn workspace <%= testAppInfo.name.dashed %> run test"
+    "test": "yarn workspaces run test"
   },
   "devDependencies": {
     "concurrently": "^7.2.1",
