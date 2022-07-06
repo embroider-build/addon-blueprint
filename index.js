@@ -11,7 +11,6 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
-
 const description = 'The default blueprint for Embroider v2 addons.';
 module.exports = {
   description,
@@ -95,14 +94,10 @@ module.exports = {
     return {
       __addonLocation__: () => addonInfo.location,
       __testAppLocation__: () => testAppInfo.location,
-    }
+    };
   },
 
   locals(options) {
-    let entity = { name: 'my-addon' };
-    let rawName = entity.name;
-    let name = stringUtil.dasherize(rawName);
-    let namespace = stringUtil.classify(rawName);
     let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
 
@@ -125,11 +120,7 @@ module.exports = {
         outdent;
     }
 
-
     return {
-      name,
-      modulePrefix: name,
-      namespace,
       addonInfo,
       testAppInfo,
       addonName: addonInfo.name.dashed,
@@ -158,9 +149,9 @@ module.exports = {
 };
 
 /**
-  * Custom info derived from CLI options for use within this blueprint.
-  * Nothing in this object is expected from the blueprint system.
-  */
+ * Custom info derived from CLI options for use within this blueprint.
+ * Nothing in this object is expected from the blueprint system.
+ */
 function addonInfoFromOptions(options) {
   let addonEntity = options.entity;
   let addonRawName = addonEntity.name;
@@ -174,7 +165,7 @@ function addonInfoFromOptions(options) {
     },
     entity: addonEntity,
     location: options.addonLocation || dashedName,
-  }
+  };
 }
 
 function testAppInfoFromOptions(options) {
@@ -187,10 +178,15 @@ function testAppInfoFromOptions(options) {
       raw: name,
     },
     location: options.testAppLocation || dashedName,
-  }
+  };
 }
 
-const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'releaseIt', 'testAppName'];
+const ADDON_OPTIONS = [
+  'addonLocation',
+  'testAppLocation',
+  'releaseIt',
+  'testAppName',
+];
 
 function withoutAddonOptions(options) {
   let result = {};
