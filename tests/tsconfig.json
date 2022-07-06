@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true,
+    "module": "node16",
+    "types": ["vitest/globals"]
+  }
+}

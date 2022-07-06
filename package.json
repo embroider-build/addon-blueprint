@@ -8,6 +8,9 @@
   "repository": "https://github.com/embroider-build/addon-blueprint.git",
   "license": "MIT",
   "author": "simonihmig <simon.ihmig@kaliber5.de>",
+  "scripts": {
+    "test": "pnpm --filter 'blueprint-tests' test"
+  },
   "dependencies": {
     "create-rwjblue-release-it-setup": "^3.1.1",
     "ember-cli-normalize-entity-name": "^1.0.0",
@@ -42,6 +45,18 @@
     "github": {
       "release": true,
       "tokenRef": "GITHUB_AUTH"
+    }
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["@octokit/rest", "@octokit/plugin-paginate-rest"],
+      "allowAny": ["@octokit/rest", "@octokit/plugin-paginate-rest"],
+      "allowedVersions": {
+        "@octokit/rest": "^3.0.0 || ^4.0.0"
+      }
+    },
+    "notes": {
+      "@octokit/rest": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/rest v4, but found 3.6"
     }
   },
   "volta": {
