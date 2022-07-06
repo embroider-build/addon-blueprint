@@ -1,0 +1,8 @@
+{
+  "name": "tests",
+  "private": true,
+  "devDependencies": {
+    "execa": "^6.1.0",
+    "vitest": "^0.17.0"
+  }
+}
