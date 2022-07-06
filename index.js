@@ -10,7 +10,11 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
-const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
+const {
+  addonInfoFromOptions,
+  testAppInfoFromOptions,
+  withoutAddonOptions,
+} = require('./src/info');
 const { scripts } = require('./src/root-package-json');
 const pnpm = require('./src/pnpm');
 
@@ -20,10 +24,22 @@ module.exports = {
   description,
 
   async afterInstall(options) {
+    let tasks = [this.createTestApp(options)];
+
+    if (options.releaseIt) {
+      tasks.push(this.setupReleaseIt(options.target));
+    }
+
+    await Promise.all(tasks);
+  },
+
+  async createTestApp(options) {
     const appBlueprint = this.lookupBlueprint('app');
 
     if (!appBlueprint) {
-      throw new SilentError('Cannot find app blueprint for generating test-app!');
+      throw new SilentError(
+        'Cannot find app blueprint for generating test-app!'
+      );
     }
 
     let addonInfo = addonInfoFromOptions(options);
@@ -44,11 +60,14 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
 
-    let tasks = [
+    await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
-      this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
+      this.overrideTestAppFiles(
+        testAppPath,
+        path.join(options.target, 'test-app-overrides')
+      ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
-    ];
+    ]);
 
     /**
      * Setup root package.json scripts based on the packager
@@ -65,14 +84,27 @@ module.exports = {
     );
 
     if (options.pnpm) {
-      tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
+      tasks.push(
+        pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo)
+      );
     }
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));
     }
 
-    await Promise.all(tasks);
+    if (options.typescript) {
+      // Ideally we would just pass on the --typescript flag to the app blueprint, as part of https://rfcs.emberjs.com/id/0800-ts-adoption-plan#cli-integration
+      // But this is not implemented yet unfortunately.
+      // Also, we cannot install ember-cli-typescript by ourselves here:
+      // * `this.addAddonToProject()` is meant for this, but we cannot tell it to *not* install into the root folder of our monorepo
+      // * manually calling `execa('ember install ember-cli-typescript, { cwd: testAppPath })` doesn't work either, because it would look for
+      //   ember-cli and all other required dependencies in the generated addon, at a time when the blueprint hasn't installed them yet
+      // So we just show some instructions for manual installation for now, until the typescript flag is eventually supported...
+
+      this.ui.writeWarnLine(
+        `Unfortunately this blueprint is not yet able to automatically set up TypeScript in your test-app. Please run \`ember install ember-cli-typescript\` in the ${testAppPath} folder manually!`
+      );
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
@@ -84,7 +116,10 @@ module.exports = {
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
 
-    return fs.writeFile(packageJsonPath, JSON.stringify(sortPackageJson(pkg), undefined, 2));
+    return fs.writeFile(
+      packageJsonPath,
+      JSON.stringify(sortPackageJson(pkg), undefined, 2)
+    );
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
@@ -134,8 +169,10 @@ module.exports = {
           options.yarn && '"--yarn"',
           options.pnpm && '"--pnpm"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
-          options.addonLocation && `"--addon-location=${options.addonLocation}"`,
-          options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
+          options.addonLocation &&
+            `"--addon-location=${options.addonLocation}"`,
+          options.testAppLocation &&
+            `"--test-app-location=${options.testAppLocation}"`,
           options.testAppName && `"--test-app-name=${options.testAppName}"`,
           options.releaseIt && `"--release-it"`,
         ]
