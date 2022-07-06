@@ -19,6 +19,16 @@ module.exports = {
   description,
 
   async afterInstall(options) {
+    let tasks = [this.createTestApp(options)];
+
+    if (options.releaseIt) {
+      tasks.push(this.setupReleaseIt(options.target));
+    }
+
+    await Promise.all(tasks);
+  },
+
+  async createTestApp(options) {
     const appBlueprint = this.lookupBlueprint('app');
 
     if (!appBlueprint) {
@@ -42,20 +52,28 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
 
-    let tasks = [
+    await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
       this.overrideTestAppFiles(
         testAppInfo.location,
         path.join(options.target, 'test-app-overrides')
       ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
-    ];
+    ]);
 
-    if (options.releaseIt) {
-      tasks.push(this.setupReleaseIt(options.target));
+    if (options.typescript) {
+      // Ideally we would just pass on the --typescript flag to the app blueprint, as part of https://rfcs.emberjs.com/id/0800-ts-adoption-plan#cli-integration
+      // But this is not implemented yet unfortunately.
+      // Also, we cannot install ember-cli-typescript by ourselves here:
+      // * `this.addAddonToProject()` is meant for this, but we cannot tell it to *not* install into the root folder of our monorepo
+      // * manually calling `execa('ember install ember-cli-typescript, { cwd: testAppPath })` doesn't work either, because it would look for
+      //   ember-cli and all other required dependencies in the generated addon, at a time when the blueprint hasn't installed them yet
+      // So we just show some instructions for manual installation for now, until the typescript flag is eventually supported...
+
+      this.ui.writeWarnLine(
+        `Unfortunately this blueprint is not yet able to automatically set up TypeScript in your test-app. Please run \`ember install ember-cli-typescript\` in the ${testAppPath} folder manually!`
+      );
     }
-
-    await Promise.all(tasks);
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
