@@ -5,8 +5,8 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     autoImport: {
-      watchDependencies: ['<%= addonName %>']
-    }
+      watchDependencies: ['<%= addonName %>'],
+    },
   });
 
   const { maybeEmbroider } = require('@embroider/test-setup');
