@@ -29,12 +29,34 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
-    "@babel/eslint-parser": "^7.18.2",
+    <% if (typescript) { %>"@babel/preset-typescript": "7.18.6"<% } else { %>"@babel/eslint-parser": "^7.18.2"<% } %>,
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-decorators": "^7.17.0",
     "@babel/plugin-syntax-decorators": "^7.17.0",
-    "@embroider/addon-dev": "^1.0.0",
-    "@rollup/plugin-babel": "^5.3.0",
+    "@embroider/addon-dev": "^1.0.0",<% if (typescript) { %>
+    "@glint/core": "^0.9.1",
+    "@glint/environment-ember-loose": "^0.9.1",
+    "@tsconfig/ember": "^1.0.0",
+    "@types/ember": "^4.0.0",
+    "@types/ember__object": "^4.0.0",
+    "@types/ember__service": "^4.0.0",
+    "@types/ember__controller": "^4.0.0",
+    "@types/ember__string": "^3.16.0",
+    "@types/ember__template": "^4.0.0",
+    "@types/ember__polyfills": "^4.0.0",
+    "@types/ember__utils": "^4.0.0",
+    "@types/ember__runloop": "^4.0.0",
+    "@types/ember__debug": "^4.0.0",
+    "@types/ember__engine": "^4.0.0",
+    "@types/ember__application": "^4.0.0",
+    "@types/ember__test": "^4.0.0",
+    "@types/ember__array": "^4.0.0",
+    "@types/ember__error": "^4.0.0",
+    "@types/ember__component": "^4.0.0",
+    "@types/ember__routing": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "5.30.5",
+    "@typescript-eslint/parser": "5.30.5",<% } else { %>
+    "@rollup/plugin-babel": "^5.3.0",<% } %>
     "concurrently": "^7.2.1",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
@@ -44,7 +66,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
     "rollup": "^2.67.0",
-    "rollup-plugin-copy": "^3.4.0"
+    "rollup-plugin-copy": "^3.4.0"<% if (typescript) { %>,
+    "rollup-plugin-ts": "^3.0.2",
+    "typescript": "^4.7.4"<% } %>
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -58,8 +82,19 @@
     "main": "addon-main.js"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*",
+    ".": "./dist/index.js", <% if (typescript) { %>
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    },<% } else { %>
+    "./*": "./dist/*.js",<% } %>
     "./addon-main.js": "./addon-main.js"
-  }
+  }<% if (typescript) { %>,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  }<% } %>
 }

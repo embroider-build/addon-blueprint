@@ -105,11 +105,13 @@ module.exports = {
   },
 
   fileMapTokens(options) {
-    let { addonInfo, testAppInfo } = options.locals;
+    let { addonInfo, testAppInfo, ext, typescript } = options.locals;
 
     return {
       __addonLocation__: () => addonInfo.location,
       __testAppLocation__: () => testAppInfo.location,
+      __ext__: () => ext,
+      __rollupExt__: () => (typescript ? 'mjs' : 'js'),
     };
   },
 
@@ -158,11 +160,27 @@ module.exports = {
       pnpm: options.pnpm,
       npm: options.npm,
       welcome: options.welcome,
+      typescript: options.typescript,
+      ext: options.typescript ? 'ts' : 'js',
       blueprint: 'addon',
       blueprintOptions,
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,
     };
+  },
+
+  files(options) {
+    let files = this._super.files.apply(this, arguments);
+
+    if (options.typescript) {
+      return files;
+    } else {
+      let ignoredFiles = ['__addonLocation__/tsconfig.json'];
+      return files.filter(
+        (filename) =>
+          !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
+      );
+    }
   },
 
   normalizeEntityName(entityName) {
