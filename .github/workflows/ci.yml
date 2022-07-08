@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 3 * * 0" # every Sunday at 3am
+
+env:
+  CI: true
+
+jobs:
+  # TODO: no lint config yet
+  # lint_js:
+  #   name: Lint JS
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/pnpm
+  #     - name: ESLint
+  #       run: pnpm run lint:js
+
+  tests:
+    name: Tests
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      # no tests yet
+      - run: echo "hello world"
+      # - run: pnpm test
+
