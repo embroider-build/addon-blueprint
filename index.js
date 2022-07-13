@@ -11,6 +11,13 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
+const ADDON_OPTIONS = [
+  'addonLocation',
+  'testAppLocation',
+  'testAppName',
+  'releaseIt',
+];
+
 const description = 'The default blueprint for Embroider v2 addons.';
 
 module.exports = {
@@ -112,6 +119,12 @@ module.exports = {
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
+          options.addonLocation &&
+            `"--addon-location=${options.addonLocation}"`,
+          options.testAppLocation &&
+            `"--test-app-location=${options.testAppLocation}"`,
+          options.testAppName && `"--test-app-name=${options.testAppName}"`,
+          options.releaseIt && `"--release-it"`,
         ]
           .filter(Boolean)
           .join(',\n            ') +
@@ -123,7 +136,7 @@ module.exports = {
       testAppInfo,
       addonName: addonInfo.name.dashed,
       addonNamespace: addonInfo.name.classified,
-      // emberCLIVersion: require('../../package').version,
+      blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       yarn: options.yarn,
       welcome: options.welcome,
@@ -178,8 +191,6 @@ function testAppInfoFromOptions(options) {
     location: options.testAppLocation || dashedName,
   };
 }
-
-const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'releaseIt', 'testAppName'];
 
 function withoutAddonOptions(options) {
   let result = {};
