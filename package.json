@@ -8,6 +8,9 @@
   "repository": "https://github.com/embroider-build/addon-blueprint.git",
   "license": "MIT",
   "author": "simonihmig <simon.ihmig@kaliber5.de>",
+  "scripts": {
+    "test": "pnpm --filter 'blueprint-tests' test"
+  },
   "dependencies": {
     "create-rwjblue-release-it-setup": "^3.1.1",
     "ember-cli-normalize-entity-name": "^1.0.0",
@@ -20,7 +23,7 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "release-it": "^14.2.1",
+    "release-it": "^14.0.0",
     "release-it-lerna-changelog": "^3.1.0"
   },
   "engines": {
@@ -42,6 +45,14 @@
     "github": {
       "release": true,
       "tokenRef": "GITHUB_AUTH"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "@octokit/core": "^4.0.0"
+    },
+    "notes": {
+      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers"
     }
   },
   "volta": {
