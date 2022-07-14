@@ -9,6 +9,7 @@ const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const execa = require('execa');
 const { merge } = require('lodash');
 
+
 let date = new Date();
 
 const description = 'The default blueprint for Embroider v2 addons.';
