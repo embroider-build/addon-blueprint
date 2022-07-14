@@ -29,5 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
+      - run: pnpm add --global ember-cli yarn
       - run: pnpm test
 
