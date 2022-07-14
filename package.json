@@ -9,6 +9,8 @@
   "license": "MIT",
   "author": "simonihmig <simon.ihmig@kaliber5.de>",
   "scripts": {
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --fix",
     "test": "pnpm --filter 'blueprint-tests' test"
   },
   "dependencies": {
