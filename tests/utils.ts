@@ -19,10 +19,10 @@ export async function createTmp() {
   * Abstraction for install, as the blueprint supports multiple package managers
   */
 export async function install({ cwd }: { cwd: string }) {
-  await execa('yarn', ['install', '--non-interactive'], { cwd, preferLocal: true });
+  await execa('yarn', ['install', '--non-interactive'], { cwd });
   // in order to test prepare, we need to have ignore-scripts=false
   // this is a security risk so we'll manually invoke install + prepare
-  await execa('yarn', ['prepare'], { cwd, preferLocal: true });
+  await execa('yarn', ['prepare'], { cwd });
 }
 
 /**
