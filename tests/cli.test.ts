@@ -21,7 +21,11 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     args?: string[];
     options?: Options;
   }) {
-    let result = await execa('ember', ['addon', name, '-b', blueprintPath, ...args], options);
+    let result = await execa(
+      'ember',
+      ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
+      options
+    );
 
     return { result, name };
   }
