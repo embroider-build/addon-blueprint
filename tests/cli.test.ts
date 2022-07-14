@@ -1,23 +1,22 @@
-
+import { type Options, execa } from 'execa';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { execa, type Options } from 'execa';
-
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-
-import { createTmp, dirContents, install, runScript } from './utils.js';
 import { assertGeneratedCorrectly } from './assertions.js';
+import { createTmp, dirContents, install, runScript } from './utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 
 const blueprintPath = path.join(__dirname, '..');
 
 describe('ember addon <the addon> -b <this blueprint>', () => {
-
-  async function createAddon({ name = 'my-addon', args = [], options = {}}: {
+  async function createAddon({
+    name = 'my-addon',
+    args = [],
+    options = {},
+  }: {
     name?: string;
     args?: string[];
     options?: Options;
@@ -35,7 +34,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     beforeAll(async () => {
       tmpDir = await createTmp();
 
-      let { name } = await createAddon({ options: { cwd: tmpDir }});
+      let { name } = await createAddon({ options: { cwd: tmpDir } });
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
@@ -87,7 +86,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
       let { name } = await createAddon({
         args: [`--addon-location=${location}`],
-        options: { cwd: tmpDir }
+        options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);
@@ -127,7 +126,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
       let { name } = await createAddon({
         args: [`--test-app-location=${location}`],
-        options: { cwd: tmpDir }
+        options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);

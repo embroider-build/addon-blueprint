@@ -1,7 +1,7 @@
 'use strict';
 
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const stringUtil = require('ember-cli-string-utils');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
@@ -12,15 +12,15 @@ const { merge } = require('lodash');
 let date = new Date();
 
 const description = 'The default blueprint for Embroider v2 addons.';
+
 module.exports = {
   description,
 
   async afterInstall(options) {
     const appBlueprint = this.lookupBlueprint('app');
+
     if (!appBlueprint) {
-      throw new SilentError(
-        'Cannot find app blueprint for generating test-app!'
-      );
+      throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
     let testAppInfo = testAppInfoFromOptions(options);
@@ -65,10 +65,7 @@ module.exports = {
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
 
-    return fs.writeFile(
-      packageJsonPath,
-      JSON.stringify(sortPackageJson(pkg), undefined, 2)
-    );
+    return fs.writeFile(packageJsonPath, JSON.stringify(sortPackageJson(pkg), undefined, 2));
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
@@ -104,6 +101,7 @@ module.exports = {
     let hasOptions = options.welcome || options.yarn || options.ciProvider;
 
     let blueprintOptions = '';
+
     if (hasOptions) {
       let indent = `\n            `;
       let outdent = `\n          `;
@@ -181,12 +179,7 @@ function testAppInfoFromOptions(options) {
   };
 }
 
-const ADDON_OPTIONS = [
-  'addonLocation',
-  'testAppLocation',
-  'releaseIt',
-  'testAppName',
-];
+const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'releaseIt', 'testAppName'];
 
 function withoutAddonOptions(options) {
   let result = {};

@@ -1,8 +1,7 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import os from 'node:os';
-
 import { execa } from 'execa';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 
 export async function createTmp() {
   let prefix = 'v2-addon-blueprint--';
@@ -14,8 +13,8 @@ export async function createTmp() {
 }
 
 /**
-  * Abstraction for install, as the blueprint supports multiple package managers
-  */
+ * Abstraction for install, as the blueprint supports multiple package managers
+ */
 export async function install({ cwd }: { cwd: string }) {
   await execa('yarn', ['install', '--non-interactive'], { cwd });
   // in order to test prepare, we need to have ignore-scripts=false
@@ -24,9 +23,9 @@ export async function install({ cwd }: { cwd: string }) {
 }
 
 /**
-  * Abstraction for install, as the blueprint supports multiple package managers
-  */
-export async function runScript({ cwd, script }: { cwd: string, script: string }) {
+ * Abstraction for install, as the blueprint supports multiple package managers
+ */
+export async function runScript({ cwd, script }: { cwd: string; script: string }) {
   let packageManager = `yarn`;
   let promise = execa(packageManager, [script], { cwd });
 
@@ -36,6 +35,7 @@ export async function runScript({ cwd, script }: { cwd: string, script: string }
     return promise;
   } catch (e) {
     console.error(e);
+
     return promise;
   }
 }
@@ -47,6 +47,7 @@ export async function dirContents(dirPath: string) {
     return files;
   } catch (e) {
     console.error('error', e);
+
     return [];
   }
 }
@@ -57,4 +58,3 @@ export async function packageJsonAt(dirPath: string) {
 
   return JSON.parse(str);
 }
-

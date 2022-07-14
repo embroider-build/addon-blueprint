@@ -9,6 +9,8 @@
   "license": "MIT",
   "author": "simonihmig <simon.ihmig@kaliber5.de>",
   "scripts": {
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --fix",
     "test": "pnpm --filter 'blueprint-tests' test"
   },
   "dependencies": {
@@ -22,9 +24,13 @@
     "sort-package-json": "^1.54.0"
   },
   "devDependencies": {
+    "@nullvoxpopuli/eslint-configs": "^2.2.35",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
     "prettier": "^2.5.1",
     "release-it": "^14.0.0",
-    "release-it-lerna-changelog": "^3.1.0"
+    "release-it-lerna-changelog": "^3.1.0",
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": "14.* || 16.* || >= 18"
