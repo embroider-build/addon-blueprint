@@ -34,6 +34,7 @@ importers:
 
   tests:
     specifiers:
+      '@types/fs-extra': ^9.0.13
       '@vitest/ui': ^0.18.0
       c8: ^7.11.3
       execa: ^6.1.0
@@ -42,6 +43,7 @@ importers:
       vite: ^3.0.0
       vitest: ^0.18.0
     devDependencies:
+      '@types/fs-extra': 9.0.13
       '@vitest/ui': 0.18.0
       c8: 7.11.3
       execa: 6.1.0
@@ -268,6 +270,12 @@ packages:
 
   /@types/chai/4.3.1:
     resolution: {integrity: sha512-/zPMqDkzSZ8t3VtxOa4KPq7uzzW978M9Tvh+j7GHKuo6k6GTLxPJ4J5gE5cjfJ26pnXst0N5Hax8Sr0T2Mi9zQ==}
+    dev: true
+
+  /@types/fs-extra/9.0.13:
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+    dependencies:
+      '@types/node': 18.0.4
     dev: true
 
   /@types/glob/7.2.0:

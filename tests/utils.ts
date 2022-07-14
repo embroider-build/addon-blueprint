@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 
-import { execa } from 'execa';
+import { execa, ExecaChildProcess } from 'execa';
 
 export async function createTmp() {
   let prefix = 'v2-addon-blueprint--';
@@ -30,11 +30,9 @@ export async function install({ cwd }: { cwd: string }) {
   */
 export async function runScript({ cwd, script }: { cwd: string, script: string }) {
   let packageManager = `yarn`;
+  let promise = execa(packageManager, [script], { cwd });
 
-  let promise: ReturnType<typeof execa>;
   try {
-    let promise = execa(packageManager, [script], { cwd });
-
     await promise;
 
     return promise;

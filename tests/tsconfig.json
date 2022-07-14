@@ -2,6 +2,10 @@
   "compilerOptions": {
     "isolatedModules": true,
     "module": "node16",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "strict": true,
+
+    // Vite's internal types aren't relevant to us
+    "skipLibCheck": true
   }
 }

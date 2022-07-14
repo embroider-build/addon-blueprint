@@ -4,6 +4,14 @@ import fse from 'fs-extra';
 import { expect } from 'vitest';
 import { packageJsonAt } from './utils.js';
 
+interface AssertGeneratedOptions {
+  projectRoot: string;
+  addonLocation?: string;
+  addonName?: string;
+  testAppLocation?: string;
+  testAppName?: string;
+}
+
 /**
   * Asserts that the names / paths of the test-app and addon
 * exist and are corrected via dependencies.
@@ -14,7 +22,7 @@ export async function assertGeneratedCorrectly({
   addonName = 'my-addon',
   testAppLocation = 'test-app',
   testAppName = 'test-app',
-}) {
+}: AssertGeneratedOptions) {
   let addonPath = path.join(projectRoot, addonLocation);
   let testAppPath = path.join(projectRoot, testAppLocation);
 

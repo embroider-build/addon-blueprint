@@ -3,11 +3,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { execa } from 'execa';
+import { execa, type Options } from 'execa';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-import { createTmp, dirContents, install, packageJsonAt, runScript } from './utils.js';
+import { createTmp, dirContents, install, runScript } from './utils.js';
 import { assertGeneratedCorrectly } from './assertions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -17,7 +17,11 @@ const blueprintPath = path.join(__dirname, '..');
 
 describe('ember addon <the addon> -b <this blueprint>', () => {
 
-  async function createAddon({ name = 'my-addon', args = [], options = {}}) {
+  async function createAddon({ name = 'my-addon', args = [], options = {}}: {
+    name?: string;
+    args?: string[];
+    options?: Options;
+  }) {
     let result = await execa('ember', ['addon', name, '-b', blueprintPath, ...args], options);
 
     return { result, name };
