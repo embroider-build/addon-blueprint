@@ -17,7 +17,7 @@ The blueprint contains a number of assumptions, e.g. using a monorepo using (`ya
 ## Usage
 
 ```bash
-ember addon my-addon -b embroider-build/addon-blueprint --yarn
+ember addon my-addon -b @embroider/addon-blueprint --yarn
 ```
 
 ### Options
@@ -28,7 +28,7 @@ The location / folder name of the addon can be customized via `--addon-location`
 
 Examples:
 ```bash
-ember addon my-addon -b embroider-build/addon-blueprint --addon-location=packages/the-addon
+ember addon my-addon -b @embroider/addon-blueprint --addon-location=packages/the-addon
 # generates
 #   my-addon/packages/the-addon
 ```
@@ -40,7 +40,7 @@ The location / folder name of the addon can be customized via `--test-app-locati
 
 Examples:
 ```bash
-ember addon my-addon -b embroider-build/addon-blueprint --test-app-location=test-app
+ember addon my-addon -b @embroider/addon-blueprint --test-app-location=test-app
 # generates
 #   my-addon/test-app
 ```
@@ -53,7 +53,7 @@ The name of the test-app can be customized via `--test-app-name`.
 
 Examples:
 ```bash
-ember addon my-addon -b embroider-build/addon-blueprint --test-app-name=test-app-for-my-addon
+ember addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-my-addon
 # generates
 #   my-addon/test-app-for-my-addon
 ```
@@ -66,7 +66,7 @@ If you want release-it behavior, (specifically provided by `create-rwjblue-relea
 use the `--release-it` flag
 
 ```bash
-ember addon my-addon -b embroider-build/addon-blueprint --yarn --release-it
+ember addon my-addon -b @embroider/addon-blueprint --yarn --release-it
 ```
 
 ### In existing monorepos
@@ -77,7 +77,7 @@ To do this, you'll need to use many of the above options all at once (rememberin
 
 For example:
 ```bash
-ember addon my-addon-name -b embroider-build/addon-blueprint \
+ember addon my-addon-name -b @embroider/addon-blueprint \
   --skip-git \
   --skip-npm \
   --addon-location="package" \
