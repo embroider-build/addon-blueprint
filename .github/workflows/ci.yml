@@ -12,15 +12,14 @@ env:
   CI: true
 
 jobs:
-  # TODO: no lint config yet
-  # lint_js:
-  #   name: Lint JS
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/pnpm
-  #     - name: ESLint
-  #       run: pnpm run lint:js
+  lint_js:
+    name: Lint JS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - name: ESLint
+        run: pnpm lint
 
   test_type_checking:
     name: "Tests: Type Check"
