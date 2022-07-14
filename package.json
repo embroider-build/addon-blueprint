@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "release-it": "^14.2.1",
+    "release-it": "^14.0.0",
     "release-it-lerna-changelog": "^3.1.0"
   },
   "engines": {
@@ -48,15 +48,11 @@
     }
   },
   "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": ["@octokit/rest", "@octokit/plugin-paginate-rest"],
-      "allowAny": ["@octokit/rest", "@octokit/plugin-paginate-rest"],
-      "allowedVersions": {
-        "@octokit/rest": "^3.0.0 || ^4.0.0"
-      }
+    "overrides": {
+      "@octokit/core": "^4.0.0"
     },
     "notes": {
-      "@octokit/rest": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/rest v4, but found 3.6"
+      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers"
     }
   },
   "volta": {
