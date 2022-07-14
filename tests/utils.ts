@@ -2,15 +2,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 
-import { execa, ExecaChildProcess } from 'execa';
+import { execa } from 'execa';
 
 export async function createTmp() {
   let prefix = 'v2-addon-blueprint--';
   let prefixPath = path.join(os.tmpdir(), prefix);
 
   let tmpDirPath = await fs.mkdtemp(prefixPath);
-
-  await fs.mkdir(tmpDirPath, { recursive: true });
 
   return tmpDirPath;
 }
