@@ -2,27 +2,26 @@
 const assert = require('assert');
 
 /**
-  * @typedef {import('./types').Options} Options
-  *
-  * @typedef {object} Info
-  * @property {import('./types').AddonInfo} addon
-  * @property {import('./types').TestAppInfo} testApp
-  *
-  */
+ * @typedef {import('./types').Options} Options
+ *
+ * @typedef {object} Info
+ * @property {import('./types').AddonInfo} addon
+ * @property {import('./types').TestAppInfo} testApp
+ *
+ */
 const { addonInfoFromOptions, testAppInfoFromOptions } = require('./info');
-
 
 module.exports = {
   /**
-  * @param {Options} options
-  */
+   * @param {Options} options
+   */
   scripts(options) {
     let { packageManager, yarn, pnpm } = options;
 
     let info = {
       addon: addonInfoFromOptions(options),
       testApp: testAppInfoFromOptions(options),
-    }
+    };
 
     if (packageManager === 'pnpm' || pnpm) {
       return scripts.pnpm(options, info);
@@ -34,15 +33,13 @@ module.exports = {
 
     return scripts.npm(options, info);
   },
-}
-
-
+};
 
 let scripts = {
   /**
-  * @param {Options} options
-  * @param {Info} info
-  */
+   * @param {Options} options
+   * @param {Info} info
+   */
   npm: (options, info) => {
     let { packageName: addonName } = info.addon;
     let { packageName: testAppName } = info.addon;
@@ -52,41 +49,41 @@ let scripts = {
       build: `npm run build --workspace ${addonName}`,
 
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      "start:tests": `npm start --workspace ${testAppName}`,
-      "start:addon": `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
+      'start:tests': `npm start --workspace ${testAppName}`,
+      'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
 
       test: `npm test --workspace ${testAppName}`,
 
       lint: 'npm run lint --workspaces --if-present',
-      'lint:fix': 'npm run lint:fix --workspaces --if-present'
-    }
+      'lint:fix': 'npm run lint:fix --workspaces --if-present',
+    };
   },
 
   /**
    * @param {Options} options
    * @param {Info} info
    */
-   yarn: (options, info) => {
+  yarn: (options, info) => {
     let { packageName: addonName } = info.addon;
     let { packageName: testAppName } = info.addon;
 
     return {
-      "prepare": `yarn workspace ${addonName} run prepare`,
-      "start": "npm-run-all --parallel start:*",
-      "start:addon": `yarn workspace ${addonName} run start`,
-      "start:test-app": `yarn workspace ${testAppName} run start`,
-      "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
-      "lint:addon": `yarn workspace ${addonName} run lint`,
-      "lint:test-app": `yarn workspace ${testAppName} run lint`,
-      "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:fix:*",
-      "lint:fix:addon": `yarn workspace ${addonName} run lint:fix`,
-      "lint:fix:test-app": `yarn workspace ${testAppName} run lint:fix`,
-      "test": "npm-run-all --aggregate-output --continue-on-error --parallel \"test:!(watch)\"",
-      "test:watch": "npm-run-all --aggregate-output --continue-on-error --parallel test:watch:*",
-      "test:test-app": `yarn workspace ${testAppName} run test`,
-      "test:watch:test-app": `yarn workspace ${testAppName} run test:watch`,
-      "test:watch:addon": `yarn workspace ${addonName} run start`
-    }
+      prepare: `yarn workspace ${addonName} run prepare`,
+      start: 'npm-run-all --parallel start:*',
+      'start:addon': `yarn workspace ${addonName} run start`,
+      'start:test-app': `yarn workspace ${testAppName} run start`,
+      lint: 'npm-run-all --aggregate-output --continue-on-error --parallel "lint:!(fix)"',
+      'lint:addon': `yarn workspace ${addonName} run lint`,
+      'lint:test-app': `yarn workspace ${testAppName} run lint`,
+      'lint:fix': 'npm-run-all --aggregate-output --continue-on-error --parallel lint:fix:*',
+      'lint:fix:addon': `yarn workspace ${addonName} run lint:fix`,
+      'lint:fix:test-app': `yarn workspace ${testAppName} run lint:fix`,
+      test: 'npm-run-all --aggregate-output --continue-on-error --parallel "test:!(watch)"',
+      'test:watch': 'npm-run-all --aggregate-output --continue-on-error --parallel test:watch:*',
+      'test:test-app': `yarn workspace ${testAppName} run test`,
+      'test:watch:test-app': `yarn workspace ${testAppName} run test:watch`,
+      'test:watch:addon': `yarn workspace ${addonName} run start`,
+    };
   },
 
   /**
@@ -114,8 +111,8 @@ let scripts = {
        * Colors are customizable
        */
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      "start:tests": `pnpm --filter ${testAppName} start`,
-      "start:addon": `pnpm --filter ${addonName} start --no-watch.clearScreen`,
+      'start:tests': `pnpm --filter ${testAppName} start`,
+      'start:addon': `pnpm --filter ${addonName} start --no-watch.clearScreen`,
 
       /**
        * Note that this test is different from v1 addon's test, which runs all of ember-try as well.
@@ -126,8 +123,7 @@ let scripts = {
       test: `pnpm --filter ${testAppName} test`,
 
       lint: "pnpm --filter '*' lint",
-      "lint:fix": "pnpm --filter '*' lint:fix"
-    }
-  }
-}
-
+      'lint:fix': "pnpm --filter '*' lint:fix",
+    };
+  },
+};

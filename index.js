@@ -53,16 +53,18 @@ module.exports = {
     ];
 
     /**
-      * Setup root package.json scripts based on the packager
-      */
-    tasks.push((async () => {
-      let packageJson = path.join(options.target, 'package.json');
-      let json = await fs.readJSON(packageJson);
+     * Setup root package.json scripts based on the packager
+     */
+    tasks.push(
+      (async () => {
+        let packageJson = path.join(options.target, 'package.json');
+        let json = await fs.readJSON(packageJson);
 
-      json.scripts = scripts(options);
+        json.scripts = scripts(options);
 
-      await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
-    })())
+        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
+      })()
+    );
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));

@@ -2,12 +2,12 @@
 const stringUtil = require('ember-cli-string-utils');
 
 /**
-  * Custom info derived from CLI options for use within this blueprint.
-  * Nothing in this object is expected from the blueprint system.
-  *
-  * @param {import('./types').Options} options
-  * @return {import('./types').AddonInfo}
-  */
+ * Custom info derived from CLI options for use within this blueprint.
+ * Nothing in this object is expected from the blueprint system.
+ *
+ * @param {import('./types').Options} options
+ * @return {import('./types').AddonInfo}
+ */
 function addonInfoFromOptions(options) {
   let addonEntity = options.entity;
   let addonRawName = addonEntity.name;
@@ -22,13 +22,13 @@ function addonInfoFromOptions(options) {
     },
     entity: addonEntity,
     location: options.addonLocation || dashedName,
-  }
+  };
 }
 
 /**
-  * @param {import('./types').Options} options
-  * @return {import('./types').TestAppInfo}
-  */
+ * @param {import('./types').Options} options
+ * @return {import('./types').TestAppInfo}
+ */
 function testAppInfoFromOptions(options) {
   let name = options.testAppName || 'test-app';
   let dashedName = stringUtil.dasherize(name);
@@ -40,7 +40,7 @@ function testAppInfoFromOptions(options) {
       raw: name,
     },
     location: options.testAppLocation || dashedName,
-  }
+  };
 }
 
 module.exports = {
