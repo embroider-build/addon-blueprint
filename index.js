@@ -26,6 +26,7 @@ module.exports = {
       throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
+    let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
     let testAppPath = path.join(options.target, testAppInfo.location);
 
@@ -65,6 +66,11 @@ module.exports = {
         await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
       })()
     );
+
+    if (options.pnpm) {
+      content = `packages:\n` + `  - '${addonInfo.location}'\n` + `  - '${testAppInfo.location}'\n`;
+      await fs.writeFile(path.join(options.target, 'pnpm-workspace.yaml'), content);
+    }
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));

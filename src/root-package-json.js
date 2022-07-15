@@ -24,7 +24,11 @@ module.exports = {
     };
 
     if (packageManager === 'pnpm' || pnpm) {
-      return scripts.pnpm(options, info);
+      let result = scripts.pnpm(options, info);
+
+      delete result.workspaces;
+
+      return result;
     }
 
     if (packageManager === 'yarn' || yarn) {
