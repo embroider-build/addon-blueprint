@@ -41,7 +41,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         tmpDir = await createTmp();
 
         let { name } = await createAddon({
-          args: [`--${packageManager}`],
+          args: [`--${packageManager}=true`],
           options: { cwd: tmpDir },
         });
 
@@ -128,7 +128,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--addon-location=${location}`, '--pnpm'],
+        args: [`--addon-location=${location}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
@@ -168,7 +168,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--test-app-location=${location}`, '--pnpm'],
+        args: [`--test-app-location=${location}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
