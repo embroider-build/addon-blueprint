@@ -40,6 +40,8 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       beforeAll(async () => {
         tmpDir = await createTmp();
 
+        console.debug(`Using ${tmpDir}`);
+
         let { name } = await createAddon({
           args: [`--${packageManager}=true`],
           options: { cwd: tmpDir },

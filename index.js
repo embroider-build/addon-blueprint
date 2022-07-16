@@ -46,10 +46,7 @@ module.exports = {
 
     let tasks = [
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
-      this.overrideTestAppFiles(
-        testAppInfo.location,
-        path.join(options.target, 'test-app-overrides')
-      ),
+      this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ];
 
@@ -68,7 +65,9 @@ module.exports = {
     );
 
     if (options.pnpm) {
-      content = `packages:\n` + `  - '${addonInfo.location}'\n` + `  - '${testAppInfo.location}'\n`;
+      let content =
+        `packages:\n` + `  - '${addonInfo.location}'\n` + `  - '${testAppInfo.location}'\n`;
+
       await fs.writeFile(path.join(options.target, 'pnpm-workspace.yaml'), content);
     }
 
@@ -92,7 +91,7 @@ module.exports = {
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
-    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprint
+    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprin
     // but fs.copy works as we need it. Just have to remove the overrides directory afterwards.
     await fs.copy(overridesPath, testAppPath, {
       overwrite: true,
@@ -134,6 +133,7 @@ module.exports = {
         [
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
+          options.pnpm && '"--pnpm"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
         ]
           .filter(Boolean)
@@ -149,6 +149,8 @@ module.exports = {
       // emberCLIVersion: require('../../package').version,
       year: date.getFullYear(),
       yarn: options.yarn,
+      pnpm: options.pnpm,
+      npm: options.npm,
       welcome: options.welcome,
       blueprint: 'addon',
       blueprintOptions,
