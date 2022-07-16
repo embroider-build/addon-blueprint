@@ -15,19 +15,32 @@ export async function createTmp() {
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
-export async function install({ cwd }: { cwd: string }) {
-  await execa('yarn', ['install', '--non-interactive'], { cwd });
+export async function install({ cwd, packageManager }: { cwd: string; packageManager: string }) {
+  if (packageManager === 'yarn') {
+    await execa('yarn', ['install', '--non-interactive'], { cwd });
+  } else {
+    await execa(packageManager, ['install'], { cwd });
+  }
+
   // in order to test prepare, we need to have ignore-scripts=false
   // this is a security risk so we'll manually invoke install + prepare
-  await execa('yarn', ['prepare'], { cwd });
+  await execa(packageManager, ['run', 'prepare'], { cwd });
 }
 
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
-export async function runScript({ cwd, script }: { cwd: string; script: string }) {
-  let packageManager = `yarn`;
-  let promise = execa(packageManager, [script], { cwd });
+export async function runScript({
+  cwd,
+  script,
+  packageManager,
+}: {
+  cwd: string;
+  script: string;
+  packageManager: string;
+}) {
+  // all package managers allow a more verbose <packageManager> run <script> way of running scripts
+  let promise = execa(packageManager, ['run', script], { cwd });
 
   try {
     await promise;
