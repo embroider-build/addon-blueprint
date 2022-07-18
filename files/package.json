@@ -6,6 +6,7 @@
   "author": "",
   "scripts": {
     "prepare": "yarn build",
+    "pretest": "yarn build",
     "build": "yarn workspace <%= addonName %> run build",
 
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
