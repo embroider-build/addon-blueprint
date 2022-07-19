@@ -11,12 +11,7 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
-const ADDON_OPTIONS = [
-  'addonLocation',
-  'testAppLocation',
-  'testAppName',
-  'releaseIt',
-];
+const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName', 'releaseIt'];
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
@@ -119,10 +114,8 @@ module.exports = {
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
-          options.addonLocation &&
-            `"--addon-location=${options.addonLocation}"`,
-          options.testAppLocation &&
-            `"--test-app-location=${options.testAppLocation}"`,
+          options.addonLocation && `"--addon-location=${options.addonLocation}"`,
+          options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
           options.testAppName && `"--test-app-name=${options.testAppName}"`,
           options.releaseIt && `"--release-it"`,
         ]
