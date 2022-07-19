@@ -33,7 +33,7 @@ ember addon my-addon -b @embroider/addon-blueprint --addon-location=packages/the
 #   my-addon/packages/the-addon
 ```
 
-### `--test-app-location`
+#### `--test-app-location`
 
 
 The location / folder name of the addon can be customized via `--test-app-location`.
@@ -47,7 +47,7 @@ ember addon my-addon -b @embroider/addon-blueprint --test-app-location=test-app
 
 By default, `{test app name}` will be used.
 
-### `--test-app-name`
+#### `--test-app-name`
 
 The name of the test-app can be customized via `--test-app-name`.
 
