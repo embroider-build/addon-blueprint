@@ -69,6 +69,13 @@ use the `--release-it` flag
 ember addon my-addon -b @embroider/addon-blueprint --yarn --release-it
 ```
 
+### Updating the addon
+
+The blueprint supports `ember-cli-update` to update your addon with any changes that occurred in the blueprint since you created the addon. So to update your addons boilerplate, simply run `ember-cli-update` (or `npx ember-cli-update` if you haven't installed it globally). 
+
+For additional instructions, please consult its [documentation](https://github.com/ember-cli/ember-cli-update).
+
+
 ### In existing monorepos
 
 In existing monorepos, it may be helpful to establish a convention for generating v2 addons as sub-monorepos
