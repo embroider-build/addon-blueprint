@@ -175,6 +175,7 @@ module.exports = {
             `"--test-app-location=${options.testAppLocation}"`,
           options.testAppName && `"--test-app-name=${options.testAppName}"`,
           options.releaseIt && `"--release-it"`,
+          options.typescript && `"--typescript"`,
         ]
           .filter(Boolean)
           .join(',\n            ') +
@@ -213,9 +214,9 @@ module.exports = {
       return files;
     } else {
       let ignoredFiles = ['__addonLocation__/tsconfig.json'];
+
       return files.filter(
-        (filename) =>
-          !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
+        (filename) => !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
       );
     }
   },
