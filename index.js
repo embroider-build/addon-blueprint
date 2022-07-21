@@ -19,6 +19,16 @@ module.exports = {
   description,
 
   async afterInstall(options) {
+    let tasks = [this.createTestApp(options)];
+
+    if (options.releaseIt) {
+      tasks.push(this.setupReleaseIt(options.target));
+    }
+
+    await Promise.all(tasks);
+  },
+
+  async createTestApp(options) {
     const appBlueprint = this.lookupBlueprint('app');
 
     if (!appBlueprint) {
@@ -42,20 +52,28 @@ module.exports = {
 
     await appBlueprint.install(appOptions);
 
-    let tasks = [
+    await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
       this.overrideTestAppFiles(
         testAppInfo.location,
         path.join(options.target, 'test-app-overrides')
       ),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
-    ];
+    ]);
 
-    if (options.releaseIt) {
-      tasks.push(this.setupReleaseIt(options.target));
+    if (options.typescript) {
+      // Ideally we would just pass on the --typescript flag to the app blueprint, as part of https://rfcs.emberjs.com/id/0800-ts-adoption-plan#cli-integration
+      // But this is not implemented yet unfortunately.
+      // Also, we cannot install ember-cli-typescript by ourselves here:
+      // * `this.addAddonToProject()` is meant for this, but we cannot tell it to *not* install into the root folder of our monorepo
+      // * manually calling `execa('ember install ember-cli-typescript, { cwd: testAppPath })` doesn't work either, because it would look for
+      //   ember-cli and all other required dependencies in the generated addon, at a time when the blueprint hasn't installed them yet
+      // So we just show some instructions for manual installation for now, until the typescript flag is eventually supported...
+
+      this.ui.writeWarnLine(
+        `Unfortunately this blueprint is not yet able to automatically set up TypeScript in your test-app. Please run \`ember install ember-cli-typescript\` in the ${testAppPath} folder manually!`
+      );
     }
-
-    await Promise.all(tasks);
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
@@ -88,11 +106,13 @@ module.exports = {
   },
 
   fileMapTokens(options) {
-    let { addonInfo, testAppInfo } = options.locals;
+    let { addonInfo, testAppInfo, ext, typescript } = options.locals;
 
     return {
       __addonLocation__: () => addonInfo.location,
       __testAppLocation__: () => testAppInfo.location,
+      __ext__: () => ext,
+      __rollupExt__: () => (typescript ? 'mjs' : 'js'),
     };
   },
 
@@ -118,6 +138,7 @@ module.exports = {
           options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
           options.testAppName && `"--test-app-name=${options.testAppName}"`,
           options.releaseIt && `"--release-it"`,
+          options.typescript && `"--typescript"`,
         ]
           .filter(Boolean)
           .join(',\n            ') +
@@ -133,10 +154,26 @@ module.exports = {
       year: date.getFullYear(),
       yarn: options.yarn,
       welcome: options.welcome,
+      typescript: options.typescript,
+      ext: options.typescript ? 'ts' : 'js',
       blueprint: 'addon',
       blueprintOptions,
       ciProvider: options.ciProvider,
     };
+  },
+
+  files(options) {
+    let files = this._super.files.apply(this, arguments);
+
+    if (options.typescript) {
+      return files;
+    } else {
+      let ignoredFiles = ['__addonLocation__/tsconfig.json'];
+
+      return files.filter(
+        (filename) => !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
+      );
+    }
   },
 
   normalizeEntityName(entityName) {
