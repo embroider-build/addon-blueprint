@@ -42,4 +42,12 @@ export async function assertGeneratedCorrectly({
     ],
     `The test app has a (dev)dependency on the addon`
   ).to.include(addonName);
+
+  let expectedStaticFiles = ['README.md', 'LICENSE.md'];
+
+  for (let expectedFile of expectedStaticFiles) {
+    let pathToFile = path.join(addonPath, expectedFile);
+
+    expect(await fse.pathExists(pathToFile), `${pathToFile} exists`).toBe(true);
+  }
 }

@@ -124,6 +124,11 @@ module.exports = {
         outdent;
     }
 
+    let pathFromAddonToRoot = addonInfo.location
+      .split('/')
+      .map(() => '..')
+      .join('/');
+
     return {
       addonInfo,
       testAppInfo,
@@ -136,6 +141,7 @@ module.exports = {
       blueprint: 'addon',
       blueprintOptions,
       ciProvider: options.ciProvider,
+      pathFromAddonToRoot,
     };
   },
 
