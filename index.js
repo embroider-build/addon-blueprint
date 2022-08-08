@@ -11,6 +11,8 @@ const { merge } = require('lodash');
 
 let date = new Date();
 
+const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
+
 const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName', 'releaseIt'];
 
 const description = 'The default blueprint for Embroider v2 addons.';
@@ -44,10 +46,7 @@ module.exports = {
 
     let tasks = [
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
-      this.overrideTestAppFiles(
-        testAppInfo.location,
-        path.join(options.target, 'test-app-overrides')
-      ),
+      this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ];
 
@@ -157,47 +156,3 @@ module.exports = {
     return entityName;
   },
 };
-
-/**
- * Custom info derived from CLI options for use within this blueprint.
- * Nothing in this object is expected from the blueprint system.
- */
-function addonInfoFromOptions(options) {
-  let addonEntity = options.entity;
-  let addonRawName = addonEntity.name;
-  let dashedName = stringUtil.dasherize(addonRawName);
-
-  return {
-    name: {
-      dashed: dashedName,
-      classified: stringUtil.classify(addonRawName),
-      raw: addonRawName,
-    },
-    entity: addonEntity,
-    location: options.addonLocation || dashedName,
-  };
-}
-
-function testAppInfoFromOptions(options) {
-  let name = options.testAppName || 'test-app';
-  let dashedName = stringUtil.dasherize(name);
-
-  return {
-    name: {
-      dashed: dashedName,
-      raw: name,
-    },
-    location: options.testAppLocation || dashedName,
-  };
-}
-
-function withoutAddonOptions(options) {
-  let result = {};
-
-  for (let [key, value] of Object.entries(options)) {
-    if (ADDON_OPTIONS.includes(key)) continue;
-    result[key] = value;
-  }
-
-  return result;
-}
