@@ -51,6 +51,19 @@ module.exports = {
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ];
 
+    if (options.vitest) {
+      tasks.push(
+        (async () => {
+          // lookupBlueprint (used above) does not lookup packages on npm
+          await execa(
+            'ember',
+            ['new', 'tests', '-b', 'vitest-blueprint', '--skip-git', '--skip-npm'],
+            { cwd: options.target }
+          );
+        })()
+      );
+    }
+
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));
     }
@@ -113,6 +126,7 @@ module.exports = {
         [
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
+          options.vitest && '"--vitest"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
           options.addonLocation && `"--addon-location=${options.addonLocation}"`,
           options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
@@ -137,6 +151,7 @@ module.exports = {
       blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       yarn: options.yarn,
+      vitest: options.vitest,
       welcome: options.welcome,
       blueprint: 'addon',
       blueprintOptions,
