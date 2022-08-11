@@ -24,7 +24,7 @@
     "sort-package-json": "^1.54.0"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "^2.2.35",
+    "@nullvoxpopuli/eslint-configs": "^2.2.37",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.19.0",
     "prettier": "^2.5.1",
