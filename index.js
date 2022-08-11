@@ -41,7 +41,6 @@ module.exports = {
       welcome: false,
     };
 
-
     await appBlueprint.install(appOptions);
 
     let tasks = [
