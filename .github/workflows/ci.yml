@@ -55,7 +55,7 @@ jobs:
         slow-test:
           - defaults with npm
           - defaults with yarn
-          # - defaults with pnpm
+          - defaults with pnpm
           - addon-location
           - test-app-location
     steps:

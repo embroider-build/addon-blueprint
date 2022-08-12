@@ -20,28 +20,21 @@ export async function install({ cwd, packageManager }: { cwd: string; packageMan
     await execa('yarn', ['install', '--non-interactive'], { cwd });
   } else {
     if (packageManager === 'pnpm') {
-      try {
-        await execa('pnpm', ['install'], { cwd });
-      } catch (e) {
-        /**
-         * This is needed because the app, when generated with pnpm,
-         * does not have correct deps - a peer is missing, @babel/core.
-         * and because the app blueprint is the second blueprint we invoke
-         * in this blueprint,we can't add dependencies to it.
-         */
-        if (e instanceof Error && e.message.includes('pnpm install')) {
-          return;
-        }
-
-        throw e;
-      }
+      /**
+       * This is needed because the app, when generated with pnpm,
+       * does not have correct deps - a peer is missing, @babel/core.
+       * and because the app blueprint is the second blueprint we invoke
+       * in this blueprint,we can't add dependencies to it.
+       */
+      await fs.writeFile(path.join(cwd, '.npmrc'), 'auto-install-peers=true');
+      await execa('pnpm', ['install'], { cwd });
     } else {
       await execa(packageManager, ['install'], { cwd });
     }
   }
 
   // in order to test prepare, we need to have ignore-scripts=false
-  // this is a security risk so we'll manually invoke install + prepare
+  // which is a security risk so we'll manually invoke install + prepare
   await execa(packageManager, ['run', 'prepare'], { cwd });
 }
 
