@@ -2,8 +2,8 @@
 
 Blueprint for scaffolding ember v2 addons
 
-This is based on the setup used for [ember-stargate](https://github.com/kaliber5/ember-stargate), explained in detail
-in the blog post [Migrating an Ember addon to the next-gen v2 format
+For migrating a v1 addon to a v2 addon, you may follow _[Porting Addons to V2](https://github.com/embroider-build/embroider/blob/main/PORTING-ADDONS-TO-V2.md)_ and
+this blog post [Migrating an Ember addon to the next-gen v2 format
 ](https://www.kaliber5.de/de/blog/v2-addon_en).
 
 
