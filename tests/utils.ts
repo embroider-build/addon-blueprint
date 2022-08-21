@@ -19,7 +19,18 @@ export async function install({ cwd, packageManager }: { cwd: string; packageMan
   if (packageManager === 'yarn') {
     await execa('yarn', ['install', '--non-interactive'], { cwd });
   } else {
-    await execa(packageManager, ['install'], { cwd });
+    try {
+      await execa(packageManager, ['install'], { cwd });
+    } catch (e) {
+      if (packageManager === 'pnpm') {
+        console.info('An error occurred. Are there still upstream issues to resolve?');
+        console.error(e);
+
+        return;
+      }
+
+      throw e;
+    }
   }
 
   // in order to test prepare, we need to have ignore-scripts=false
