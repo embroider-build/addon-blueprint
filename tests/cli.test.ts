@@ -28,10 +28,15 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       options
     );
 
+    // Light work-around for an upstream `@babel/core` peer issue
+    if (typeof options.cwd === 'string') {
+      await fs.writeFile(path.join(options.cwd, name, '.npmrc'), 'auto-install-peers=true');
+    }
+
     return { result, name };
   }
 
-  ['npm', 'yarn' /*, 'pnpm' */].map((packageManager) => {
+  ['npm', 'yarn', 'pnpm'].map((packageManager) => {
     describe(`defaults with ${packageManager}`, () => {
       let cwd = '';
       let tmpDir = '';
