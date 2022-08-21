@@ -90,7 +90,7 @@ module.exports = {
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
-    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprin
+    // we cannot us fs.move, as it will replace the directory, removing the other files of the app blueprint
     // but fs.copy works as we need it. Just have to remove the overrides directory afterwards.
     await fs.copy(overridesPath, testAppPath, {
       overwrite: true,
