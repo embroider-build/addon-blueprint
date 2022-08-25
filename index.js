@@ -12,6 +12,7 @@ let date = new Date();
 
 const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
 const { scripts } = require('./src/root-package-json');
+const pnpm = require('./src/pnpm');
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
@@ -64,10 +65,7 @@ module.exports = {
     );
 
     if (options.pnpm) {
-      let content =
-        `packages:\n` + `  - '${addonInfo.location}'\n` + `  - '${testAppInfo.location}'\n`;
-
-      await fs.writeFile(path.join(options.target, 'pnpm-workspace.yaml'), content);
+      tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
     }
 
     if (options.releaseIt) {

@@ -59,7 +59,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       });
 
       afterAll(async () => {
-        fs.rm(tmpDir, { recursive: true });
+        fs.rm(tmpDir, { recursive: true, force: true });
       });
 
       it('is using the correct packager', async () => {
@@ -145,7 +145,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true });
+      fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
@@ -185,7 +185,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true });
+      fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
