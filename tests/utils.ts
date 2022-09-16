@@ -22,11 +22,20 @@ export async function install({ cwd, packageManager }: { cwd: string; packageMan
     try {
       await execa(packageManager, ['install'], { cwd });
     } catch (e) {
-      if (packageManager === 'pnpm') {
-        console.info('An error occurred. Are there still upstream issues to resolve?');
-        console.error(e);
+      if (e instanceof Error) {
+        // ignore the `@babel/core` peer issue.
+        // this is dependent on ember-cli-babel doing a v8 release
+        // where it declares `@babel/core` as a peer, and removes it from
+        // dependencies
+        let isPeerError = e.message.includes('Peer dependencies that should be installed:');
+        let isExpectedPeer = e.message.includes('@babel/core@">=7.0.0 <8.0.0"');
 
-        return;
+        if (packageManager === 'pnpm' && isPeerError && isExpectedPeer) {
+          console.info('An error occurred. Are there still upstream issues to resolve?');
+          console.error(e);
+
+          return;
+        }
       }
 
       throw e;
