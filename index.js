@@ -2,7 +2,6 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const stringUtil = require('ember-cli-string-utils');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
@@ -12,8 +11,8 @@ const { merge } = require('lodash');
 let date = new Date();
 
 const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
-
-const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName', 'releaseIt'];
+const { scripts } = require('./src/root-package-json');
+const pnpm = require('./src/pnpm');
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
@@ -27,6 +26,7 @@ module.exports = {
       throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
+    let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
     let testAppPath = path.join(options.target, testAppInfo.location);
 
@@ -49,6 +49,24 @@ module.exports = {
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ];
+
+    /**
+     * Setup root package.json scripts based on the packager
+     */
+    tasks.push(
+      (async () => {
+        let packageJson = path.join(options.target, 'package.json');
+        let json = await fs.readJSON(packageJson);
+
+        json.scripts = scripts(options);
+
+        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
+      })()
+    );
+
+    if (options.pnpm) {
+      tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
+    }
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));
@@ -112,6 +130,7 @@ module.exports = {
         [
           options.welcome && '"--welcome"',
           options.yarn && '"--yarn"',
+          options.pnpm && '"--pnpm"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
           options.addonLocation && `"--addon-location=${options.addonLocation}"`,
           options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
@@ -136,6 +155,8 @@ module.exports = {
       blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       yarn: options.yarn,
+      pnpm: options.pnpm,
+      npm: options.npm,
       welcome: options.welcome,
       blueprint: 'addon',
       blueprintOptions,

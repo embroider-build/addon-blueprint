@@ -15,19 +15,52 @@ export async function createTmp() {
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
-export async function install({ cwd }: { cwd: string }) {
-  await execa('yarn', ['install', '--non-interactive'], { cwd });
+export async function install({ cwd, packageManager }: { cwd: string; packageManager: string }) {
+  if (packageManager === 'yarn') {
+    await execa('yarn', ['install', '--non-interactive'], { cwd });
+  } else {
+    try {
+      await execa(packageManager, ['install'], { cwd });
+    } catch (e) {
+      if (e instanceof Error) {
+        // ignore the `@babel/core` peer issue.
+        // this is dependent on ember-cli-babel doing a v8 release
+        // where it declares `@babel/core` as a peer, and removes it from
+        // dependencies
+        let isPeerError = e.message.includes('Peer dependencies that should be installed:');
+        let isExpectedPeer = e.message.includes('@babel/core@">=7.0.0 <8.0.0"');
+
+        if (packageManager === 'pnpm' && isPeerError && isExpectedPeer) {
+          console.info('An error occurred. Are there still upstream issues to resolve?');
+          console.error(e);
+
+          return;
+        }
+      }
+
+      throw e;
+    }
+  }
+
   // in order to test prepare, we need to have ignore-scripts=false
-  // this is a security risk so we'll manually invoke install + prepare
-  await execa('yarn', ['prepare'], { cwd });
+  // which is a security risk so we'll manually invoke install + prepare
+  await execa(packageManager, ['run', 'prepare'], { cwd });
 }
 
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
-export async function runScript({ cwd, script }: { cwd: string; script: string }) {
-  let packageManager = `yarn`;
-  let promise = execa(packageManager, [script], { cwd });
+export async function runScript({
+  cwd,
+  script,
+  packageManager,
+}: {
+  cwd: string;
+  script: string;
+  packageManager: string;
+}) {
+  // all package managers allow a more verbose <packageManager> run <script> way of running scripts
+  let promise = execa(packageManager, ['run', script], { cwd });
 
   try {
     await promise;

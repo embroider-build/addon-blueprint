@@ -1,4 +1,5 @@
 import { type Options, execa } from 'execa';
+import fse from 'fs-extra';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,55 +28,100 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       options
     );
 
+    // Light work-around for an upstream `@babel/core` peer issue
+    if (typeof options.cwd === 'string') {
+      await fs.writeFile(path.join(options.cwd, name, '.npmrc'), 'auto-install-peers=true');
+    }
+
     return { result, name };
   }
 
-  describe('defaults', () => {
-    let cwd = '';
-    let tmpDir = '';
-    let distDir = '';
+  ['npm', 'yarn', 'pnpm'].map((packageManager) => {
+    describe(`defaults with ${packageManager}`, () => {
+      let cwd = '';
+      let tmpDir = '';
+      let distDir = '';
 
-    beforeAll(async () => {
-      tmpDir = await createTmp();
+      beforeAll(async () => {
+        tmpDir = await createTmp();
 
-      let { name } = await createAddon({ options: { cwd: tmpDir } });
+        console.debug(`Debug test repo at ${tmpDir}`);
 
-      cwd = path.join(tmpDir, name);
-      distDir = path.join(cwd, name, 'dist');
+        let { name } = await createAddon({
+          args: [`--${packageManager}=true`],
+          options: { cwd: tmpDir },
+        });
 
-      await install({ cwd });
-    });
+        cwd = path.join(tmpDir, name);
+        distDir = path.join(cwd, name, 'dist');
 
-    afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true });
-    });
+        await install({ cwd, packageManager });
+      });
 
-    it('"prepare" built the addon', async () => {
-      let contents = await dirContents(distDir);
+      afterAll(async () => {
+        fs.rm(tmpDir, { recursive: true, force: true });
+      });
 
-      expect(contents).to.deep.equal(['index.js']);
-    });
+      it('is using the correct packager', async () => {
+        let npm = path.join(cwd, 'package-lock.json');
+        let yarn = path.join(cwd, 'yarn.lock');
+        let pnpm = path.join(cwd, 'pnpm-lock.yaml');
 
-    it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: cwd });
-    });
+        switch (packageManager) {
+          case 'npm': {
+            expect(await fse.pathExists(npm), 'for NPM: package-lock.json exists').toBe(true);
+            expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
+            expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
-    it('builds the addon', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'build' });
+            break;
+          }
+          case 'yarn': {
+            expect(await fse.pathExists(yarn), 'for Yarn: yarn.lock exists').toBe(true);
+            expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
+            expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
-      expect(exitCode).toEqual(0);
-    });
+            break;
+          }
+          case 'pnpm': {
+            expect(await fse.pathExists(pnpm), 'for pnpm: pnpm-lock.yaml exists').toBe(true);
+            expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
+            expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
 
-    it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test' });
+            break;
+          }
 
-      expect(exitCode).toEqual(0);
-    });
+          default:
+            throw new Error(`unknown packageManager: ${packageManager}`);
+        }
+      });
 
-    it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint' });
+      it('"prepare" built the addon', async () => {
+        let contents = await dirContents(distDir);
 
-      expect(exitCode).toEqual(0);
+        expect(contents).to.deep.equal(['index.js']);
+      });
+
+      it('was generated correctly', async () => {
+        assertGeneratedCorrectly({ projectRoot: cwd });
+      });
+
+      it('builds the addon', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
+
+        expect(exitCode).toEqual(0);
+      });
+
+      it('runs tests', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'test', packageManager });
+
+        expect(exitCode).toEqual(0);
+      });
+
+      it('lints all pass', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'lint', packageManager });
+
+        expect(exitCode).toEqual(0);
+      });
     });
   });
 
@@ -89,17 +135,17 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--addon-location=${location}`],
+        args: [`--addon-location=${location}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);
 
-      await install({ cwd });
+      await install({ cwd, packageManager: 'pnpm' });
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true });
+      fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
@@ -107,13 +153,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test' });
+      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
 
     it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint' });
+      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
@@ -129,17 +175,17 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--test-app-location=${location}`],
+        args: [`--test-app-location=${location}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);
 
-      await install({ cwd });
+      await install({ cwd, packageManager: 'pnpm' });
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true });
+      fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
@@ -147,13 +193,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test' });
+      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
 
     it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint' });
+      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
