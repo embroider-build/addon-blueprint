@@ -1,6 +1,6 @@
 {
   "name": "@embroider/addon-blueprint",
-  "version": "1.1.2",
+  "version": "1.2.5",
   "description": "Blueprint for scaffolding ember v2 addons",
   "keywords": [
     "ember-blueprint"
