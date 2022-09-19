@@ -31,7 +31,7 @@ Once the prep work is completed, the actual release is straight forward:
 * First, ensure that you have installed your projects dependencies:
 
 ```sh
-yarn install
+pnpm install
 ```
 
 * Second, ensure that you have obtained a
@@ -58,3 +58,7 @@ release process. It will prompt you to to choose the version number after which
 you will have the chance to hand tweak the changelog to be used (for the
 `CHANGELOG.md` and GitHub release), then `release-it` continues on to tagging,
 pushing the tag and commits, etc.
+
+If prompted for a username/password by `release-it`, the `GITHUB_AUTH` environment
+variable was not detected. Enter your username, and use your personal access token
+as the password, and the release should succeed.
