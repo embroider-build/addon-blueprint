@@ -22,6 +22,44 @@ ember addon my-addon -b @embroider/addon-blueprint --yarn
 
 ### Options
 
+For all these options, you'll see a warning printed from `ember-cli` about unsupported options.
+`ember-cli` doesn't have a way to detect if flags are used by a blueprint.
+
+### `--pnpm`
+
+Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default.
+Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
+
+Example:
+```bash
+ember addon my-addon -b @embroider/addon-blueprint --pnpm --skip-npm
+cd my-addon
+pnpm install
+```
+
+### `--npm`
+
+Sets up the new addon with `npm` as a default.
+Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
+
+Example:
+```bash
+ember addon my-addon -b @embroider/addon-blueprint --npm --skip-npm
+cd my-addon
+npm install
+```
+
+### `--yarn`
+
+Sets up the new addon with `yarn` as a default.
+
+Example:
+```bash
+ember addon my-addon -b @embroider/addon-blueprint --yarn
+cd my-addon
+yarn install
+```
+
 #### `--addon-location`
 
 The location / folder name of the addon can be customized via `--addon-location`.
@@ -71,7 +109,7 @@ ember addon my-addon -b @embroider/addon-blueprint --yarn --release-it
 
 ### Updating the addon
 
-The blueprint supports `ember-cli-update` to update your addon with any changes that occurred in the blueprint since you created the addon. So to update your addons boilerplate, simply run `ember-cli-update` (or `npx ember-cli-update` if you haven't installed it globally). 
+The blueprint supports `ember-cli-update` to update your addon with any changes that occurred in the blueprint since you created the addon. So to update your addons boilerplate, simply run `ember-cli-update` (or `npx ember-cli-update` if you haven't installed it globally).
 
 For additional instructions, please consult its [documentation](https://github.com/ember-cli/ember-cli-update).
 
