@@ -7,14 +7,11 @@ const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
 const execa = require('execa');
 const { merge } = require('lodash');
+const { lt } = require('semver');
 
 let date = new Date();
 
-const {
-  addonInfoFromOptions,
-  testAppInfoFromOptions,
-  withoutAddonOptions,
-} = require('./src/info');
+const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
 const { scripts } = require('./src/root-package-json');
 const pnpm = require('./src/pnpm');
 
@@ -25,6 +22,24 @@ module.exports = {
 
   async afterInstall(options) {
     let tasks = [this.createTestApp(options)];
+
+    /**
+     * Setup root package.json scripts based on the packager
+     */
+    tasks.push(
+      (async () => {
+        let packageJson = path.join(options.target, 'package.json');
+        let json = await fs.readJSON(packageJson);
+
+        json.scripts = scripts(options);
+
+        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
+      })()
+    );
+
+    if (options.pnpm) {
+      tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
+    }
 
     if (options.releaseIt) {
       tasks.push(this.setupReleaseIt(options.target));
@@ -37,9 +52,7 @@ module.exports = {
     const appBlueprint = this.lookupBlueprint('app');
 
     if (!appBlueprint) {
-      throw new SilentError(
-        'Cannot find app blueprint for generating test-app!'
-      );
+      throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
     let addonInfo = addonInfoFromOptions(options);
@@ -62,49 +75,20 @@ module.exports = {
 
     await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
-      this.overrideTestAppFiles(
-        testAppPath,
-        path.join(options.target, 'test-app-overrides')
-      ),
+      this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
 
-    /**
-     * Setup root package.json scripts based on the packager
-     */
-    tasks.push(
-      (async () => {
-        let packageJson = path.join(options.target, 'package.json');
-        let json = await fs.readJSON(packageJson);
-
-        json.scripts = scripts(options);
-
-        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
-      })()
-    );
-
-    if (options.pnpm) {
-      tasks.push(
-        pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo)
-      );
-    }
-
-    if (options.releaseIt) {
-      tasks.push(this.setupReleaseIt(options.target));
-    }
-
     if (options.typescript) {
-      // Ideally we would just pass on the --typescript flag to the app blueprint, as part of https://rfcs.emberjs.com/id/0800-ts-adoption-plan#cli-integration
-      // But this is not implemented yet unfortunately.
-      // Also, we cannot install ember-cli-typescript by ourselves here:
-      // * `this.addAddonToProject()` is meant for this, but we cannot tell it to *not* install into the root folder of our monorepo
-      // * manually calling `execa('ember install ember-cli-typescript, { cwd: testAppPath })` doesn't work either, because it would look for
-      //   ember-cli and all other required dependencies in the generated addon, at a time when the blueprint hasn't installed them yet
-      // So we just show some instructions for manual installation for now, until the typescript flag is eventually supported...
+      const needsVersion = '4.9.0-beta.0';
+      const hasVersion = this.project.emberCLIVersion();
 
-      this.ui.writeWarnLine(
-        `Unfortunately this blueprint is not yet able to automatically set up TypeScript in your test-app. Please run \`ember install ember-cli-typescript\` in the ${testAppPath} folder manually!`
-      );
+      if (lt(hasVersion, needsVersion)) {
+        this.ui.writeWarnLine(
+          `Your version ${hasVersion} of Ember CLI does not support the --typescript flag yet. Please run \`ember install ember-cli-typescript\` in the ${testAppInfo.location} folder manually!`
+        );
+      }
+    }
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
@@ -116,10 +100,7 @@ module.exports = {
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
 
-    return fs.writeFile(
-      packageJsonPath,
-      JSON.stringify(sortPackageJson(pkg), undefined, 2)
-    );
+    return fs.writeFile(packageJsonPath, JSON.stringify(sortPackageJson(pkg), undefined, 2));
   },
 
   async overrideTestAppFiles(testAppPath, overridesPath) {
@@ -169,10 +150,8 @@ module.exports = {
           options.yarn && '"--yarn"',
           options.pnpm && '"--pnpm"',
           options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
-          options.addonLocation &&
-            `"--addon-location=${options.addonLocation}"`,
-          options.testAppLocation &&
-            `"--test-app-location=${options.testAppLocation}"`,
+          options.addonLocation && `"--addon-location=${options.addonLocation}"`,
+          options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
           options.testAppName && `"--test-app-name=${options.testAppName}"`,
           options.releaseIt && `"--release-it"`,
           options.typescript && `"--typescript"`,
