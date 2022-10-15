@@ -49,7 +49,7 @@ cd my-addon
 npm install
 ```
 
-### `--yarn`
+#### `--yarn`
 
 Sets up the new addon with `yarn` as a default.
 
