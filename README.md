@@ -27,7 +27,7 @@ For all these options, you'll see a warning printed from `ember-cli` about unsup
 
 ### `--pnpm`
 
-Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default.
+Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default package manager.
 Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
 
 Example:
