@@ -25,7 +25,7 @@ ember addon my-addon -b @embroider/addon-blueprint --yarn
 For all these options, you'll see a warning printed from `ember-cli` about unsupported options.
 `ember-cli` doesn't have a way to detect if flags are used by a blueprint.
 
-### `--pnpm`
+#### `--pnpm`
 
 Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default package manager.
 Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
