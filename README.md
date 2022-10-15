@@ -37,7 +37,7 @@ cd my-addon
 pnpm install
 ```
 
-### `--npm`
+#### `--npm`
 
 Sets up the new addon with `npm` as a default.
 Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
