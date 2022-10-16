@@ -109,6 +109,10 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
 
         expect(exitCode).toEqual(0);
+
+        let contents = await dirContents(distDir);
+
+        expect(contents).to.deep.equal(['index.js', 'index.js.map']);
       });
 
       it('runs tests', async () => {
@@ -122,6 +126,64 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
         expect(exitCode).toEqual(0);
       });
+    });
+  });
+
+  describe('--typescript', () => {
+    let cwd = '';
+    let tmpDir = '';
+    let distDir = '';
+
+    beforeAll(async () => {
+      tmpDir = await createTmp();
+
+      let { name } = await createAddon({
+        args: ['--typescript', '--yarn=true'],
+        options: { cwd: tmpDir },
+      });
+
+      cwd = path.join(tmpDir, name);
+      distDir = path.join(cwd, name, 'dist');
+
+      await install({ cwd, packageManager: 'yarn' });
+    });
+
+    afterAll(async () => {
+      fs.rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it('was generated correctly', async () => {
+      assertGeneratedCorrectly({ projectRoot: cwd });
+    });
+
+    it('builds the addon', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
+
+      let contents = await dirContents(distDir);
+
+      expect(contents).to.deep.equal([
+        'glint.d.ts',
+        'glint.d.ts.map',
+        'glint.js',
+        'glint.js.map',
+        'index.d.ts',
+        'index.js',
+        'index.js.map',
+      ]);
+    });
+
+    it('runs tests', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
+    });
+
+    it('lints all pass', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
     });
   });
 
