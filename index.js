@@ -93,7 +93,7 @@ module.exports = {
   },
 
   async updateTestAppPackageJson(packageJsonPath) {
-    const pkg = require(packageJsonPath);
+    const pkg = await fs.readJSON(packageJsonPath);
     const additions = require('./additional-test-app-package.json');
 
     merge(pkg, additions);
