@@ -98,7 +98,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       it('"prepare" built the addon', async () => {
         let contents = await dirContents(distDir);
 
-        expect(contents).to.deep.equal(['index.js']);
+        expect(contents).to.deep.equal(['index.js', 'index.js.map']);
       });
 
       it('was generated correctly', async () => {

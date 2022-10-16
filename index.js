@@ -22,6 +22,8 @@ module.exports = {
 
   async afterInstall(options) {
     let tasks = [this.createTestApp(options)];
+    let addonInfo = addonInfoFromOptions(options);
+    let testAppInfo = testAppInfoFromOptions(options);
 
     /**
      * Setup root package.json scripts based on the packager
@@ -55,7 +57,6 @@ module.exports = {
       throw new SilentError('Cannot find app blueprint for generating test-app!');
     }
 
-    let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
     let testAppPath = path.join(options.target, testAppInfo.location);
 
