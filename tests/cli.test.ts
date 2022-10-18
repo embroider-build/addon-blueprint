@@ -149,7 +149,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true, force: true });
+      await fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
