@@ -4,14 +4,14 @@ module.exports = {
   root: true,
   parser: '<%= typescript ? '@typescript-eslint/parser' : '@babel/eslint-parser' %>',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'latest',<% if (!typescript) { %>
     sourceType: 'module',
     ecmaFeatures: {
       legacyDecorators: true,
     },
     babelOptions: {
       root: __dirname,
-    },
+    },<% } %>
   },
   plugins: ['ember'],
   extends: [
