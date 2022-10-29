@@ -45,8 +45,10 @@ let scripts = {
    * @param {Info} info
    */
   npm: (options, info) => {
-    let { packageName: addonName } = info.addon;
-    let { packageName: testAppName } = info.addon;
+    let {
+      addon: { packageName: addonName },
+      testApp: { packageName: testAppName },
+    } = info;
 
     return {
       prepare: 'npm run build',
@@ -68,8 +70,10 @@ let scripts = {
    * @param {Info} info
    */
   yarn: (options, info) => {
-    let { packageName: addonName } = info.addon;
-    let { packageName: testAppName } = info.addon;
+    let {
+      addon: { packageName: addonName },
+      testApp: { packageName: testAppName },
+    } = info;
 
     return {
       prepare: `yarn build`,
@@ -91,8 +95,10 @@ let scripts = {
    * @param {Info} info
    */
   pnpm: (options, info) => {
-    let { packageName: addonName } = info.addon;
-    let { packageName: testAppName } = info.addon;
+    let {
+      addon: { packageName: addonName },
+      testApp: { packageName: testAppName },
+    } = info;
 
     return {
       /**
