@@ -4,10 +4,8 @@
 
 // import type MyComponent from './components/my-component';
 
-declare module '@glint/environment-ember-loose/registry' {
-  // Remove this once entries have been added! 👇
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export default interface Registry {
-    // MyComponent: typeof MyComponent
-  }
+// Remove this once entries have been added! 👇
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export default interface Registry {
+  // MyComponent: typeof MyComponent
 }
