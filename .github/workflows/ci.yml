@@ -6,7 +6,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 3 * * 0" # every Sunday at 3am
+    - cron: '0 3 * * 0' # every Sunday at 3am
 
 env:
   CI: true
@@ -22,7 +22,7 @@ jobs:
         run: pnpm lint
 
   test_type_checking:
-    name: "Tests: Type Check"
+    name: 'Tests: Type Check'
     timeout-minutes: 5
     runs-on: ubuntu-latest
 
@@ -47,10 +47,10 @@ jobs:
           - defaults with pnpm
           - addon-location
           - test-app-location
+          - typescript
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
       - run: pnpm add --global ember-cli yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
-

@@ -98,7 +98,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       it('"prepare" built the addon', async () => {
         let contents = await dirContents(distDir);
 
-        expect(contents).to.deep.equal(['index.js']);
+        expect(contents).to.deep.equal(['index.js', 'index.js.map']);
       });
 
       it('was generated correctly', async () => {
@@ -109,6 +109,10 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
 
         expect(exitCode).toEqual(0);
+
+        let contents = await dirContents(distDir);
+
+        expect(contents).to.deep.equal(['index.js', 'index.js.map']);
       });
 
       it('runs tests', async () => {
@@ -122,6 +126,64 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
         expect(exitCode).toEqual(0);
       });
+    });
+  });
+
+  describe('--typescript', () => {
+    let cwd = '';
+    let tmpDir = '';
+    let distDir = '';
+
+    beforeAll(async () => {
+      tmpDir = await createTmp();
+
+      let { name } = await createAddon({
+        args: ['--typescript', '--yarn=true'],
+        options: { cwd: tmpDir },
+      });
+
+      cwd = path.join(tmpDir, name);
+      distDir = path.join(cwd, name, 'dist');
+
+      await install({ cwd, packageManager: 'yarn' });
+    });
+
+    afterAll(async () => {
+      await fs.rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it('was generated correctly', async () => {
+      assertGeneratedCorrectly({ projectRoot: cwd });
+    });
+
+    it('builds the addon', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
+
+      let contents = await dirContents(distDir);
+
+      expect(contents).to.deep.equal([
+        'index.d.ts',
+        'index.d.ts.map',
+        'index.js',
+        'index.js.map',
+        'template-registry.d.ts',
+        'template-registry.js',
+        'template-registry.js.map',
+      ]);
+    });
+
+    it('runs tests', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
+    });
+
+    it('lints all pass', async () => {
+      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'yarn' });
+
+      expect(exitCode).toEqual(0);
     });
   });
 

@@ -2,16 +2,16 @@
 
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
+  parser: '<%= typescript ? '@typescript-eslint/parser' : '@babel/eslint-parser' %>',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'latest',<% if (!typescript) { %>
     sourceType: 'module',
     ecmaFeatures: {
       legacyDecorators: true,
     },
     babelOptions: {
       root: __dirname,
-    },
+    },<% } %>
   },
   plugins: ['ember'],
   extends: [
@@ -24,7 +24,18 @@ module.exports = {
   },
   rules: {},
   overrides: [
-    // node files
+<% if (typescript) { %>    // ts files
+    {
+      files: ['**/*.ts'],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      rules: {
+        // Add any custom rules here
+      },
+    },
+<% } %>    // node files
     {
       files: [
         './.eslintrc.js',
