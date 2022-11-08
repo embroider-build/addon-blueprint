@@ -164,13 +164,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       let contents = await dirContents(distDir);
 
       expect(contents).to.deep.equal([
-        'glint.d.ts',
-        'glint.d.ts.map',
-        'glint.js',
-        'glint.js.map',
         'index.d.ts',
+        'index.d.ts.map',
         'index.js',
         'index.js.map',
+        'template-registry.d.ts',
+        'template-registry.js',
+        'template-registry.js.map',
       ]);
     });
 
