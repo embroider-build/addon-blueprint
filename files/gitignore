@@ -9,6 +9,7 @@ node_modules/
 # misc
 /.env*
 /.pnp*
+/.pnpm-debug.log
 /.sass-cache
 .eslintcache
 /connect.lock
