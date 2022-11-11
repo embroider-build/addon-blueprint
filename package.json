@@ -14,7 +14,7 @@
     "test": "pnpm --filter 'blueprint-tests' test"
   },
   "dependencies": {
-    "create-rwjblue-release-it-setup": "^3.1.1",
+    "create-rwjblue-release-it-setup": "^4.0.0",
     "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
     "execa": "^5.1.1",
