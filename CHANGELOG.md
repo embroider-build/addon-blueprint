@@ -3,6 +3,32 @@
 
 
 
+
+## v1.3.0 (2022-11-13)
+
+#### :rocket: Enhancement
+* [#74](https://github.com/embroider-build/addon-blueprint/pull/74) Cleanup .eslintignore file in addon blueprint ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#75](https://github.com/embroider-build/addon-blueprint/pull/75) Update create-rwjblue-release-it-setup, adds support for `--release-it` and `--pnpm` ([@simonihmig](https://github.com/simonihmig))
+* [#42](https://github.com/embroider-build/addon-blueprint/pull/42) Add Typescript support ([@simonihmig](https://github.com/simonihmig))
+
+#### :bug: Bug Fix
+* [#73](https://github.com/embroider-build/addon-blueprint/pull/73) add pnpm condition to yarn/npm branches in blueprint files ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#72](https://github.com/embroider-build/addon-blueprint/pull/72) Fix packageName  wrong `start:tests` and `test` ([@LevelbossMike](https://github.com/LevelbossMike))
+
+#### :memo: Documentation
+* [#63](https://github.com/embroider-build/addon-blueprint/pull/63) Add docs for --npm, --pnpm, and --yarn ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#69](https://github.com/embroider-build/addon-blueprint/pull/69) Update release-it plugins ([@simonihmig](https://github.com/simonihmig))
+* [#67](https://github.com/embroider-build/addon-blueprint/pull/67) Update CI to volta-cli/action@v4 ([@simonihmig](https://github.com/simonihmig))
+* [#62](https://github.com/embroider-build/addon-blueprint/pull/62) Update release-it instructions for when GITHUB_AUTH detection fails ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 4
+- Michael Klein ([@LevelbossMike](https://github.com/LevelbossMike))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v1.2.5 (2022-09-19)
 
 #### :rocket: Enhancement
