@@ -8,6 +8,5 @@
   "scripts": {
     "test:watch": "ember test --server",
     "test": "npm-run-all lint \"test:!(watch)\""
-  },
-  "private": true
+  }
 }
