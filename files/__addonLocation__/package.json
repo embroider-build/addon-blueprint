@@ -37,6 +37,7 @@
     "@embroider/addon-dev": "^2.0.0",<% if (typescript) { %>
     "@glint/core": "^0.9.7",
     "@glint/environment-ember-loose": "^0.9.7",
+    "@glimmer/component": "^1.1.2",
     "@tsconfig/ember": "^1.0.0",
     "@types/ember": "^4.0.0",
     "@types/ember__object": "^4.0.0",
@@ -58,8 +59,10 @@
     "@types/ember__test-helpers": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",<% } else { %>
+    "@glimmer/component": "^1.1.2",
     "@rollup/plugin-babel": "^5.3.0",<% } %>
     "concurrently": "^7.2.1",
+    "ember-cli-htmlbars": "^6.1.1",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",

@@ -99,6 +99,7 @@ module.exports = {
     merge(pkg, additions);
 
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
+    pkg.devDependencies['@babel/core'] = '^7.17.0';
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
 
     return fs.writeFile(packageJsonPath, JSON.stringify(sortPackageJson(pkg), undefined, 2));
