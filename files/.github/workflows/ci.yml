@@ -18,17 +18,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      <% if (pnpm) {%>- name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7<%}%>
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
-          cache: <%= yarn ? 'yarn' : 'npm' %>
+          cache: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm' %>
       - name: Install Dependencies
-        run: <%= yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
+        run: <%= pnpm ? 'pnpm install --frozen-lockfile' : yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
       - name: Lint
-        run: <%= yarn ? 'yarn' : 'npm run' %> lint
+        run: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm run' %> lint
       - name: Run Tests
-        run: <%= yarn ? 'yarn' : 'npm run' %> test
+        run: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm run' %> test
 
   floating:
     name: "Floating Dependencies"
@@ -36,14 +40,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      <% if (pnpm) {%>- name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7<%}%>
       - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-          cache: <%= yarn ? 'yarn' : 'npm' %>
+          cache: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm' %>
       - name: Install Dependencies
-        run: <%= yarn ? 'yarn install --no-lockfile' : 'npm install --no-shrinkwrap' %>
+        run: <%= pnpm ? 'pnpm install --no-lockfile' : yarn ? 'yarn install --no-lockfile' : 'npm install --no-shrinkwrap' %>
       - name: Run Tests
-        run: <%= yarn ? 'yarn' : 'npm run' %> test
+        run: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm run' %> test
 
   try-scenarios:
     name: ${{ matrix.try-scenario }}
@@ -65,13 +73,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      <% if (pnpm) {%>- name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7<%}%>
       - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
-          cache: <%= yarn ? 'yarn' : 'npm' %>
+          cache: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm' %>
       - name: Install Dependencies
-        run: <%= yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
+        run: <%= pnpm ? 'pnpm install --frozen-lockfile' : yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
       - name: Run Tests
         run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
         working-directory: <%= testAppInfo.location %>
