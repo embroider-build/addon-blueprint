@@ -98,6 +98,8 @@ module.exports = {
 
     merge(pkg, additions);
 
+    pkg.description = `Test app for ${this.locals(this.options).addonName} addon`;
+
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
 
