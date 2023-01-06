@@ -51,6 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - run: pnpm add --global ember-cli yarn
+      # use ember-cli 4.10.0 beta, as this version is the first to support --typescript properly. @todo Revert this when 4.10.0 is stable      
+      - run: pnpm add --global ember-cli@beta yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
