@@ -37,6 +37,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         # how to say "not these" so we don't miss anything?
         # waiting on a an api from vitest for querying
