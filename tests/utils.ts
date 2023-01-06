@@ -42,9 +42,13 @@ export async function install({ cwd, packageManager }: { cwd: string; packageMan
     }
   }
 
+  const pkg = await packageJsonAt(cwd);
+
   // in order to test prepare, we need to have ignore-scripts=false
   // which is a security risk so we'll manually invoke install + prepare
-  await execa(packageManager, ['run', 'prepare'], { cwd });
+  if (pkg.scripts?.prepare) {
+    await execa(packageManager, ['run', 'prepare'], { cwd });
+  }
 }
 
 /**

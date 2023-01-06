@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const os = require('os');
 const fs = require('fs-extra');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
@@ -17,8 +18,31 @@ const pnpm = require('./src/pnpm');
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
+async function createTmp() {
+  let prefix = 'v2-addon-blueprint--';
+  let prefixPath = path.join(os.tmpdir(), prefix);
+
+  let tmpDirPath = await fs.mkdtemp(prefixPath);
+
+  return tmpDirPath;
+}
+
+const filesToCopyFromRootToAddon = ['README.md', 'CONTRIBUTING.md'];
+
 module.exports = {
   description,
+
+  install(options) {
+    if (fs.existsSync(path.join('..', 'package.json'))) {
+      options.ui.writeInfoLine(
+        "Existing monorepo detected! The blueprint will only create the addon and test-app folders, and omit any other files in the repo's root folder."
+      );
+
+      this.isExistingMonorepo = true;
+    }
+
+    return this._super.install.apply(this, arguments);
+  },
 
   async afterInstall(options) {
     let tasks = [this.createTestApp(options)];
@@ -48,6 +72,44 @@ module.exports = {
     }
 
     await Promise.all(tasks);
+
+    if (this.isExistingMonorepo) {
+      await this.moveFilesForExistingMonorepo(options);
+
+      this.ui.writeWarnLine(
+        `Make sure your workspaces are configured correctly to cover the newly created ${addonInfo.location} and ${testAppInfo.location} packages!`
+      );
+    }
+  },
+
+  // EmberCLI will always create a <addon-name> root folder for us, which makes no sense in an existing repo
+  // Until we have a better solution for this use case upstream, we are fixing this here by moving the generated
+  // files outside of this folder and deleting it
+  async moveFilesForExistingMonorepo(options) {
+    let addonInfo = addonInfoFromOptions(options);
+    let testAppInfo = testAppInfoFromOptions(options);
+
+    let tmpDir = await createTmp();
+    let tmpAddonDir = path.join(tmpDir, 'addon');
+    let tmpTestAppDir = path.join(tmpDir, 'test-app');
+    let originalAddonDir = path.resolve(addonInfo.location);
+    let originalTestAppDir = path.resolve(testAppInfo.location);
+    let finalAddonDir = path.resolve('..', addonInfo.location);
+    let finalTestAppDir = path.resolve('..', testAppInfo.location);
+    let extraneousDir = process.cwd();
+
+    await fs.move(originalAddonDir, tmpAddonDir);
+    await fs.move(originalTestAppDir, tmpTestAppDir);
+
+    for (let fileToCopy of filesToCopyFromRootToAddon) {
+      await fs.move(fileToCopy, path.join(tmpAddonDir, fileToCopy));
+    }
+
+    process.chdir('..');
+    await fs.remove(extraneousDir);
+
+    await fs.move(tmpAddonDir, finalAddonDir);
+    await fs.move(tmpTestAppDir, finalTestAppDir);
   },
 
   async createTestApp(options) {
@@ -186,6 +248,8 @@ module.exports = {
       blueprintOptions,
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,
+      filesToCopyFromRootToAddon,
+      isExistingMonorepo: this.isExistingMonorepo,
     };
   },
 

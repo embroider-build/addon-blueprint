@@ -1,4 +1,5 @@
 import { type Options, execa } from 'execa';
+import fixturify from 'fixturify';
 import fse from 'fs-extra';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -265,5 +266,125 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
       expect(exitCode).toEqual(0);
     });
+  });
+
+  describe('existing monorepo', () => {
+    ['npm', 'yarn', 'pnpm'].map((packageManager) =>
+      describe(`with ${packageManager}`, () => {
+        let cwd = '';
+        let tmpDir = '';
+        let location = '';
+        let testAppLocation = '';
+        let rootPackageJson;
+        let rootFiles = {};
+        let lockFile =
+          packageManager === 'yarn'
+            ? 'yarn.lock'
+            : packageManager === 'pnpm'
+            ? 'pnpm-lock.yaml'
+            : 'package-lock.json';
+
+        beforeAll(async () => {
+          tmpDir = await createTmp();
+
+          let commonFixtures = {
+            '.prettierrc.js':
+              // prettier-ignore
+              'module.exports = {' + 
+              '  singleQuote: true,' + 
+              '};',
+          };
+
+          switch (packageManager) {
+            case 'npm':
+            case 'yarn':
+              rootPackageJson = {
+                name: 'existing-monorepo',
+                private: true,
+                workspaces: ['*'],
+                devDependencies: {
+                  prettier: '^2.5.0',
+                },
+              };
+              rootFiles = {
+                ...commonFixtures,
+                'package.json': JSON.stringify(rootPackageJson),
+              };
+              fixturify.writeSync(tmpDir, rootFiles);
+
+              break;
+            case 'pnpm':
+              rootPackageJson = {
+                name: 'existing-monorepo',
+                private: true,
+                devDependencies: {
+                  prettier: '^2.5.0',
+                },
+              };
+              rootFiles = {
+                ...commonFixtures,
+                'package.json': JSON.stringify(rootPackageJson),
+                'pnpm-workspace.yaml': "packages:\n  - '*'",
+              };
+              fixturify.writeSync(tmpDir, rootFiles);
+
+              break;
+          }
+
+          let { name } = await createAddon({
+            options: { cwd: tmpDir },
+          });
+
+          cwd = tmpDir;
+          location = path.join(cwd, name);
+          testAppLocation = path.join(cwd, 'test-app');
+
+          await install({ cwd, packageManager });
+        });
+
+        afterAll(async () => {
+          fs.rm(tmpDir, { recursive: true, force: true });
+        });
+
+        it('ignores root files', async () => {
+          expect(
+            fixturify.readSync(cwd, {
+              ignore: ['my-addon', 'test-app', 'node_modules', lockFile],
+            }),
+            'root files have not been touched'
+          ).toEqual(rootFiles);
+        });
+
+        it('was generated correctly', async () => {
+          await assertGeneratedCorrectly({ projectRoot: cwd });
+        });
+
+        it('runs tests', async () => {
+          let { exitCode } = await runScript({
+            cwd: testAppLocation,
+            script: 'test',
+            packageManager,
+          });
+
+          expect(exitCode).toEqual(0);
+        });
+
+        it('addon lints all pass', async () => {
+          let { exitCode } = await runScript({ cwd: location, script: 'lint', packageManager });
+
+          expect(exitCode).toEqual(0);
+        });
+
+        it('test-app lints all pass', async () => {
+          let { exitCode } = await runScript({
+            cwd: testAppLocation,
+            script: 'lint',
+            packageManager,
+          });
+
+          expect(exitCode).toEqual(0);
+        });
+      })
+    );
   });
 });
