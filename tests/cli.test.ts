@@ -31,7 +31,12 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
     // Light work-around for an upstream `@babel/core` peer issue
     if (typeof options.cwd === 'string') {
-      await fs.writeFile(path.join(options.cwd, name, '.npmrc'), 'auto-install-peers=true');
+      await fs.writeFile(
+        fse.existsSync(path.join(options.cwd, name))
+          ? path.join(options.cwd, name, '.npmrc')
+          : path.join(options.cwd, '.npmrc'),
+        'auto-install-peers=true'
+      );
     }
 
     return { result, name };
@@ -191,14 +196,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
   describe('--addon-location', () => {
     let cwd = '';
     let tmpDir = '';
-    let location = '';
+    let addonLocation = 'packages/my-custom-location';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
-      location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--addon-location=${location}`, '--pnpm=true'],
+        args: [`--addon-location=${addonLocation}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
@@ -212,7 +216,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: cwd, addonLocation: location });
+      assertGeneratedCorrectly({ projectRoot: cwd, addonLocation });
     });
 
     it('runs tests', async () => {
@@ -231,14 +235,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
   describe('--test-app-location', () => {
     let cwd = '';
     let tmpDir = '';
-    let location = '';
+    let testAppLocation = 'packages/my-custom-location';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
-      location = 'packages/my-custom-location';
 
       let { name } = await createAddon({
-        args: [`--test-app-location=${location}`, '--pnpm=true'],
+        args: [`--test-app-location=${testAppLocation}`, '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
@@ -252,7 +255,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: cwd, testAppLocation: location });
+      assertGeneratedCorrectly({ projectRoot: cwd, testAppLocation });
     });
 
     it('runs tests', async () => {
@@ -269,12 +272,20 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
   });
 
   describe('existing monorepo', () => {
+    let commonFixtures = {
+      '.prettierrc.js':
+        // prettier-ignore
+        'module.exports = {' + 
+        '  singleQuote: true,' + 
+        '};',
+    };
+
     ['npm', 'yarn', 'pnpm'].map((packageManager) =>
       describe(`with ${packageManager}`, () => {
         let cwd = '';
         let tmpDir = '';
-        let location = '';
-        let testAppLocation = '';
+        let addonLocation = 'my-addon';
+        let testAppLocation = 'test-app';
         let rootPackageJson;
         let rootFiles = {};
         let lockFile =
@@ -286,14 +297,6 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
         beforeAll(async () => {
           tmpDir = await createTmp();
-
-          let commonFixtures = {
-            '.prettierrc.js':
-              // prettier-ignore
-              'module.exports = {' + 
-              '  singleQuote: true,' + 
-              '};',
-          };
 
           switch (packageManager) {
             case 'npm':
@@ -331,13 +334,12 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
               break;
           }
 
-          let { name } = await createAddon({
+          await createAddon({
+            args: [`--${packageManager}=true`],
             options: { cwd: tmpDir },
           });
 
           cwd = tmpDir;
-          location = path.join(cwd, name);
-          testAppLocation = path.join(cwd, 'test-app');
 
           await install({ cwd, packageManager });
         });
@@ -349,7 +351,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         it('ignores root files', async () => {
           expect(
             fixturify.readSync(cwd, {
-              ignore: ['my-addon', 'test-app', 'node_modules', lockFile],
+              ignore: ['my-addon', 'test-app', 'node_modules', lockFile, '.npmrc'],
             }),
             'root files have not been touched'
           ).toEqual(rootFiles);
@@ -361,7 +363,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
         it('runs tests', async () => {
           let { exitCode } = await runScript({
-            cwd: testAppLocation,
+            cwd: path.join(cwd, testAppLocation),
             script: 'test',
             packageManager,
           });
@@ -370,14 +372,18 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         });
 
         it('addon lints all pass', async () => {
-          let { exitCode } = await runScript({ cwd: location, script: 'lint', packageManager });
+          let { exitCode } = await runScript({
+            cwd: path.join(cwd, addonLocation),
+            script: 'lint',
+            packageManager,
+          });
 
           expect(exitCode).toEqual(0);
         });
 
         it('test-app lints all pass', async () => {
           let { exitCode } = await runScript({
-            cwd: testAppLocation,
+            cwd: path.join(cwd, testAppLocation),
             script: 'lint',
             packageManager,
           });
@@ -386,5 +392,92 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         });
       })
     );
+
+    describe('custom locations', () => {
+      let cwd = '';
+      let tmpDir = '';
+      let addonLocation = 'addons/my-fancy-addon';
+      let testAppLocation = 'tests/my-fancy-addon';
+      let rootFiles = {};
+
+      beforeAll(async () => {
+        tmpDir = await createTmp();
+
+        let rootPackageJson = {
+          name: 'existing-monorepo',
+          private: true,
+          devDependencies: {
+            prettier: '^2.5.0',
+          },
+        };
+
+        rootFiles = {
+          ...commonFixtures,
+          'package.json': JSON.stringify(rootPackageJson),
+          'pnpm-workspace.yaml': "packages:\n  - 'addons/*'\n  - 'tests/*'",
+        };
+        fixturify.writeSync(tmpDir, rootFiles);
+
+        await createAddon({
+          args: [
+            `--addon-location=${addonLocation}`,
+            `--test-app-location=${testAppLocation}`,
+            '--pnpm=true',
+          ],
+          options: { cwd: tmpDir },
+        });
+
+        cwd = tmpDir;
+
+        await install({ cwd, packageManager: 'pnpm' });
+      });
+
+      afterAll(async () => {
+        fs.rm(tmpDir, { recursive: true, force: true });
+      });
+
+      it('ignores root files', async () => {
+        expect(
+          fixturify.readSync(cwd, {
+            ignore: ['addons', 'tests', 'node_modules', 'pnpm-lock.yaml', '.npmrc'],
+          }),
+          'root files have not been touched'
+        ).toEqual(rootFiles);
+      });
+
+      it('was generated correctly', async () => {
+        assertGeneratedCorrectly({ projectRoot: cwd, addonLocation, testAppLocation });
+      });
+
+      it('runs tests', async () => {
+        let { exitCode } = await runScript({
+          cwd: path.join(cwd, testAppLocation),
+          script: 'test',
+          packageManager: 'pnpm',
+        });
+
+        expect(exitCode).toEqual(0);
+      });
+
+      it('addon lints all pass', async () => {
+        let { exitCode } = await runScript({
+          cwd: path.join(cwd, addonLocation),
+          script: 'lint',
+          packageManager: 'pnpm',
+        });
+
+        expect(exitCode).toEqual(0);
+      });
+
+      it('test-app lints all pass', async () => {
+        let { exitCode } = await runScript({
+          cwd: path.join(cwd, testAppLocation),
+          script: 'lint',
+          packageManager: 'pnpm',
+        });
+
+        expect(exitCode).toEqual(0);
+      });
+    });
   });
 });
