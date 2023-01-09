@@ -6,13 +6,11 @@ For migrating a v1 addon to a v2 addon, you may follow _[Porting Addons to V2](h
 this blog post [Migrating an Ember addon to the next-gen v2 format
 ](https://www.kaliber5.de/de/blog/v2-addon_en).
 
-
 ## WIP
 
 This is still work in progress.
 
-The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn`  or `npm`) workspaces, with separate workspaces for the addon and the test-app. But there is plenty of room for bikeshedding here, so if you have suggestions about better ways to set this up, then please file an issue to discuss!
-
+The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn` or `npm`) workspaces, with separate workspaces for the addon and the test-app. But there is plenty of room for bikeshedding here, so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
 ## Usage
 
@@ -31,6 +29,7 @@ Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default package manag
 Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
 
 Example:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --pnpm --skip-npm
 cd my-addon
@@ -43,6 +42,7 @@ Sets up the new addon with `npm` as a default.
 Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
 
 Example:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --npm --skip-npm
 cd my-addon
@@ -54,6 +54,7 @@ npm install
 Sets up the new addon with `yarn` as a default.
 
 Example:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --yarn
 cd my-addon
@@ -65,6 +66,7 @@ yarn install
 The location / folder name of the addon can be customized via `--addon-location`.
 
 Examples:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --addon-location=packages/the-addon
 # generates
@@ -73,10 +75,10 @@ ember addon my-addon -b @embroider/addon-blueprint --addon-location=packages/the
 
 #### `--test-app-location`
 
-
 The location / folder name of the addon can be customized via `--test-app-location`.
 
 Examples:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --test-app-location=test-app
 # generates
@@ -90,6 +92,7 @@ By default, `{test app name}` will be used.
 The name of the test-app can be customized via `--test-app-name`.
 
 Examples:
+
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-my-addon
 # generates
@@ -113,44 +116,77 @@ The blueprint supports `ember-cli-update` to update your addon with any changes 
 
 For additional instructions, please consult its [documentation](https://github.com/ember-cli/ember-cli-update).
 
-
 ### In existing monorepos
 
-In existing monorepos, it may be helpful to establish a convention for generating v2 addons as sub-monorepos
-within your monorepo.
-To do this, you'll need to use many of the above options all at once (remembering that all packages in a monorepo must have a unique "name" in their package.json).
+To generate a new v2 addon inside an existing monorepo, `cd` to that repo's directory and run the command as usual. The blueprint will auto-detect an existing `package.json` and adapt to it. Specifically it will not create or override any files at the root folder, like the `package.json` itself.
 
-For example:
+Most likely though you would not want to use the default locations for the addon and the test app. Instead you should establish a convention how multiple addons and test-apps are located. With the aforementioned path options you can then make the blueprint emit the packages in the correct place.
+
+Some more things to pay attention to:
+
+- Pass the package manager option ( `--npm`, `--yarn`, `--pnpm`) that you already use!
+- Make sure that the chosen addon and test-app locations are all covered by the configured workspace layout of your package manager!
+- Each package should have a distinct name, so make provide unique names for your test apps instead of the default `test-app` by using the `--test-app-name` option.
+- There is no `start` script at the root `package.json` anymore to start both the addon's build and the test app in watch mode. So you would have to run that `start` script with your package manager in both locations in parallel (separate terminal windows/tabs).
+- Pass the `skip-git` option to not auto-commit the generated files. Most likely there will be things to adapt to you specific requirements before committing.
+- The blueprint will omit all files usually generated at the root folder, including `.prettierrc.js`, and instead use whatever you have already defined in your existing monorepo. So you should run the `lint:fix` script for both the addon and the test-app, and eventually address any non-fixable linting issues or other configuration conventions related to your specific setup.
+
+Some examples...
+
+#### Group by name
+
+We group by the name of the addon, the addon's package and its test app are co-located sub-folders:
+
+```
+project-monorepo
+└── addons
+    ├── my-addon
+    │   ├── package
+    │   └── test-app
+    └── ...
+```
+
+[//]: # 'to edit this: https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath3~trailingSlash3~rootDot3)~4(%274%27project-monorepo02addons05my-addon0*5package0*5test-app05...%27)~version!%271%27)*%20%200%5Cn5-%203!false4source!5*2%0154320*'
+
+To generate this run:
+
 ```bash
-ember addon my-addon-name -b @embroider/addon-blueprint \
+cd project-monorepo
+ember addon my-addon -b @embroider/addon-blueprint \
   --skip-git \
   --skip-npm \
-  --addon-location="package" \
-  --test-app-name="test-app-for-my-addon-name" \
-  --test-app-location="test-app"
-# generates
-#   my-addon-name/
-#     package/
-#     test-app/
+  --addon-location="addons/my-addon/package" \
+  --test-app-name="test-app-for-my-addon" \
+  --test-app-location="addons/my-addon/test-app"
 ```
 
-Then, your workspace search globs can be defined as (for example):
-```js
-# all ember apps in the top level "apps directory"
-apps/*
-# all ember v2 addons share the same structure
-# example:
-#   addons/
-#     my-awesome-addon/
-#       package/
-#       test-app/
-#       docs/
-#       etc/
-addons/*/package
-addons/*/test-app
-addons/*/docs
+#### Group by type
+
+Addons and test-apps are separated:
+
+```
+project-monorepo
+├── addons
+│   ├── my-addon
+│   └── ...
+└── tests
+    ├── my-addon
+    └── ...
 ```
 
+[//]: # 'to edit this: https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath2~trailingSlash2~rootDot2)~5(%275%27project-monorepo04738904test39%27)~version!%271%27)*0640862!false3s*my-74-%205source!6%20%207addon8%5Cn9*...%01987654320*'
+
+To generate this run:
+
+```bash
+cd project-monorepo
+ember addon my-addon -b @embroider/addon-blueprint \
+  --skip-git \
+  --skip-npm \
+  --addon-location="addons/my-addon" \
+  --test-app-name="test-app-for-my-addon" \
+  --test-app-location="tests/my-addon"
+```
 
 ## License
 
