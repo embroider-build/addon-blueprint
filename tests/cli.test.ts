@@ -281,7 +281,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     };
 
     ['npm', 'yarn', 'pnpm'].map((packageManager) =>
-      describe(`with ${packageManager}`, () => {
+      describe(`monorepo with ${packageManager}`, () => {
         let cwd = '';
         let tmpDir = '';
         let addonLocation = 'my-addon';

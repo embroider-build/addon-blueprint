@@ -50,7 +50,9 @@ jobs:
           - test-app-location
           # skip TS tests until EmberCLI 4.10.0 is released, see https://github.com/embroider-build/addon-blueprint/issues/82
           # - typescript
-          - existing monorepo
+          - monorepo with npm
+          - monorepo with yarn
+          - monorepo with pnpm
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
