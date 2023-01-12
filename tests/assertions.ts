@@ -10,6 +10,7 @@ interface AssertGeneratedOptions {
   addonName?: string;
   testAppLocation?: string;
   testAppName?: string;
+  expectedStaticFiles?: string[];
 }
 
 /**
@@ -22,6 +23,7 @@ export async function assertGeneratedCorrectly({
   addonName = 'my-addon',
   testAppLocation = 'test-app',
   testAppName = 'test-app',
+  expectedStaticFiles = ['README.md', 'LICENSE.md'],
 }: AssertGeneratedOptions) {
   let addonPath = path.join(projectRoot, addonLocation);
   let testAppPath = path.join(projectRoot, testAppLocation);
@@ -42,8 +44,6 @@ export async function assertGeneratedCorrectly({
     ],
     `The test app has a (dev)dependency on the addon`
   ).to.include(addonName);
-
-  let expectedStaticFiles = ['README.md', 'CONTRIBUTING.md'];
 
   for (let expectedFile of expectedStaticFiles) {
     let pathToFile = path.join(addonPath, expectedFile);

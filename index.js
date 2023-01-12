@@ -27,7 +27,8 @@ async function createTmp() {
   return tmpDirPath;
 }
 
-const filesToCopyFromRootToAddon = ['README.md', 'CONTRIBUTING.md'];
+const filesToCopyFromRootToAddonDuringBuild = ['README.md', 'LICENSE.md'];
+const filesToCopyFromRootToAddonInExistingMonorepo = ['README.md', 'CONTRIBUTING.md'];
 
 module.exports = {
   description,
@@ -101,7 +102,7 @@ module.exports = {
     await fs.move(originalAddonDir, tmpAddonDir);
     await fs.move(originalTestAppDir, tmpTestAppDir);
 
-    for (let fileToCopy of filesToCopyFromRootToAddon) {
+    for (let fileToCopy of filesToCopyFromRootToAddonInExistingMonorepo) {
       await fs.move(fileToCopy, path.join(tmpAddonDir, fileToCopy));
     }
 
@@ -248,7 +249,7 @@ module.exports = {
       blueprintOptions,
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,
-      filesToCopyFromRootToAddon,
+      filesToCopyFromRootToAddon: filesToCopyFromRootToAddonDuringBuild,
       isExistingMonorepo: this.isExistingMonorepo,
     };
   },
