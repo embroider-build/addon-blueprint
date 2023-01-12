@@ -5,6 +5,17 @@
 
 
 
+
+## v1.4.1 (2023-01-12)
+
+#### :bug: Bug Fix
+* [#95](https://github.com/embroider-build/addon-blueprint/pull/95) Fix missing `.gitignore` in addon folder ([@simonihmig](https://github.com/simonihmig))
+* [#96](https://github.com/embroider-build/addon-blueprint/pull/96) Remove deprecated `@types/ember__test-helpers` ([@simonihmig](https://github.com/simonihmig))
+* [#94](https://github.com/embroider-build/addon-blueprint/pull/94) Fix files that get copied from root to addon ([@simonihmig](https://github.com/simonihmig))
+
+#### Committers: 1
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+
 ## v1.4.0 (2023-01-12)
 
 #### :rocket: Enhancement
