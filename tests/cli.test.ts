@@ -139,6 +139,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let cwd = '';
     let tmpDir = '';
     let distDir = '';
+    let addonDir = '';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
@@ -149,6 +150,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       });
 
       cwd = path.join(tmpDir, name);
+      addonDir = path.join(cwd, name);
       distDir = path.join(cwd, name, 'dist');
 
       /**
@@ -162,7 +164,9 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       }
 
       // https://github.com/typed-ember/glint/pull/516
-      await execa('pnpm', ['add', '--save-dev', '@types/ember__test-helpers'], { cwd });
+      await execa('pnpm', ['add', '--save-dev', '@types/ember__test-helpers'], {
+        cwd: addonDir,
+      });
 
       /**
        * A common feature used in TS code-bases is the `declare` field augment.
@@ -178,15 +182,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
        */
 
       await fs.writeFile(
-        path.join(cwd, 'src/index.js'),
-        `
-         import { service } from '@ember/service';
-         import type RouterService from '@ember/routing/service';
-
-         export class Example {
-           @service declare router: RouterService;
-         }
-       `
+        path.join(addonDir, 'src/index.ts'),
+        `import { service } from '@ember/service';\n` +
+          `import type RouterService from '@ember/routing/router-service';\n` +
+          `\n` +
+          `export class Example {\n` +
+          `  @service declare router: RouterService;\n` +
+          `}\n`
       );
     });
 
