@@ -2,7 +2,8 @@
 <% if (typescript) { %>  "presets": [["@babel/preset-typescript", { "allowDeclareFields": true }]],
 <% } %>  "plugins": [
     "@embroider/addon-dev/template-colocation-plugin",
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    <%if (typescript ){ %>["@babel/plugin-transform-typescript", { "allowDeclareFields": true }],
+    <% } %>["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-class-properties"
   ]
 }
