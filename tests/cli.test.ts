@@ -155,7 +155,14 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
        * We should _strongly_ recommend against using `--yarn` because Yarn@v1 is objectively bad.
        * Also pnpm is better for the environment.
        */
-      await install({ cwd, packageManager: 'pnpm' });
+      try {
+        await install({ cwd, packageManager: 'pnpm' });
+      } catch {
+        // :shrug:
+      }
+
+      // https://github.com/typed-ember/glint/pull/516
+      await execa('pnpm', ['add', '--save-dev', '@types/ember__test-helpers'], { cwd });
 
       /**
        * A common feature used in TS code-bases is the `declare` field augment.
