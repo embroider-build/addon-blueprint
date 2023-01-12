@@ -144,14 +144,43 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       tmpDir = await createTmp();
 
       let { name } = await createAddon({
-        args: ['--typescript', '--yarn=true'],
+        args: ['--typescript', '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
 
-      await install({ cwd, packageManager: 'yarn' });
+      /**
+       * We should _strongly_ recommend against using `--yarn` because Yarn@v1 is objectively bad.
+       * Also pnpm is better for the environment.
+       */
+      await install({ cwd, packageManager: 'pnpm' });
+
+      /**
+       * A common feature used in TS code-bases is the `declare` field augment.
+       *
+       * For example:
+       * ```ts
+       *   @service declare router: RouterService
+       * ```
+       * To make sure we've configured TS correctly, we'll add a utility class that
+       * has this line.
+       *
+       * This also ensures that some types are correctly accessible.
+       */
+
+      await fs.writeFile(
+        path.join(cwd, 'src/index.js'),
+        `
+         import { service } from '@ember/service';
+         import type RouterService from '@ember/routing/service';
+
+         export class Example {
+           @service declare router: RouterService;
+         }
+       `
+      );
     });
 
     afterAll(async () => {
@@ -275,8 +304,8 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let commonFixtures = {
       '.prettierrc.js':
         // prettier-ignore
-        'module.exports = {' + 
-        '  singleQuote: true,' + 
+        'module.exports = {' +
+        '  singleQuote: true,' +
         '};',
     };
 

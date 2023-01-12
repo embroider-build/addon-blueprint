@@ -47,7 +47,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@vitest/ui': ^0.18.0
       c8: ^7.11.3
-      ember-cli: ^4.9.2
+      ember-cli: ^4.10.0-beta.0
       execa: ^6.1.0
       fixturify: ^3.0.0
       fs-extra: ^10.0.0
@@ -58,7 +58,7 @@ importers:
       '@types/fs-extra': 9.0.13
       '@vitest/ui': 0.18.0
       c8: 7.11.3
-      ember-cli: 4.9.2
+      ember-cli: 4.10.0-beta.0
       execa: 6.1.0
       fixturify: 3.0.0
       fs-extra: 10.1.0
@@ -3302,8 +3302,8 @@ packages:
   /ember-cli-string-utils/1.1.0:
     resolution: {integrity: sha512-PlJt4fUDyBrC/0X+4cOpaGCiMawaaB//qD85AXmDRikxhxVzfVdpuoec02HSiTGTTB85qCIzWBIh8lDOiMyyFg==}
 
-  /ember-cli/4.9.2:
-    resolution: {integrity: sha512-zvZjB0uHY2ewCrfNc0k3dM9QpfcDQ4GW5h1MmNXN7+nAPfFROSwJ/o24t6DHUFcU/B9H7Dd+2GGC4W6NKz6Shw==}
+  /ember-cli/4.10.0-beta.0:
+    resolution: {integrity: sha512-g9wa7LfiYuKd044axju2wD2/thKRL//jVfPccA/zhxw1V0rl7OWSpUMBg7ck0s5b3I0v75TL8I+QvJxHg5emtw==}
     engines: {node: '>= 14'}
     hasBin: true
     dependencies:

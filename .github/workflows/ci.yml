@@ -48,14 +48,13 @@ jobs:
           - defaults with pnpm
           - addon-location
           - test-app-location
-          # skip TS tests until EmberCLI 4.10.0 is released, see https://github.com/embroider-build/addon-blueprint/issues/82
-          # - typescript
+          - typescript
           - monorepo with npm
           - monorepo with yarn
           - monorepo with pnpm
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - run: pnpm add --global ember-cli yarn
+      - run: pnpm add --global ember-cli@4.10.0-beta.0 yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
