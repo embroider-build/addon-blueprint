@@ -144,8 +144,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     beforeAll(async () => {
       tmpDir = await createTmp();
 
+      /**
+       * NOTE: we have to use either yarn or npm, because ember-cli doesn't support anything else.
+       *       (this is encountered during the app's --typescript phase when it uses --yarn to install
+       *       the deps of ember-cli-typescript)
+       */
       let { name } = await createAddon({
-        args: ['--typescript', '--pnpm=true'],
+        args: ['--typescript', '--yarn=true'],
         options: { cwd: tmpDir },
       });
 
@@ -158,13 +163,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
        * Also pnpm is better for the environment.
        */
       try {
-        await install({ cwd, packageManager: 'pnpm' });
+        await install({ cwd, packageManager: 'yarn' });
       } catch {
         // :shrug:
       }
 
       // https://github.com/typed-ember/glint/pull/516
-      await execa('pnpm', ['add', '--save-dev', '@types/ember__test-helpers'], {
+      await execa('yarn', ['add', '--dev', '@types/ember__test-helpers'], {
         cwd: addonDir,
       });
 

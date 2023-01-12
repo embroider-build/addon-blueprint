@@ -1,5 +1,5 @@
 {
-<% if (typescript) { %>  "presets": [["@babel/preset-typescript"]],
+<% if (typescript) { %>  "presets": [["@babel/preset-typescript", { "allowDeclareFields": true }]],
 <% } %>  "plugins": [
     "@embroider/addon-dev/template-colocation-plugin",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
