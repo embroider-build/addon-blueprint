@@ -49,6 +49,7 @@ jobs:
           - addon-location
           - test-app-location
           - typescript
+          - existing monorepo
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
