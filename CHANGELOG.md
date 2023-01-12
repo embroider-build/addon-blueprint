@@ -4,6 +4,30 @@
 
 
 
+
+## v1.4.0 (2023-01-12)
+
+#### :rocket: Enhancement
+* [#83](https://github.com/embroider-build/addon-blueprint/pull/83) Bump `@embroider/addon-dev` ([@simonihmig](https://github.com/simonihmig))
+* [#88](https://github.com/embroider-build/addon-blueprint/pull/88) Support existing monorepos ([@simonihmig](https://github.com/simonihmig))
+* [#76](https://github.com/embroider-build/addon-blueprint/pull/76) Tweak test-app "description" field ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :bug: Bug Fix
+* [#87](https://github.com/embroider-build/addon-blueprint/pull/87) Update broken test-app script overrides ([@simonihmig](https://github.com/simonihmig))
+* [#78](https://github.com/embroider-build/addon-blueprint/pull/78) Support pnpm in GitHub workflow ([@LevelbossMike](https://github.com/LevelbossMike))
+* [#79](https://github.com/embroider-build/addon-blueprint/pull/79) Fix accidental resolutions ([@ef4](https://github.com/ef4))
+
+#### :house: Internal
+* [#92](https://github.com/embroider-build/addon-blueprint/pull/92) Split monorepo tests in CI ([@simonihmig](https://github.com/simonihmig))
+* [#91](https://github.com/embroider-build/addon-blueprint/pull/91) Skip `--typescript` tests temporarily due to #82 ([@simonihmig](https://github.com/simonihmig))
+* [#85](https://github.com/embroider-build/addon-blueprint/pull/85) Don't fail-fast in CI ([@simonihmig](https://github.com/simonihmig))
+
+#### Committers: 4
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+- Michael Klein ([@LevelbossMike](https://github.com/LevelbossMike))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+
 ## v1.3.0 (2022-11-13)
 
 #### :rocket: Enhancement
