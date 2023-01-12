@@ -196,6 +196,14 @@ module.exports = {
     };
   },
 
+  mapFile(file, locals) {
+    // EmberCLI has builtin support for converting gitignore to .gitignore: https://github.com/ember-cli/ember-cli/blob/24ef75b2e28cadee4a69472c6ae9c0e4845d512e/lib/models/blueprint.js#L1633
+    // But this only works at the root folder, for the addon subfolder we have to do this ourselves here
+    file = file.replace(/\/gitignore/, '/.gitignore');
+
+    return this._super.mapFile.call(this, file, locals);
+  },
+
   locals(options) {
     let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
