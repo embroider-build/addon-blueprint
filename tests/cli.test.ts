@@ -358,7 +358,10 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         });
 
         it('was generated correctly', async () => {
-          await assertGeneratedCorrectly({ projectRoot: cwd });
+          await assertGeneratedCorrectly({
+            projectRoot: cwd,
+            expectedStaticFiles: ['README.md', 'CONTRIBUTING.md'],
+          });
         });
 
         it('runs tests', async () => {
@@ -446,7 +449,12 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       });
 
       it('was generated correctly', async () => {
-        assertGeneratedCorrectly({ projectRoot: cwd, addonLocation, testAppLocation });
+        assertGeneratedCorrectly({
+          projectRoot: cwd,
+          addonLocation,
+          testAppLocation,
+          expectedStaticFiles: ['README.md', 'CONTRIBUTING.md'],
+        });
       });
 
       it('runs tests', async () => {
