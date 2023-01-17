@@ -18,6 +18,32 @@ export async function createTmp() {
 export async function install({ cwd, packageManager }: { cwd: string; packageManager: string }) {
   if (packageManager === 'yarn') {
     await execa('yarn', ['install', '--non-interactive'], { cwd });
+  } else if (packageManager === 'npm') {
+    //  --force is used because:
+    //
+    //  ERESOLVE unable to resolve dependency tree
+    //
+    //  While resolving: test-app@0.0.0
+    //  Found: ember-cli@4.10.0-beta.0
+    //  node_modules/ember-cli
+    //    dev ember-cli@\"~4.10.0-beta.0\" from test-app@0.0.0
+    //    test-app
+    //      test-app@0.0.0
+    //      node_modules/test-app
+    //        workspace test-app from the root project
+    //
+    //  Could not resolve dependency:
+    //  peer ember-cli@\"^3.2.0 || ^4.0.0\" from ember-cli-dependency-checker@3.3.1
+    //  node_modules/ember-cli-dependency-checker
+    //    dev ember-cli-dependency-checker@\"^3.3.1\" from test-app@0.0.0
+    //    test-app
+    //      test-app@0.0.0
+    //      node_modules/test-app
+    //        workspace test-app from the root project
+    //
+    //  Fix the upstream dependency conflict, or retry
+    //  this command with --force, or --legacy-peer-deps
+    await execa('npm', ['install', '--force'], { cwd });
   } else {
     try {
       await execa(packageManager, ['install'], { cwd });
