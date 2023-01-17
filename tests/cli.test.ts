@@ -144,13 +144,10 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     beforeAll(async () => {
       tmpDir = await createTmp();
 
-      /**
-       * NOTE: we have to use either yarn or npm, because ember-cli doesn't support anything else.
-       *       (this is encountered during the app's --typescript phase when it uses --yarn to install
-       *       the deps of ember-cli-typescript)
-       */
+      // Using pnpm, because:
+      // https://github.com/typed-ember/glint/pull/516
       let { name } = await createAddon({
-        args: ['--typescript', '--yarn=true'],
+        args: ['--typescript', '--pnpm=true', '--skip-npm'],
         options: { cwd: tmpDir },
       });
 
@@ -163,15 +160,10 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
        * Also pnpm is better for the environment.
        */
       try {
-        await install({ cwd, packageManager: 'yarn' });
+        await install({ cwd, packageManager: 'pnpm' });
       } catch {
         // :shrug:
       }
-
-      // https://github.com/typed-ember/glint/pull/516
-      await execa('yarn', ['add', '--dev', '@types/ember__test-helpers'], {
-        cwd: addonDir,
-      });
 
       /**
        * A common feature used in TS code-bases is the `declare` field augment.
