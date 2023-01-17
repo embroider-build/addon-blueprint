@@ -128,6 +128,7 @@ module.exports = {
       target: testAppPath,
       skipNpm: true,
       skipGit: true,
+      embroider: true,
       entity: { name: testAppInfo.name.raw },
       name: testAppInfo.name.raw,
       rawName: testAppInfo.name.raw,
