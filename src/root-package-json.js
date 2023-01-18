@@ -76,7 +76,9 @@ let scripts = {
     } = info;
 
     return {
-      prepare: `yarn build`,
+      // Have to disable, because ember-cli does not allow `yarn` to *not* run when using --skip-npm
+      // This breaks builds using other package managers
+      // prepare: `yarn build`,
       build: `yarn workspace ${addonName} run build`,
 
       start: `concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow`,
@@ -101,12 +103,14 @@ let scripts = {
     } = info;
 
     return {
+      // Have to disable, because ember-cli does not allow `yarn` to *not* run when using --skip-npm
+      // This breaks builds using other package managers
       /**
        * For most optimized C.I., this will likely want to be removed, but
        * the prepare scripts helps folks get going quicker without having to understand
        * that every step in C.I. that needs the addon also needs the addon to be built first.
        */
-      prepare: `pnpm build`,
+      // prepare: `pnpm build`,
       build: `pnpm --filter ${addonName} build`,
       /**
        * restart-after exists because ember-cli continually crashes
