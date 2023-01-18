@@ -56,9 +56,9 @@ let scripts = {
       'lint:fix': 'npm run lint:fix --workspaces --if-present',
       prepare: 'npm run build',
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
-      'start:tests': `npm start --workspace ${testAppName}`,
-      test: `npm test --workspace ${testAppName}`,
+      'start:addon': `npm start --workspace ${addonName}`,
+      'start:test': `npm start --workspace ${testAppName}`,
+      test: 'npm run test --workspaces --if-present',
     };
   },
 
@@ -76,8 +76,8 @@ let scripts = {
       build: `yarn workspace ${addonName} run build`,
       lint: 'yarn workspaces run lint',
       'lint:fix': 'yarn workspaces run lint:fix',
-      prepare: `yarn build`,
-      start: `concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow`,
+      prepare: 'yarn build',
+      start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
       'start:addon': `yarn workspace ${addonName} run start`,
       'start:test': `yarn workspace ${testAppName} run start`,
       test: 'yarn workspaces run test',
@@ -103,7 +103,7 @@ let scripts = {
        * the prepare scripts helps folks get going quicker without having to understand
        * that every step in C.I. that needs the addon also needs the addon to be built first.
        */
-      prepare: `pnpm build`,
+      prepare: 'pnpm build',
       /**
        * restart-after exists because ember-cli continually crashes
        * when addon code changes from underneath it.
@@ -113,15 +113,15 @@ let scripts = {
        * Colors are customizable
        */
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:addon': `pnpm --filter ${addonName} start --no-watch.clearScreen`,
-      'start:tests': `pnpm --filter ${testAppName} start`,
+      'start:addon': `pnpm --filter ${addonName} start`,
+      'start:test': `pnpm --filter ${testAppName} start`,
       /**
        * Note that this test is different from v1 addon's test, which runs all of ember-try as well.
        * ember-try requires some alternate lockfile behaviors that we can't easily abstract into a
        * package.json script -- but will be present in C.I.
        *  (this is a consequence of enforced strict peers)
        */
-      test: `pnpm --filter ${testAppName} test`,
+      test: "pnpm --filter '*' test",
     };
   },
 };
