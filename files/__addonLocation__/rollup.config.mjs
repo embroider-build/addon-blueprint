@@ -1,4 +1,4 @@
-<% if (typescript) { %>import typescript from 'rollup-plugin-ts';<% } else { %>import babel from '@rollup/plugin-babel';<% } %>
+<% if (typescript) { %>import typescript from 'rollup-plugin-ts';<% } else { %>import { babel } from '@rollup/plugin-babel';<% } %>
 <% if (!isExistingMonorepo) { %>import copy from 'rollup-plugin-copy';
 <% } %>import { Addon } from '@embroider/addon-dev/rollup';
 
