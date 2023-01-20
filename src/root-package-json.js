@@ -57,7 +57,7 @@ let scripts = {
       prepare: 'npm run build',
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
       'start:addon': `npm start --workspace ${addonName}`,
-      'start:test': `npm start --workspace ${testAppName}`,
+      'start:test-app': `npm start --workspace ${testAppName}`,
       test: 'npm run test --workspaces --if-present',
     };
   },
@@ -79,7 +79,7 @@ let scripts = {
       prepare: 'yarn build',
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
       'start:addon': `yarn workspace ${addonName} run start`,
-      'start:test': `yarn workspace ${testAppName} run start`,
+      'start:test-app': `yarn workspace ${testAppName} run start`,
       test: 'yarn workspaces run test',
     };
   },
@@ -114,7 +114,7 @@ let scripts = {
        */
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
       'start:addon': `pnpm --filter ${addonName} start`,
-      'start:test': `pnpm --filter ${testAppName} start`,
+      'start:test-app': `pnpm --filter ${testAppName} start`,
       /**
        * Note that this test is different from v1 addon's test, which runs all of ember-try as well.
        * ember-try requires some alternate lockfile behaviors that we can't easily abstract into a
