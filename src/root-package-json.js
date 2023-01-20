@@ -56,7 +56,7 @@ let scripts = {
       'lint:fix': 'npm run lint:fix --workspaces --if-present',
       prepare: 'npm run build',
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:addon': `npm start --workspace ${addonName}`,
+      'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
       'start:test-app': `npm start --workspace ${testAppName}`,
       test: 'npm run test --workspaces --if-present',
     };
@@ -113,7 +113,7 @@ let scripts = {
        * Colors are customizable
        */
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:addon': `pnpm --filter ${addonName} start`,
+      'start:addon': `pnpm --filter ${addonName} start --no-watch.clearScreen`,
       'start:test-app': `pnpm --filter ${testAppName} start`,
       /**
        * Note that this test is different from v1 addon's test, which runs all of ember-try as well.
