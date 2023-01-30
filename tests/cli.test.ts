@@ -135,9 +135,6 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
   });
 
-  /**
-   * --typescript can't be supported yet, due to issues with ember-cli's peer dependencies.
-   */
   describe('--typescript', () => {
     let cwd = '';
     let tmpDir = '';
