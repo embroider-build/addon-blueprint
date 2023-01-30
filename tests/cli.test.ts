@@ -168,7 +168,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       // makes doing anything statically, and with *any* package manager, hard.
       // Additionally, this behavior makes setting up the v2 addon blueprint,
       // and testing with it *extremely* slow.
-      await fse.rm(path.join(cwd, 'yarn.lock'));
+      await fse.rm(path.join(cwd, 'yarn.lock'), { force: true });
       await fse.rm(path.join(cwd, 'node_modules'), { recursive: true, force: true });
       await fse.rm(path.join(cwd, name, 'node_modules'), { recursive: true, force: true });
       await fse.rm(path.join(cwd, 'test-app', 'node_modules'), { recursive: true, force: true });
