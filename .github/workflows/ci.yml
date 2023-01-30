@@ -42,14 +42,21 @@ jobs:
         # how to say "not these" so we don't miss anything?
         # waiting on a an api from vitest for querying
         # the list of tests ahead of time before running them.
+        #
+        # It would be great if vitest had a flag to give us the JSON of all the tests, 
+        # so we could be sure we don't miss anything 
+        # and then generate this list from a previous C.I. job
         slow-test:
           - defaults with npm
           - defaults with yarn
           - defaults with pnpm
+
+          # flags
           - addon-location
           - test-app-location
-          # skip TS tests until EmberCLI 4.10.0 is released, see https://github.com/embroider-build/addon-blueprint/issues/82
-          # - typescript
+          - typescript
+
+          # existing monorepo
           - monorepo with npm
           - monorepo with yarn
           - monorepo with pnpm

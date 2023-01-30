@@ -15,12 +15,20 @@ export async function createTmp() {
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
-export async function install({ cwd, packageManager }: { cwd: string; packageManager: string }) {
+export async function install({
+  cwd,
+  packageManager,
+  skipPrepare,
+}: {
+  cwd: string;
+  packageManager: string;
+  skipPrepare?: boolean;
+}) {
   if (packageManager === 'yarn') {
     await execa('yarn', ['install', '--non-interactive'], { cwd });
   } else {
     try {
-      await execa(packageManager, ['install'], { cwd });
+      await execa(packageManager, ['install', '--ignore-scripts'], { cwd });
     } catch (e) {
       if (e instanceof Error) {
         // ignore the `@babel/core` peer issue.
@@ -46,7 +54,7 @@ export async function install({ cwd, packageManager }: { cwd: string; packageMan
 
   // in order to test prepare, we need to have ignore-scripts=false
   // which is a security risk so we'll manually invoke install + prepare
-  if (pkg.scripts?.prepare) {
+  if (pkg.scripts?.prepare && !skipPrepare) {
     await execa(packageManager, ['run', 'prepare'], { cwd });
   }
 }
