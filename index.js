@@ -204,7 +204,6 @@ module.exports = {
       __addonLocation__: () => addonInfo.location,
       __testAppLocation__: () => testAppInfo.location,
       __ext__: () => ext,
-      __rollupExt__: () => (typescript ? 'mjs' : 'js'),
     };
   },
 

@@ -9,7 +9,7 @@
   "license": "MIT",
   "author": "",
   "files": [
-    "addon-main.js",
+    "addon-main.cjs",
     "dist"
   ],
   "scripts": {
@@ -80,7 +80,7 @@
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.js"
+    "main": "addon-main.cjs"
   },
   "exports": {
     ".": "./dist/index.js", <% if (typescript) { %>
@@ -89,7 +89,7 @@
       "default": "./dist/*.js"
     },<% } else { %>
     "./*": "./dist/*.js",<% } %>
-    "./addon-main.js": "./addon-main.js"
+    "./addon-main.js": "./addon-main.cjs"
   }<% if (typescript) { %>,
   "typesVersions": {
     "*": {
