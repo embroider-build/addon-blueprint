@@ -77,6 +77,7 @@ module.exports = {
 
     if (options.pnpm) {
       tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
+      tasks.push(pnpm.handleImperfections(addonInfo, testAppInfo));
     }
 
     if (options.releaseIt) {
