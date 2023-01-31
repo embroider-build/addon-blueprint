@@ -47,17 +47,14 @@ let scripts = {
     } = info;
 
     return {
-      prepare: 'npm run build',
       build: `npm run build --workspace ${addonName}`,
-
-      start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:tests': `npm start --workspace ${testAppName}`,
-      'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
-
-      test: `npm test --workspace ${testAppName}`,
-
       lint: 'npm run lint --workspaces --if-present',
       'lint:fix': 'npm run lint:fix --workspaces --if-present',
+      prepare: 'npm run build',
+      start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+      'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
+      'start:test-app': `npm start --workspace ${testAppName}`,
+      test: 'npm run test --workspaces --if-present',
     };
   },
 
@@ -72,17 +69,14 @@ let scripts = {
     } = info;
 
     return {
-      prepare: `yarn build`,
       build: `yarn workspace ${addonName} run build`,
-
-      start: `concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow`,
-      'start:addon': `yarn workspace ${addonName} run start`,
-      'start:test': `yarn workspace ${testAppName} run start`,
-
-      test: 'yarn workspaces run test',
-
       lint: 'yarn workspaces run lint',
       'lint:fix': 'yarn workspaces run lint:fix',
+      prepare: 'yarn build',
+      start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+      'start:addon': `yarn workspace ${addonName} run start`,
+      'start:test-app': `yarn workspace ${testAppName} run start`,
+      test: 'yarn workspaces run test',
     };
   },
 
@@ -97,13 +91,15 @@ let scripts = {
     } = info;
 
     return {
+      build: `pnpm --filter ${addonName} build`,
+      lint: "pnpm --filter '*' lint",
+      'lint:fix': "pnpm --filter '*' lint:fix",
       /**
        * For most optimized C.I., this will likely want to be removed, but
        * the prepare scripts helps folks get going quicker without having to understand
        * that every step in C.I. that needs the addon also needs the addon to be built first.
        */
-      prepare: `pnpm build`,
-      build: `pnpm --filter ${addonName} build`,
+      prepare: 'pnpm build',
       /**
        * restart-after exists because ember-cli continually crashes
        * when addon code changes from underneath it.
@@ -113,19 +109,15 @@ let scripts = {
        * Colors are customizable
        */
       start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-      'start:tests': `pnpm --filter ${testAppName} start`,
       'start:addon': `pnpm --filter ${addonName} start --no-watch.clearScreen`,
-
+      'start:test-app': `pnpm --filter ${testAppName} start`,
       /**
        * Note that this test is different from v1 addon's test, which runs all of ember-try as well.
        * ember-try requires some alternate lockfile behaviors that we can't easily abstract into a
        * package.json script -- but will be present in C.I.
        *  (this is a consequence of enforced strict peers)
        */
-      test: `pnpm --filter ${testAppName} test`,
-
-      lint: "pnpm --filter '*' lint",
-      'lint:fix': "pnpm --filter '*' lint:fix",
+      test: "pnpm --filter '*' test",
     };
   },
 };
