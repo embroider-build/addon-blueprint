@@ -77,7 +77,6 @@ module.exports = {
 
     if (options.pnpm) {
       tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
-      tasks.push(pnpm.handleImperfections(addonInfo, testAppInfo));
     }
 
     if (options.releaseIt) {
@@ -92,6 +91,14 @@ module.exports = {
       this.ui.writeWarnLine(
         `Make sure your workspaces are configured correctly to cover the newly created ${addonInfo.location} and ${testAppInfo.location} packages!`
       );
+    }
+
+    /**
+     * Each package-manager has its own issues.
+     * Here, we deal with those issues as late as possible.
+     */
+    if (options.pnpm) {
+      await pnpm.handleImperfections(addonInfo, testAppInfo);
     }
   },
 

@@ -35,7 +35,7 @@ async function handleImperfections(addonInfo, testAppInfo) {
    * more info here:
    *  https://pnpm.io/package_json#dependenciesmetainjected
    */
-  let testAppPackageJsonPath = path.join(testAppInfo.location, 'package.json');
+  let testAppPackageJsonPath = path.join(process.cwd(), testAppInfo.location, 'package.json');
   let testAppPackageJson = await fse.readJSON(testAppPackageJsonPath);
 
   testAppPackageJson.dependenciesMeta = {
@@ -43,6 +43,8 @@ async function handleImperfections(addonInfo, testAppInfo) {
       injected: true,
     },
   };
+
+  await fse.writeJSON(testAppPackageJsonPath, testAppPackageJson);
 }
 
 module.exports = {

@@ -47,6 +47,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       let cwd = '';
       let tmpDir = '';
       let distDir = '';
+      let addonName = '';
 
       beforeAll(async () => {
         tmpDir = await createTmp();
@@ -58,6 +59,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
           options: { cwd: tmpDir },
         });
 
+        addonName = name;
         cwd = path.join(tmpDir, name);
         distDir = path.join(cwd, name, 'dist');
 
@@ -131,6 +133,22 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         let { exitCode } = await runScript({ cwd, script: 'lint', packageManager });
 
         expect(exitCode).toEqual(0);
+      });
+
+      it('has package-manager specific work-arounds for common problems', async () => {
+        switch (packageManager) {
+          case 'pnpm': {
+            let testPackageJson = await fse.readJSON(path.join(cwd, 'test-app/package.json'));
+
+            expect(testPackageJson?.dependenciesMeta?.[addonName]?.injected).toBe(true);
+
+            break;
+          }
+
+          default:
+            // No other work-arounds are implemented today
+            expect(true).toBe(true);
+        }
       });
     });
   });
