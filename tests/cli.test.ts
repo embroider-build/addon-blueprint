@@ -143,15 +143,33 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     beforeAll(async () => {
       tmpDir = await createTmp();
 
+      /**
+       * We can't use yarn here, because it does the wrong thing with the types from
+       * test-helpers:
+       *
+       * [!] (plugin Typescript) TS2688: Cannot find type definition file for 'ember__test-helpers'.
+       *     The file is in the program because:
+       *       Entry point for implicit type library 'ember__test-helpers'
+       */
       let { name } = await createAddon({
-        args: ['--typescript', '--yarn=true'],
+        args: ['--typescript', '--pnpm=true', '--skip-npm'],
         options: { cwd: tmpDir },
       });
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
 
-      await install({ cwd, packageManager: 'yarn' });
+      // Remove because ember-cli ignores --skip-npm.
+      // At present, ember-cli installs `ember-cli-typescript`, which then
+      // further installs other things. This chaining of relying on the package-manager
+      // makes doing anything statically, and with *any* package manager, hard.
+      // Additionally, this behavior makes setting up the v2 addon blueprint,
+      // and testing with it *extremely* slow.
+      await fse.rm(path.join(cwd, 'yarn.lock'), { force: true });
+      await fse.rm(path.join(cwd, 'node_modules'), { recursive: true, force: true });
+      await fse.rm(path.join(cwd, name, 'node_modules'), { recursive: true, force: true });
+      await fse.rm(path.join(cwd, 'test-app', 'node_modules'), { recursive: true, force: true });
+      await install({ cwd, packageManager: 'pnpm', skipPrepare: true });
     });
 
     afterAll(async () => {
@@ -159,11 +177,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('was generated correctly', async () => {
+      await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
+
       assertGeneratedCorrectly({ projectRoot: cwd });
     });
 
     it('builds the addon', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'yarn' });
+      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
 
@@ -181,13 +201,13 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     });
 
     it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'yarn' });
+      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
 
     it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'yarn' });
+      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
 
       expect(exitCode).toEqual(0);
     });
