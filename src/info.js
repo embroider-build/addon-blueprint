@@ -14,6 +14,11 @@ function addonInfoFromOptions(options) {
   let addonEntity = options.entity;
   let addonRawName = addonEntity.name;
   let dashedName = stringUtil.dasherize(addonRawName);
+  let location = options.addonLocation || dashedName;
+
+  if (options.addonOnly) {
+    location = '.';
+  }
 
   return {
     packageName: dashedName,
@@ -23,7 +28,7 @@ function addonInfoFromOptions(options) {
       raw: addonRawName,
     },
     entity: addonEntity,
-    location: options.addonLocation || dashedName,
+    location,
   };
 }
 

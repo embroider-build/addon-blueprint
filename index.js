@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const assert = require('assert');
 const os = require('os');
 const fs = require('fs-extra');
 const SilentError = require('silent-error');
@@ -34,58 +35,65 @@ module.exports = {
   description,
 
   install(options) {
-    if (fs.existsSync(path.join('..', 'package.json'))) {
-      options.ui.writeInfoLine(
-        "Existing monorepo detected! The blueprint will only create the addon and test-app folders, and omit any other files in the repo's root folder."
-      );
+    if (!options.addonOnly) {
+      if (fs.existsSync(path.join('..', 'package.json'))) {
+        options.ui.writeInfoLine(
+          "Existing monorepo detected! The blueprint will only create the addon and test-app folders, and omit any other files in the repo's root folder."
+        );
 
-      this.isExistingMonorepo = true;
+        this.isExistingMonorepo = true;
+      }
     }
 
     return this._super.install.apply(this, arguments);
   },
 
   async afterInstall(options) {
-    let tasks = [this.createTestApp(options)];
+    let tasks = [];
+
     let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
 
-    /**
-     * Setup root package.json scripts based on the packager
-     */
-    tasks.push(
-      (async () => {
-        let packageJson = path.join(options.target, 'package.json');
-        let json = await fs.readJSON(packageJson);
+    if (!options.addonOnly) {
+      tasks.push(this.createTestApp(options));
 
-        json.scripts = scripts(options);
+      /**
+       * Setup root package.json scripts based on the packager
+       */
+      tasks.push(
+        (async () => {
+          let packageJson = path.join(options.target, 'package.json');
+          let json = await fs.readJSON(packageJson);
 
-        if (options.packageManager === 'pnpm' || options.pnpm) {
-          delete json.workspaces;
+          json.scripts = scripts(options);
 
-          json.pnpm = {
-            // TODO: update the blueprint's output to ESLint 8
-            overrides: {
-              '@types/eslint': '^7.0.0',
-            },
-          };
-        }
+          if (options.packageManager === 'pnpm' || options.pnpm) {
+            delete json.workspaces;
 
-        await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
-      })()
-    );
+            json.pnpm = {
+              // TODO: update the blueprint's output to ESLint 8
+              overrides: {
+                '@types/eslint': '^7.0.0',
+              },
+            };
+          }
 
-    if (options.pnpm) {
-      tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
-    }
+          await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
+        })()
+      );
 
-    if (options.releaseIt) {
-      tasks.push(this.setupReleaseIt(options.target));
+      if (options.pnpm) {
+        tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
+      }
+
+      if (options.releaseIt) {
+        tasks.push(this.setupReleaseIt(options.target));
+      }
     }
 
     await Promise.all(tasks);
 
-    if (this.isExistingMonorepo) {
+    if (this.isExistingMonorepo && !options.addonOnly) {
       await this.moveFilesForExistingMonorepo(options);
 
       this.ui.writeWarnLine(
@@ -98,6 +106,12 @@ module.exports = {
   // Until we have a better solution for this use case upstream, we are fixing this here by moving the generated
   // files outside of this folder and deleting it
   async moveFilesForExistingMonorepo(options) {
+    assert(
+      !options.addonOnly,
+      `When in --addon-only mode, we don't need to move files within an existing monorepo. ` +
+        `If you see this error, please open an issue at: https://github.com/embroider-build/addon-blueprint/issues`
+    );
+
     let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
 
@@ -125,6 +139,12 @@ module.exports = {
   },
 
   async createTestApp(options) {
+    assert(
+      !options.addonOnly,
+      `When in --addon-only mode, we don't create a test-app. ` +
+        `If you see this error, please open an issue at: https://github.com/embroider-build/addon-blueprint/issues`
+    );
+
     const appBlueprint = this.lookupBlueprint('app');
 
     if (!appBlueprint) {
@@ -274,6 +294,10 @@ module.exports = {
 
   files(options) {
     let files = this._super.files.apply(this, arguments);
+
+    if (options.addonOnly) {
+      files = files.filter((filename) => !filename.includes('test-app-overrides'));
+    }
 
     if (options.typescript) {
       return files;
