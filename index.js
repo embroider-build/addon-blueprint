@@ -218,7 +218,7 @@ module.exports = {
   },
 
   fileMapTokens(options) {
-    let { addonInfo, testAppInfo, ext, typescript } = options.locals;
+    let { addonInfo, testAppInfo, ext } = options.locals;
 
     return {
       __addonLocation__: () => addonInfo.location,

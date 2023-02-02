@@ -516,12 +516,12 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     beforeAll(async () => {
       tmpDir = await createTmp();
 
-      await createAddon({
+      let { name } = await createAddon({
         args: ['--addon-only', '--pnpm=true'],
         options: { cwd: tmpDir },
       });
 
-      cwd = tmpDir;
+      cwd = path.join(tmpDir, name);
 
       await install({ cwd, packageManager: 'pnpm' });
     });
