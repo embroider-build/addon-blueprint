@@ -296,7 +296,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (options.addonOnly) {
-      files = files.filter((filename) => !filename.includes('test-app-overrides'));
+      files = files.filter((filename) => filename.includes('__addonLocation__'));
     }
 
     if (options.typescript) {
