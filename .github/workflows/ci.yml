@@ -55,6 +55,7 @@ jobs:
           - addon-location
           - test-app-location
           - typescript
+          - addon-only
 
           # existing monorepo
           - monorepo with npm

@@ -101,6 +101,24 @@ ember addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-
 
 By default, `test-app` will be used.
 
+### `--addon-only`
+
+Will only create the addon, similar to the v1 addon behavior of `ember addon my-addon`. 
+This is useful for incremental migrations of v1 addons to v2 addons where the process from the 
+[Porting Addons to V2](https://github.com/embroider-build/embroider/blob/main/PORTING-ADDONS-TO-V2.md)
+guide.
+
+```bash
+ember addon my-addon -b @embroider/addon-blueprint --addon-only
+# generates non-monorepo:
+#   my-addon/
+#     .git 
+#     package.json
+```
+
+For incremental migration in monorepos, you'll want to also supply the `--skip-git` flag.
+
+
 #### `--release-it`
 
 If you want release-it behavior, (specifically provided by `create-rwjblue-release-it-setup`),
