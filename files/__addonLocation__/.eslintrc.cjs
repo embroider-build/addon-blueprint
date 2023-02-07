@@ -6,9 +6,6 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',<% if (!typescript) { %>
     sourceType: 'module',
-    ecmaFeatures: {
-      legacyDecorators: true,
-    },
     babelOptions: {
       root: __dirname,
     },<% } %>
