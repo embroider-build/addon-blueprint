@@ -6,6 +6,22 @@
 
 
 
+
+## v1.5.0 (2023-02-17)
+
+#### :rocket: Enhancement
+* [#105](https://github.com/embroider-build/addon-blueprint/pull/105) New flag: --addon-only ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#102](https://github.com/embroider-build/addon-blueprint/pull/102) Alphabetized and standardized the root package.json scripts ([@ijlee2](https://github.com/ijlee2))
+
+#### :house: Internal
+* [#102](https://github.com/embroider-build/addon-blueprint/pull/102) Alphabetized and standardized the root package.json scripts ([@ijlee2](https://github.com/ijlee2))
+* [#103](https://github.com/embroider-build/addon-blueprint/pull/103) Reduce ambiguity in *.js file extension in addon-root files by explicitly mentioning cjs or mjs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#106](https://github.com/embroider-build/addon-blueprint/pull/106) Run the tests for --typescript, and get those tests working ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v1.4.1 (2023-01-12)
 
 #### :bug: Bug Fix
