@@ -4,6 +4,9 @@
     "src/**/*",
     "unpublished-development-types/**/*"
   ],
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
   "glint": {
     "environment": "ember-loose"
   }
