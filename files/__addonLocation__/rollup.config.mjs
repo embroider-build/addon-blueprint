@@ -1,6 +1,7 @@
 <% if (typescript) { %>import typescript from 'rollup-plugin-ts';<% } else { %>import { babel } from '@rollup/plugin-babel';<% } %>
 <% if (!isExistingMonorepo) { %>import copy from 'rollup-plugin-copy';
 <% } %>import { Addon } from '@embroider/addon-dev/rollup';
+import { glimmerTemplateTag } from 'rollup-plugin-glimmer-template-tag';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -31,7 +32,7 @@ export default {
     typescript({
       transpiler: 'babel',
       browserslist: false,
-      transpileOnly: false,
+      transpileOnly: true,
     }),
 <% } else { %>    // This babel config should *not* apply presets or compile away ES modules.
     // It exists only to provide development niceties for you, like automatic
@@ -45,6 +46,7 @@ export default {
 <% } %>
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+    glimmerTemplateTag(),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
