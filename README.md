@@ -12,6 +12,28 @@ This is still work in progress.
 
 The blueprint contains a number of assumptions, e.g. using a monorepo using (`yarn` or `npm`) workspaces, with separate workspaces for the addon and the test-app. But there is plenty of room for bikeshedding here, so if you have suggestions about better ways to set this up, then please file an issue to discuss!
 
+### Temporary work-around for `--typescript` issues
+
+Today, `--typescript` is implemented via differing to `ember-cli`'s `--typescript` when generating the test-app.
+This has a number of issues:
+ - `ember-cli-typescript` is very out of date
+   - remove `@types/ember__test-helpers` and `@types/ember-test-helpers` (`@ember/test-helpers` provides its own types)
+ - peer issues with ember-cli cause the generation of a whole project to be deleted by ember-cli
+ - the package manager is ignored when ember-cli defers to `ember-cli-typescript`s blueprint
+ - there is no way to opt out of ember-cli installing dependencies when using `--typescript`
+ 
+To make a monorepo manually:
+```bash
+mkdir my-monorepo
+cd my-monorepo
+git init
+touch package.json # make sure to fill this out
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --skip-git --skip-npm --typescript --addon-only
+npx ember-cli@latest new test-app --skip-git --skip-npm --typescript # make sure to add the addon as a dependency in the test-app
+```
+
+We're actively trying to make this situation better, but this is what we have to deal with until `--typescript` support in ember-cli is more stable (and maybe uses the built-in types).
+
 ## Usage
 
 ```bash
