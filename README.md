@@ -18,6 +18,8 @@ Today, `--typescript` is implemented via differing to `ember-cli`'s `--typescrip
 This has a number of issues:
  - `ember-cli-typescript` is very out of date
    - remove `@types/ember__test-helpers` and `@types/ember-test-helpers` (`@ember/test-helpers` provides its own types)
+   - released infrequently
+   - it's being sunset anyway
  - peer issues with ember-cli cause the generation of a whole project to be deleted by ember-cli
  - the package manager is ignored when ember-cli defers to `ember-cli-typescript`s blueprint
  - there is no way to opt out of ember-cli installing dependencies when using `--typescript`
