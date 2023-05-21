@@ -17,11 +17,10 @@ The blueprint contains a number of assumptions, e.g. using a monorepo using (`ya
 Today, `--typescript` is implemented via differing to `ember-cli`'s `--typescript` when generating the test-app.
 This has a number of issues:
  - `ember-cli-typescript` is very out of date
-   - remove `@types/ember__test-helpers` and `@types/ember-test-helpers` (`@ember/test-helpers` provides its own types)
-   - released infrequently
-   - it's being sunset anyway
+   - you'll need to remove `@types/ember__test-helpers`, `@types/ember-resolver`, and `@types/ember__string` (these provide their own types now)
+   - it's being sunset anyway, as effort is being put in to making TS support more native and less reliant on DefinitelyTyped. 
  - peer issues with ember-cli cause the generation of a whole project to be deleted by ember-cli
- - the package manager is ignored when ember-cli defers to `ember-cli-typescript`s blueprint
+ - the package manager is ignored when ember-cli defers to `ember-cli-typescript`s blueprint (this mostly only affects `--pnpm` using projects)
  - there is no way to opt out of ember-cli installing dependencies when using `--typescript`
  
 To make a monorepo manually:
@@ -30,6 +29,7 @@ mkdir my-monorepo
 cd my-monorepo
 git init
 touch package.json # make sure to fill this out
+touch pnpm-workspace.yaml # if you're using pnpm
 npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --skip-git --skip-npm --typescript --addon-only
 npx ember-cli@latest new test-app --skip-git --skip-npm --typescript # make sure to add the addon as a dependency in the test-app
 ```
