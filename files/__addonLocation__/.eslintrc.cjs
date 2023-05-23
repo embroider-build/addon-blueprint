@@ -6,9 +6,6 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',<% if (!typescript) { %>
     sourceType: 'module',
-    ecmaFeatures: {
-      legacyDecorators: true,
-    },
     babelOptions: {
       root: __dirname,
     },<% } %>
@@ -38,10 +35,10 @@ module.exports = {
 <% } %>    // node files
     {
       files: [
-        './.eslintrc.js',
+        './.eslintrc.cjs',
         './.prettierrc.js',
-        './.template-lintrc.js',
-        './addon-main.js',
+        './.template-lintrc.cjs',
+        './addon-main.cjs',
       ],
       parserOptions: {
         sourceType: 'script',
