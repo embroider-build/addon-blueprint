@@ -1,6 +1,4 @@
 {
-  "name": "<%= addonName %>-monorepo",
-  "version": "0.0.0",
   "private": true,
   "repository": "",
   "license": "MIT",
