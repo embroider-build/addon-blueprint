@@ -7,6 +7,15 @@
 
 
 
+
+## v1.6.1 (2023-05-30)
+
+#### :house: Internal
+* [#125](https://github.com/embroider-build/addon-blueprint/pull/125) Update RELEASE.md ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v1.5.0 (2023-02-17)
 
 #### :rocket: Enhancement
