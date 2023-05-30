@@ -49,15 +49,21 @@ pnpm install
 
 - Test that the release will succeed. Make sure your `origin` git remote is using SSH (or you are authorized via your protocol of choice)
 
-```sh
-npx release-it --dry-run
-```
+  ```sh
+  npx release-it --dry-run
+  ```
+
+  If you've changed your origin from https to ssh, be sure to set the upstream:
+
+  ```sh 
+  git push --set-upstream origin main
+  ```
 
 - And last (but not least 😁) do your release.
 
-```sh
-npx release-it
-```
+  ```sh
+  npx release-it
+  ```
 
 [release-it](https://github.com/release-it/release-it/) manages the actual
 release process. It will prompt you to to choose the version number after which
