@@ -47,6 +47,12 @@ pnpm install
 
 [generate-token]: https://github.com/settings/tokens/new?scopes=repo&description=GITHUB_AUTH+env+variable
 
+- Test that the release will succeed. Make sure your `origin` git remote is using SSH (or you are authorized via your protocol of choice)
+
+```sh
+npx release-it --dry-run
+```
+
 - And last (but not least 😁) do your release.
 
 ```sh
