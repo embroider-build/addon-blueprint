@@ -8,6 +8,15 @@
 
 
 
+
+## v1.6.2 (2023-05-31)
+
+#### :bug: Bug Fix
+* [#127](https://github.com/embroider-build/addon-blueprint/pull/127) Updated the addon package's Babel configuration ([@ijlee2](https://github.com/ijlee2))
+
+#### Committers: 1
+- Isaac Lee ([@ijlee2](https://github.com/ijlee2))
+
 ## v1.6.1 (2023-05-30)
 
 #### :house: Internal
