@@ -304,15 +304,21 @@ module.exports = {
       files = files.filter((filename) => filename.includes('__addonLocation__'));
     }
 
-    if (options.typescript) {
-      return files;
-    } else {
+    if (!options.typescript) {
       let ignoredFiles = ['__addonLocation__/tsconfig.json'];
 
-      return files.filter(
+      files = files.filter(
         (filename) => !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
       );
     }
+
+    if (this.isExistingMonorepo) {
+      // The .gitignore is used for ignoring files that are moved to the addon from the root folder at build time
+      // But this setup does not apply for an existing monorepo (all root files are ignored), so we don't need the .gitignore
+      files = files.filter((filename) => filename !== '__addonLocation__/gitignore');
+    }
+
+    return files;
   },
 
   normalizeEntityName(entityName) {
