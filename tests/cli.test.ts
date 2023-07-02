@@ -26,7 +26,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let result = await execa(
       'ember',
       ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
-      { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' } }
+      { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' }, preferLocal: true }
     );
 
     // Light work-around for an upstream `@babel/core` peer issue
@@ -133,91 +133,65 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         expect(exitCode).toEqual(0);
       });
     });
-  });
 
-  describe('--typescript', () => {
-    let cwd = '';
-    let tmpDir = '';
-    let distDir = '';
-    let distTypesDir = '';
+    describe('--typescript', () => {
+      let cwd = '';
+      let tmpDir = '';
+      let distDir = '';
 
-    beforeAll(async () => {
-      tmpDir = await createTmp();
+      beforeAll(async () => {
+        tmpDir = await createTmp();
 
-      /**
-       * We can't use yarn here, because it does the wrong thing with the types from
-       * test-helpers:
-       *
-       * [!] (plugin Typescript) TS2688: Cannot find type definition file for 'ember__test-helpers'.
-       *     The file is in the program because:
-       *       Entry point for implicit type library 'ember__test-helpers'
-       */
-      let { name } = await createAddon({
-        args: ['--typescript', '--pnpm=true', '--skip-npm'],
-        options: { cwd: tmpDir },
+        let { name } = await createAddon({
+          args: ['--typescript', `--${packageManager}=true`, '--skip-npm'],
+          options: { cwd: tmpDir },
+        });
+
+        cwd = path.join(tmpDir, name);
+        distDir = path.join(cwd, name, 'dist');
+
+        await install({ cwd, packageManager, skipPrepare: true });
       });
 
-      cwd = path.join(tmpDir, name);
-      distDir = path.join(cwd, name, 'dist');
-      distTypesDir = path.join(cwd, name, 'declarations');
+      afterAll(async () => {
+        await fs.rm(tmpDir, { recursive: true, force: true });
+      });
 
-      // Remove because ember-cli ignores --skip-npm.
-      // At present, ember-cli installs `ember-cli-typescript`, which then
-      // further installs other things. This chaining of relying on the package-manager
-      // makes doing anything statically, and with *any* package manager, hard.
-      // Additionally, this behavior makes setting up the v2 addon blueprint,
-      // and testing with it *extremely* slow.
-      await fse.rm(path.join(cwd, 'yarn.lock'), { force: true });
-      await fse.rm(path.join(cwd, 'node_modules'), { recursive: true, force: true });
-      await fse.rm(path.join(cwd, name, 'node_modules'), { recursive: true, force: true });
-      await fse.rm(path.join(cwd, 'test-app', 'node_modules'), { recursive: true, force: true });
-      await install({ cwd, packageManager: 'pnpm', skipPrepare: true });
-    });
+      it('was generated correctly', async () => {
+        await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
 
-    afterAll(async () => {
-      await fs.rm(tmpDir, { recursive: true, force: true });
-    });
+        assertGeneratedCorrectly({ projectRoot: cwd });
+      });
 
-    it('was generated correctly', async () => {
-      await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
+      it('builds the addon', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
 
-      assertGeneratedCorrectly({ projectRoot: cwd });
-    });
+        expect(exitCode).toEqual(0);
 
-    it('builds the addon', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
+        let contents = await dirContents(distDir);
 
-      expect(exitCode).toEqual(0);
+        expect(contents).to.deep.equal([
+          'index.d.ts',
+          'index.d.ts.map',
+          'index.js',
+          'index.js.map',
+          'template-registry.d.ts',
+          'template-registry.js',
+          'template-registry.js.map',
+        ]);
+      });
 
-      let contents = await dirContents(distDir);
+      it('runs tests', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
 
-      expect(contents).to.deep.equal([
-        'index.js',
-        'index.js.map',
-        'template-registry.js',
-        'template-registry.js.map',
-      ]);
+        expect(exitCode).toEqual(0);
+      });
 
-      let typesContents = await dirContents(distTypesDir);
+      it('lints all pass', async () => {
+        let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
 
-      expect(typesContents).to.deep.equal([
-        'index.d.ts',
-        'index.d.ts.map',
-        'template-registry.d.ts',
-        'template-registry.d.ts.map',
-      ]);
-    });
-
-    it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
-
-      expect(exitCode).toEqual(0);
-    });
-
-    it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
-
-      expect(exitCode).toEqual(0);
+        expect(exitCode).toEqual(0);
+      });
     });
   });
 

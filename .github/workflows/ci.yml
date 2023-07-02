@@ -43,18 +43,22 @@ jobs:
         # waiting on a an api from vitest for querying
         # the list of tests ahead of time before running them.
         #
-        # It would be great if vitest had a flag to give us the JSON of all the tests, 
-        # so we could be sure we don't miss anything 
+        # It would be great if vitest had a flag to give us the JSON of all the tests,
+        # so we could be sure we don't miss anything
         # and then generate this list from a previous C.I. job
         slow-test:
           - defaults with npm
           - defaults with yarn
           - defaults with pnpm
 
+          # TypeScript
+          - typescript with npm
+          - typescript with yarn
+          - typescript with pnpm
+
           # flags
           - addon-location
           - test-app-location
-          - typescript
           - addon-only
 
           # existing monorepo
