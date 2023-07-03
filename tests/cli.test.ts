@@ -204,6 +204,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
         'index.d.ts',
         'index.d.ts.map',
         'template-registry.d.ts',
+        'template-registry.d.ts.map',
       ]);
     });
 
