@@ -10,18 +10,25 @@
   "author": "",
   "files": [
     "addon-main.cjs",
-    "dist"
+    "dist",
+    "dist-types"
   ],
-  "scripts": {
-    "build": "rollup --config",
+  "scripts": {<% if (typescript) { %>
+    "build": "concurrently 'npm:build:*'",
+    "build:js": "rollup --config",
+    "build:types": "glint --build", <% } else { %>
+    "build": "rollup --config", <% } %>
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",<% if (typescript) { %>
-    "lint:types": "glint",<% } %>
-    "start": "rollup --config --watch",
+    "lint:types": "glint",
+    "start": "concurrently 'npm:start:*'",
+    "start:js": "rollup --config --watch",
+    "start:types": "glint --build --watch",<% } else { %>
+    "start": "rollup --config --watch", <% } %>
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
     "prepack": "rollup --config"
   },
@@ -57,8 +64,9 @@
     "@types/ember__component": "^4.0.0",
     "@types/ember__routing": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",<% } else { %>
-    "@rollup/plugin-babel": "^6.0.3",<% } %>
+    "@typescript-eslint/parser": "^5.30.5",<% } %>
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "concurrently": "^8.0.1",
     "ember-template-lint": "^5.7.3",
     "eslint": "^8.33.0",
@@ -69,7 +77,6 @@
     "prettier": "^2.5.1",
     "rollup": "^3.21.8"<% if (!isExistingMonorepo) { %>,
     "rollup-plugin-copy": "^3.4.0"<% } %><% if (typescript) { %>,
-    "rollup-plugin-ts": "^3.0.2",
     "typescript": "^5.0.4"<% } %>
   },
   "publishConfig": {
@@ -86,7 +93,7 @@
   "exports": {
     ".": "./dist/index.js", <% if (typescript) { %>
     "./*": {
-      "types": "./dist/*.d.ts",
+      "types": "./dist-types/*.d.ts",
       "default": "./dist/*.js"
     },<% } else { %>
     "./*": "./dist/*.js",<% } %>
@@ -95,7 +102,7 @@
   "typesVersions": {
     "*": {
       "*": [
-        "dist/*"
+        "dist-types/*"
       ]
     }
   }<% } %>
