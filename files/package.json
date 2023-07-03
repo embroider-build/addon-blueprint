@@ -10,8 +10,11 @@
     "concurrently": "^7.2.1",
     "prettier": "^2.5.1"
   },
-  "workspaces": [
-    "<%= addonInfo.location %>",
-    "<%= testAppInfo.location %>"
-  ]
+  "workspaces": {
+    "nohoist": ["**/ember-source", "ember-source", "@types/*", "**/@types/*"],
+    "packages": [
+      "<%= addonInfo.location %>",
+      "<%= testAppInfo.location %>"
+    ]
+  }
 }
