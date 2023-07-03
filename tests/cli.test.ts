@@ -26,7 +26,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let result = await execa(
       'ember',
       ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
-      options
+      { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' } }
     );
 
     // Light work-around for an upstream `@babel/core` peer issue
