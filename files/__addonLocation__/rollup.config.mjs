@@ -9,7 +9,7 @@ const addon = new Addon({
 });
 
 // Add extensions here, such as ts, gjs, etc that you may import
-const extensions = ['.js', '.hbs'];
+const extensions = ['.js',<% if (typescript) { %> '.ts',<% } %> '.hbs'];
 
 export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
