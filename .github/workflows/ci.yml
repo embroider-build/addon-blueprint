@@ -61,6 +61,6 @@ jobs:
           - monorepo with pnpm
     steps:
       - uses: wyvox/action@v1
-      - run: pnpm add --global ember-cli yarn
+      - run: pnpm add --global ember-cli@beta yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
