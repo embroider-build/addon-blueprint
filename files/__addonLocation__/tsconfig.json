@@ -8,7 +8,7 @@
     "environment": "ember-loose"
   },
   "compilerOptions": {
-    "declarationDir": "dist-types",
+    "declarationDir": "declarations",
     "emitDeclarationOnly": true,
     "noEmit": false
   }

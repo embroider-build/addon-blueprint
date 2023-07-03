@@ -5,6 +5,6 @@
 /LICENSE.md
 # Build output
 /dist/
-/dist-types/
+/declarations/
 # npm/pnpm/yarn pack output
 *.tgz

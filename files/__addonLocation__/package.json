@@ -11,7 +11,7 @@
   "files": [
     "addon-main.cjs",
     "dist",
-    "dist-types"
+    "declarations"
   ],
   "scripts": {<% if (typescript) { %>
     "build": "concurrently 'npm:build:*'",
@@ -90,19 +90,23 @@
     "type": "addon",
     "main": "addon-main.cjs"
   },
-  "exports": {
-    ".": "./dist/index.js", <% if (typescript) { %>
+  "exports": {<% if (typescript) { %>
+    ".": {
+      "types": "./declarations/index.js",
+      "default": "./dist/index.js"
+    },
     "./*": {
-      "types": "./dist-types/*.d.ts",
+      "types": "./declarations/*.d.ts",
       "default": "./dist/*.js"
     },<% } else { %>
+    ".": "./dist/index.js",
     "./*": "./dist/*.js",<% } %>
     "./addon-main.js": "./addon-main.cjs"
   }<% if (typescript) { %>,
   "typesVersions": {
     "*": {
       "*": [
-        "dist-types/*"
+        "declarations/*"
       ]
     }
   }<% } %>

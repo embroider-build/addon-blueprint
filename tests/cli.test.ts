@@ -159,7 +159,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
-      distTypesDir = path.join(cwd, name, 'dist-types');
+      distTypesDir = path.join(cwd, name, 'declarations');
 
       // Remove because ember-cli ignores --skip-npm.
       // At present, ember-cli installs `ember-cli-typescript`, which then
