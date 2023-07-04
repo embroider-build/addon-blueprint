@@ -41,6 +41,7 @@ export default {
       extensions,
       babelHelpers: 'bundled',
     }),
+
     // Allows rollup to resolve imports of files with the specified extensions
     nodeResolve({ extensions }),
 
