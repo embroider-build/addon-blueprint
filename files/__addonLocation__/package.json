@@ -10,8 +10,8 @@
   "author": "",
   "files": [
     "addon-main.cjs",
-    "dist",
-    "declarations"
+    "declarations",
+    "dist"
   ],
   "scripts": {<% if (typescript) { %>
     "build": "concurrently 'npm:build:*'",
