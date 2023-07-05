@@ -26,7 +26,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let result = await execa(
       'ember',
       ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
-      options
+      { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' } }
     );
 
     // Light work-around for an upstream `@babel/core` peer issue
@@ -139,6 +139,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
     let cwd = '';
     let tmpDir = '';
     let distDir = '';
+    let distTypesDir = '';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
@@ -158,6 +159,7 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
+      distTypesDir = path.join(cwd, name, 'declarations');
 
       // Remove because ember-cli ignores --skip-npm.
       // At present, ember-cli installs `ember-cli-typescript`, which then
@@ -190,13 +192,19 @@ describe('ember addon <the addon> -b <this blueprint>', () => {
       let contents = await dirContents(distDir);
 
       expect(contents).to.deep.equal([
-        'index.d.ts',
-        'index.d.ts.map',
         'index.js',
         'index.js.map',
-        'template-registry.d.ts',
         'template-registry.js',
         'template-registry.js.map',
+      ]);
+
+      let typesContents = await dirContents(distTypesDir);
+
+      expect(typesContents).to.deep.equal([
+        'index.d.ts',
+        'index.d.ts.map',
+        'template-registry.d.ts',
+        'template-registry.d.ts.map',
       ]);
     });
 
