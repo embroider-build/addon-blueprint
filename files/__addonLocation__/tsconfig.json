@@ -8,8 +8,6 @@
     "environment": "ember-loose"
   },
   "compilerOptions": {
-    "declarationDir": "declarations",
-    "emitDeclarationOnly": true,
-    "noEmit": false
+    "declarationDir": "declarations"
   }
 }
