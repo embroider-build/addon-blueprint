@@ -92,8 +92,8 @@
   },
   "exports": {<% if (typescript) { %>
     ".": {
-      "types": "./declarations/*.d.js",
-      "default": "./dist/*.js"
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./*": {
       "types": "./declarations/*.d.ts",
