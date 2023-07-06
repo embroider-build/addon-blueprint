@@ -176,11 +176,16 @@ module.exports = {
 
     if (options.typescript) {
       const needsVersion = '4.9.0-beta.0';
+      const recommendedVersion = '5.2.0-beta.0';
       const hasVersion = this.project.emberCLIVersion();
 
       if (lt(hasVersion, needsVersion)) {
         this.ui.writeWarnLine(
           `Your version ${hasVersion} of Ember CLI does not support the --typescript flag yet. Please run \`ember install ember-cli-typescript\` in the ${testAppInfo.location} folder manually!`
+        );
+      } else if (lt(hasVersion, recommendedVersion)) {
+        this.ui.writeWarnLine(
+          `We recommend using Ember CLI >= ${recommendedVersion} for the best blueprint support when using TypeScript!`
         );
       }
     }
