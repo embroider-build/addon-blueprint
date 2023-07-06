@@ -9,6 +9,24 @@
 
 
 
+
+## v1.7.0 (2023-07-06)
+
+#### :rocket: Enhancement
+* [#136](https://github.com/embroider-build/addon-blueprint/pull/136) Move off rollup-plugin-ts ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#129](https://github.com/embroider-build/addon-blueprint/pull/129) Skip .gitignore in existing monorepo ([@simonihmig](https://github.com/simonihmig))
+* [#137](https://github.com/embroider-build/addon-blueprint/pull/137) Update for ember-cli `--typescript` changes ([@simonihmig](https://github.com/simonihmig))
+
+#### :house: Internal
+* [#134](https://github.com/embroider-build/addon-blueprint/pull/134) Run tests with latest Ember CLI ([@simonihmig](https://github.com/simonihmig))
+* [#140](https://github.com/embroider-build/addon-blueprint/pull/140) Node 14.19.3 does not exist anymore (sometimes, 500 error from nodejs) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v1.6.2 (2023-05-31)
 
 #### :bug: Bug Fix
