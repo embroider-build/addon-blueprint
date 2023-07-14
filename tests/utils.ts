@@ -8,8 +8,28 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const blueprintPath = path.join(__dirname, '..');
+const fixturesPath = path.join(__dirname, 'fixtures');
 
 export const SUPPORTED_PACKAGE_MANAGERS = ['npm', 'yarn', 'pnpm'] as const;
+
+export async function fixture(
+  /**
+   * Which file within in the fixture-set / scenario to read
+   */
+  file: string,
+  options?: {
+    /**
+     * Which fixture set to use
+     */
+    scenario?: string;
+  }
+) {
+  let scenario = options?.scenario ?? 'default';
+  let fixtureFilePath = path.join(fixturesPath, scenario, file);
+  let contents = await fs.readFile(fixtureFilePath);
+
+  return contents.toString();
+}
 
 export async function createTmp() {
   let prefix = 'v2-addon-blueprint--';
