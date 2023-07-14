@@ -82,7 +82,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       assertGeneratedCorrectly({ projectRoot: cwd });
     });
 
-    it('builds the addon', async () => {
+    it('builds the addon and runs tests', async () => {
       let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
 
       expect(exitCode).toEqual(0);
@@ -90,12 +90,10 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let contents = await dirContents(distDir);
 
       expect(contents).to.deep.equal(['index.js', 'index.js.map']);
-    });
 
-    it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test', packageManager });
+      let { exitCode: testExitCode } = await runScript({ cwd, script: 'test', packageManager });
 
-      expect(exitCode).toEqual(0);
+      expect(testExitCode).toEqual(0);
     });
 
     it('lints all pass', async () => {
