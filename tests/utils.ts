@@ -1,7 +1,15 @@
-import { execa } from 'execa';
+import { type Options, execa } from 'execa';
+import fse from 'fs-extra';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const blueprintPath = path.join(__dirname, '..');
+
+export const SUPPORTED_PACKAGE_MANAGERS = ['npm', 'yarn', 'pnpm'] as const;
 
 export async function createTmp() {
   let prefix = 'v2-addon-blueprint--';
@@ -102,4 +110,32 @@ export async function packageJsonAt(dirPath: string) {
   let str = buffer.toString();
 
   return JSON.parse(str);
+}
+
+export async function createAddon({
+  name = 'my-addon',
+  args = [],
+  options = {},
+}: {
+  name?: string;
+  args?: string[];
+  options?: Options;
+}) {
+  let result = await execa(
+    'ember',
+    ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
+    { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' }, preferLocal: true }
+  );
+
+  // Light work-around for an upstream `@babel/core` peer issue
+  if (typeof options.cwd === 'string') {
+    await fs.writeFile(
+      fse.existsSync(path.join(options.cwd, name))
+        ? path.join(options.cwd, name, '.npmrc')
+        : path.join(options.cwd, '.npmrc'),
+      'auto-install-peers=true'
+    );
+  }
+
+  return { result, name };
 }
