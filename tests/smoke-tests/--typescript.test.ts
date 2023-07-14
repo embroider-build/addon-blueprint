@@ -17,6 +17,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     let cwd = '';
     let tmpDir = '';
     let distDir = '';
+    let declarationsDir = '';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
@@ -28,12 +29,13 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
+      declarationsDir = path.join(cwd, name, 'declarations');
 
       await install({ cwd, packageManager, skipPrepare: true });
     });
 
     afterAll(async () => {
-      await fs.rm(tmpDir, { recursive: true, force: true });
+      // await fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {
@@ -47,16 +49,21 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       expect(exitCode).toEqual(0);
 
-      let contents = await dirContents(distDir);
+      let distContents = await dirContents(distDir);
+      let declarationsContents = await dirContents(declarationsDir);
 
-      expect(contents).to.deep.equal([
-        'index.d.ts',
-        'index.d.ts.map',
+      expect(distContents).to.deep.equal([
         'index.js',
         'index.js.map',
-        'template-registry.d.ts',
         'template-registry.js',
         'template-registry.js.map',
+      ]);
+
+      expect(declarationsContents).to.deep.equal([
+        'index.d.ts',
+        'index.d.ts.map',
+        'template-registry.d.ts',
+        'template-registry.d.ts.map',
       ]);
     });
 
