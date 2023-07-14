@@ -36,7 +36,13 @@ export async function install({
     await execa('yarn', ['install', '--non-interactive'], { cwd });
   } else {
     try {
-      await execa(packageManager, ['install', '--ignore-scripts'], { cwd });
+      let installOptions = [];
+
+      if (packageManager === 'pnpm') {
+        installOptions.push('--no-frozen-lockfile');
+      }
+
+      await execa(packageManager, ['install', '--ignore-scripts', ...installOptions], { cwd });
     } catch (e) {
       if (e instanceof Error) {
         // ignore the `@babel/core` peer issue.

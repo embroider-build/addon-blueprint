@@ -52,11 +52,9 @@ jobs:
           - defaults with pnpm
 
           # TypeScript
-          # Disabled for now, we are having a conflict between built-in-types from @ember/test-helpers
-          # and the types from definitely typed
-          # - typescript with npm
-          # - typescript with yarn
-          # - typescript with pnpm
+          - typescript with npm
+          - typescript with yarn
+          - typescript with pnpm
 
           # flags
           - addon-location
