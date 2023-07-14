@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -34,7 +35,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     afterAll(async () => {
-      // await fs.rm(tmpDir, { recursive: true, force: true });
+      await fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {

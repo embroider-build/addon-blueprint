@@ -91,5 +91,8 @@ export async function matchesFixture(
   let sourceContents = await fs.readFile(testFilePath);
   let fixtureContents = await fixture(fixtureFile, { scenario });
 
-  expect(sourceContents).to.equal(fixtureContents, `${testFilePath} matches ${fixtureFile}`);
+  expect(sourceContents.toString()).to.equal(
+    fixtureContents,
+    `${testFilePath} matches ${fixtureFile}`
+  );
 }

@@ -25,7 +25,7 @@ export async function fixture(
   }
 ) {
   let scenario = options?.scenario ?? 'default';
-  let fixtureFilePath = path.join(fixturesPath, scenario, file);
+  let fixtureFilePath = path.isAbsolute(file) ? file : path.join(fixturesPath, scenario, file);
   let contents = await fs.readFile(fixtureFilePath);
 
   return contents.toString();
