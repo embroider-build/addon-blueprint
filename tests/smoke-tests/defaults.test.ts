@@ -6,6 +6,7 @@ import {
   AddonHelper,
   assertGeneratedCorrectly,
   dirContents,
+  matchesFixture,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../helpers.js';
 
@@ -36,6 +37,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
           expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
+          await matchesFixture('.github/workflows/push-dist.yml', { cwd: helper.projectRoot });
+
           break;
         }
         case 'yarn': {
@@ -43,12 +46,22 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
           expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
+          await matchesFixture('.github/workflows/push-dist.yml', {
+            cwd: helper.projectRoot,
+            scenario: 'yarn',
+          });
+
           break;
         }
         case 'pnpm': {
           expect(await fse.pathExists(pnpm), 'for pnpm: pnpm-lock.yaml exists').toBe(true);
           expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
           expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
+
+          await matchesFixture('.github/workflows/push-dist.yml', {
+            cwd: helper.projectRoot,
+            scenario: 'pnpm',
+          });
 
           break;
         }
@@ -65,7 +78,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+      await assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
     });
 
     // Tests are additive, so when running them in order, we want to check linting
