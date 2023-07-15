@@ -1,5 +1,6 @@
 import { type Options, execa } from 'execa';
 import fse from 'fs-extra';
+import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -26,6 +27,14 @@ export async function fixture(
 ) {
   let scenario = options?.scenario ?? 'default';
   let fixtureFilePath = path.isAbsolute(file) ? file : path.join(fixturesPath, scenario, file);
+
+  let exists = await fse.pathExists(fixtureFilePath);
+
+  assert(
+    exists,
+    `Fixture file ${fixtureFilePath} does not exist. To make this work, place a new file ${fixtureFilePath} in the tests/fixtures/${scenario} directory`
+  );
+
   let contents = await fs.readFile(fixtureFilePath);
 
   return contents.toString();
