@@ -47,6 +47,8 @@ jobs:
         # so we could be sure we don't miss anything
         # and then generate this list from a previous C.I. job
         slow-test:
+          - components
+
           - defaults with npm
           - defaults with yarn
           - defaults with pnpm
