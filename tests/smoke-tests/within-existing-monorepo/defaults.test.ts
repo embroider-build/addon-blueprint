@@ -7,17 +7,14 @@ import { assertGeneratedCorrectly } from '../../assertions.js';
 import {
   createAddon,
   createTmp,
+  fixture,
   install,
   runScript,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../../utils.js';
 
 let commonFixtures = {
-  '.prettierrc.js':
-    // prettier-ignore
-    'module.exports = {' + 
-        '  singleQuote: true,' + 
-        '};',
+  '.prettierrc.js': await fixture('.prettierrc.js'),
 };
 
 for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {

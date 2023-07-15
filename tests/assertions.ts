@@ -85,14 +85,18 @@ export async function matchesFixture(
 
   if (options?.cwd) {
     testFilePath = path.join(options.cwd, testFilePath);
-    fixtureFile = path.join(options.cwd, fixtureFile);
   }
 
-  let sourceContents = await fs.readFile(testFilePath);
+  let sourceContents = (await fs.readFile(testFilePath)).toString();
   let fixtureContents = await fixture(fixtureFile, { scenario });
 
-  expect(sourceContents.toString()).to.equal(
-    fixtureContents,
+  /**
+   * We trim because whether or not the source or fixture has
+   * leading / trailing invisible characters is of no significance
+   * and is mostly a bother to get correct in testing
+   */
+  expect(sourceContents.trim()).to.equal(
+    fixtureContents.trim(),
     `${testFilePath} matches ${fixtureFile}`
   );
 }
