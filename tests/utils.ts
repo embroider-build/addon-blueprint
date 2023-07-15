@@ -32,7 +32,7 @@ export async function fixture(
 
   assert(
     exists,
-    `Fixture file ${file} does not exist. To make this work, place a new file ${file} in the tests/fixtures/${scenario} directory`
+    `Fixture file '${file}' does not exist. To make this work, place a new file '${file}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fixtureFilePath}'.`
   );
 
   let contents = await fs.readFile(fixtureFilePath);
