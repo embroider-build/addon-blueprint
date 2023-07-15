@@ -1,0 +1,3 @@
+# Editors may run prettier per-workspace, which would ignore 
+# the top-level workspaces' prettier config.
+fixtures/
