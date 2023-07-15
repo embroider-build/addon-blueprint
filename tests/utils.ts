@@ -13,6 +13,43 @@ const fixturesPath = path.join(__dirname, 'fixtures');
 
 export const SUPPORTED_PACKAGE_MANAGERS = ['npm', 'yarn', 'pnpm'] as const;
 
+export async function copyFixture(
+  /**
+   * Which file within the fixture-set / scenario to copy
+   */
+  newFile: string,
+  options?: {
+    /**
+     * Which fixture set to use
+     */
+    scenario?: string;
+    /**
+     * By default, the file used will be the same as the testFilePath, but
+     * in the fixtures directory under the (maybe) specified scenario.
+     * this can be overridden, if needed.
+     * (like if you're testFilePath is deep with in an existing monorepo, and wouldn't
+     *   inherently match our default-project structure used in the fixtures)
+     */
+    file?: string;
+    /**
+     * The working directory to use for the relative paths. Defaults to process.cwd() (node default)
+     */
+    cwd?: string;
+  }
+) {
+  let scenario = options?.scenario ?? 'default';
+  let fixtureFile = options?.file ?? newFile;
+
+  if (options?.cwd) {
+    newFile = path.join(options.cwd, newFile);
+  }
+
+  let fixtureContents = await fixture(fixtureFile, { scenario });
+
+  await fse.mkdir(path.dirname(newFile), { recursive: true });
+  await fs.writeFile(newFile, fixtureContents);
+}
+
 export async function fixture(
   /**
    * Which file within in the fixture-set / scenario to read
