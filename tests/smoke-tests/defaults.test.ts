@@ -18,6 +18,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     let cwd = '';
     let tmpDir = '';
     let distDir = '';
+    let addonName = '';
 
     beforeAll(async () => {
       tmpDir = await createTmp();
@@ -28,6 +29,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         args: [`--${packageManager}=true`],
         options: { cwd: tmpDir },
       });
+
+      addonName = name;
 
       cwd = path.join(tmpDir, name);
       distDir = path.join(cwd, name, 'dist');
@@ -82,7 +85,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       assertGeneratedCorrectly({ projectRoot: cwd });
     });
 
-    it('builds the addon and runs tests', async () => {
+    it('builds the empty addon and runs tests', async () => {
       let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
 
       expect(exitCode).toEqual(0);
@@ -90,6 +93,25 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let contents = await dirContents(distDir);
 
       expect(contents).to.deep.equal(['index.js', 'index.js.map']);
+
+      let { exitCode: testExitCode } = await runScript({ cwd, script: 'test', packageManager });
+
+      expect(testExitCode).toEqual(0);
+    });
+
+    it('builds the addon with fixtures and runs tests', async () => {
+      await fs.cp('./fixtures/components', path.join(cwd, addonName, 'src', 'components'), {
+        recursive: true,
+      });
+      await fs.cp('./fixtures/tests/', path.join(cwd, 'test-app', 'tests'), { recursive: true });
+
+      let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
+
+      expect(exitCode).toEqual(0);
+
+      let contents = await dirContents(distDir);
+
+      expect(contents).to.deep.equal(['_app_', 'components', 'index.js', 'index.js.map']);
 
       let { exitCode: testExitCode } = await runScript({ cwd, script: 'test', packageManager });
 
