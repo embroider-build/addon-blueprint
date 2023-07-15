@@ -7,5 +7,6 @@
 
     // Vite's internal types aren't relevant to us
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["fixtures/"]
 }
