@@ -13,7 +13,15 @@ const fixturesPath = path.join(__dirname, 'fixtures');
 
 export const SUPPORTED_PACKAGE_MANAGERS = ['npm', 'yarn', 'pnpm'] as const;
 
-export async function fixture(
+/**
+ * Returns the contents of a file from the "tests/fixtures" directory.
+ * The "tests/fixtures" directory contains sub-directories, "scenarios".
+ * This is we can have different sets of fixtures, depending on what we're testing.
+ *
+ * The default scenario is "default", and represents the the file contents when we provide
+ * no arguments to the blueprint
+ */
+export async function readFixture(
   /**
    * Which file within in the fixture-set / scenario to read
    */

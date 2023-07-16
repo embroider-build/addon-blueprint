@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect } from 'vitest';
 
-import { fixture, packageJsonAt } from './utils.js';
+import { packageJsonAt, readFixture } from './utils.js';
 
 interface AssertGeneratedOptions {
   projectRoot: string;
@@ -88,7 +88,7 @@ export async function matchesFixture(
   }
 
   let sourceContents = (await fs.readFile(testFilePath)).toString();
-  let fixtureContents = await fixture(fixtureFile, { scenario });
+  let fixtureContents = await readFixture(fixtureFile, { scenario });
 
   /**
    * We trim because whether or not the source or fixture has
