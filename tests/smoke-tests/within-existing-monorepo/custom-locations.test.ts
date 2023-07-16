@@ -4,10 +4,11 @@ import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { assertGeneratedCorrectly } from '../../assertions.js';
-import { createAddon, createTmp, fixture, install, runScript } from '../../utils.js';
+import { readFixture } from '../../fixtures.js';
+import { createAddon, createTmp, install, runScript } from '../../utils.js';
 
 let commonFixtures = {
-  '.prettierrc.js': await fixture('.prettierrc.js'),
+  '.prettierrc.js': await readFixture('.prettierrc.js'),
 };
 
 describe('custom locations', () => {

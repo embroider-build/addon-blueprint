@@ -1,0 +1,115 @@
+import assert from 'node:assert';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+import { matchesFixture } from './assertions.js';
+import { copyFixture } from './fixtures.js';
+import { createAddon, createTmp, install, runScript } from './utils.js';
+
+const DEBUG = process.env.DEBUG === 'true';
+
+/**
+ * Helps with common addon testing concerns.
+ * tl;dr:
+ *   it's a wrapper around ember addon -b (so we can pass our flags with less duplication)
+ *   it lets us set compare against a fixture set / scenario
+ *
+ * To DEBUG the intermediate output (in tmp),
+ * re-start your tests with `DEBUG=true`, and the tmpdir will be printed
+ * as well as the `clean` function will not run so that if a test finishes,
+ * you can still inspect the folder contents
+ *
+ */
+export class AddonHelper {
+  #cwd?: string;
+  #tmpDir?: string;
+  #scenario: string;
+  #packageManager: 'npm' | 'pnpm' | 'yarn';
+  #args: string[];
+  #fixtures: AddonFixtureHelper | undefined;
+
+  constructor(options: {
+    args?: string[];
+    scenario?: string;
+    packageManager: 'pnpm' | 'npm' | 'yarn';
+  }) {
+    this.#args = options.args || [];
+    this.#scenario = options.scenario || 'default';
+    this.#packageManager = options.packageManager;
+  }
+
+  async setup() {
+    this.#tmpDir = await createTmp();
+
+    if (DEBUG) {
+      console.debug(`Debug test repo at ${this.#tmpDir}`);
+    }
+
+    let { name } = await createAddon({
+      args: this.#args,
+      options: { cwd: this.#tmpDir },
+    });
+
+    // this is the project root
+    this.#cwd = path.join(this.#tmpDir, name);
+
+    this.#fixtures = new AddonFixtureHelper({ cwd: this.#cwd, scenario: this.#scenario });
+  }
+
+  async run(scriptName: string) {
+    return await runScript({
+      cwd: this.cwd,
+      script: scriptName,
+      packageManager: this.#packageManager,
+    });
+  }
+
+  async build() {
+    return this.run('build');
+  }
+
+  async clean() {
+    if (DEBUG) return;
+
+    assert(
+      this.#tmpDir,
+      "Cannot clean without a tmpDir. Was the Addon Helper's `setup` method called to generate the addon?"
+    );
+
+    await fs.rm(this.#tmpDir, { recursive: true, force: true });
+  }
+
+  async installDeps() {
+    await install({ cwd: this.cwd, packageManager: this.#packageManager, skipPrepare: true });
+  }
+
+  get cwd() {
+    assert(this.#cwd, "Cannot get cwd. Was the Addon Helper's `setup` method called?");
+
+    return this.#cwd;
+  }
+
+  get fixtures() {
+    assert(this.#fixtures, 'Cannot get fixtures-helper. Was the Addon Helper `setup`?');
+
+    return this.#fixtures;
+  }
+}
+
+export class AddonFixtureHelper {
+  #cwd: string;
+  #scenario: string;
+
+  constructor(options: { cwd: string; scenario?: string }) {
+    this.#cwd = options.cwd;
+    this.#scenario = options.scenario || 'default';
+  }
+
+  async use(file: string) {
+    await copyFixture(file, { scenario: this.#scenario, cwd: this.#cwd });
+  }
+
+  async matches(outputFile: string) {
+    await matchesFixture(outputFile, { scenario: this.#scenario, cwd: this.#cwd });
+  }
+}

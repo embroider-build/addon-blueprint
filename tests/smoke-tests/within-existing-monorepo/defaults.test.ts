@@ -4,17 +4,17 @@ import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { assertGeneratedCorrectly } from '../../assertions.js';
+import { readFixture } from '../../fixtures.js';
 import {
   createAddon,
   createTmp,
-  fixture,
   install,
   runScript,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../../utils.js';
 
 let commonFixtures = {
-  '.prettierrc.js': await fixture('.prettierrc.js'),
+  '.prettierrc.js': await readFixture('.prettierrc.js'),
 };
 
 for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {

@@ -3,7 +3,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect } from 'vitest';
 
-import { packageJsonAt, readFixture } from './utils.js';
+import { readFixture } from './fixtures.js';
+import { packageJsonAt } from './utils.js';
 
 interface AssertGeneratedOptions {
   projectRoot: string;
