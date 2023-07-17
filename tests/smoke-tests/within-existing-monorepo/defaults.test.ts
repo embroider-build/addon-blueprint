@@ -3,15 +3,15 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { assertGeneratedCorrectly } from '../../assertions.js';
-import { readFixture } from '../../fixtures.js';
 import {
+  assertGeneratedCorrectly,
   createAddon,
   createTmp,
   install,
+  readFixture,
   runScript,
   SUPPORTED_PACKAGE_MANAGERS,
-} from '../../utils.js';
+} from '../../helpers.js';
 
 let commonFixtures = {
   '.prettierrc.js': await readFixture('.prettierrc.js'),

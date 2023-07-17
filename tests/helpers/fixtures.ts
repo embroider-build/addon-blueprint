@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const fixturesPath = path.join(__dirname, 'fixtures');
+const fixturesPath = path.join(__dirname, '../fixtures');
 
 /**
  * Returns the contents of a file from the "tests/fixtures" directory.

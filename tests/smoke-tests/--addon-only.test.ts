@@ -2,7 +2,7 @@ import fse from 'fs-extra';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { AddonHelper } from '../test-helpers.js';
+import { AddonHelper } from '../helpers.js';
 
 describe('--addon-only', () => {
   let helper = new AddonHelper({ packageManager: 'pnpm', args: ['--addon-only'] });
