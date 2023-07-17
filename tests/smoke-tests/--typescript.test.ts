@@ -1,15 +1,16 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { assertGeneratedCorrectly } from '../assertions.js';
 import {
+  assertGeneratedCorrectly,
   createAddon,
   createTmp,
   dirContents,
   install,
   runScript,
   SUPPORTED_PACKAGE_MANAGERS,
-} from '../utils.js';
+} from '../helpers.js';
 
 for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
   describe(`--typescript with ${packageManager}`, () => {
@@ -34,7 +35,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     afterAll(async () => {
-      // await fs.rm(tmpDir, { recursive: true, force: true });
+      await fs.rm(tmpDir, { recursive: true, force: true });
     });
 
     it('was generated correctly', async () => {

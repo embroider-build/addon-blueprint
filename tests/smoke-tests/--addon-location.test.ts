@@ -2,8 +2,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { assertGeneratedCorrectly } from '../assertions.js';
-import { createAddon, createTmp, install, runScript } from '../utils.js';
+import {
+  assertGeneratedCorrectly,
+  createAddon,
+  createTmp,
+  install,
+  runScript,
+} from '../helpers.js';
 
 describe('--addon-location', () => {
   let cwd = '';

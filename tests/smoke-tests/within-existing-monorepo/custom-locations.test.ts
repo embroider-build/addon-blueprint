@@ -3,15 +3,17 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { assertGeneratedCorrectly } from '../../assertions.js';
-import { createAddon, createTmp, install, runScript } from '../../utils.js';
+import {
+  assertGeneratedCorrectly,
+  createAddon,
+  createTmp,
+  install,
+  readFixture,
+  runScript,
+} from '../../helpers.js';
 
 let commonFixtures = {
-  '.prettierrc.js':
-    // prettier-ignore
-    'module.exports = {' + 
-        '  singleQuote: true,' + 
-        '};',
+  '.prettierrc.js': await readFixture('.prettierrc.js'),
 };
 
 describe('custom locations', () => {

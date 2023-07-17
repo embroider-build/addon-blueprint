@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const blueprintPath = path.join(__dirname, '..');
+// repo-root
+const blueprintPath = path.join(__dirname, '../..');
 
 export const SUPPORTED_PACKAGE_MANAGERS = ['npm', 'yarn', 'pnpm'] as const;
 
