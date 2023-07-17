@@ -74,8 +74,32 @@ export async function copyFixture(
     newFile = path.join(options.cwd, newFile);
   }
 
+  let fullFixturePath = path.join(fixturesPath, scenario, fixtureFile);
+  let exists = await fse.pathExists(fullFixturePath);
+
+  assert(
+    exists,
+    `Fixture path '${fixtureFile}' does not exist. To make this work, place a new file/folder '${fixtureFile}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fullFixturePath}'.`
+  );
+
+  if (await isDirectory(fullFixturePath)) {
+    await fse.copy(fullFixturePath, newFile);
+
+    return;
+  }
+
   let fixtureContents = await readFixture(fixtureFile, { scenario });
 
   await fse.mkdir(path.dirname(newFile), { recursive: true });
   await fs.writeFile(newFile, fixtureContents);
+}
+
+async function isDirectory(maybePath: string) {
+  try {
+    const stats = await fs.stat(maybePath);
+
+    return stats.isDirectory();
+  } catch {
+    return false;
+  }
 }

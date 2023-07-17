@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+const DEBUG = process.env.DEBUG === 'true';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // repo-root
@@ -128,11 +129,18 @@ export async function createAddon({
   args?: string[];
   options?: Options;
 }) {
-  let result = await execa(
-    'ember',
-    ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args],
-    { ...options, env: { ...options.env, EMBER_CLI_PNPM: 'true' }, preferLocal: true }
-  );
+  let emberCliArgs = ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args];
+
+  if (DEBUG) {
+    console.debug(`Running ember-cli in ${options.cwd}`);
+    console.debug(`\tember ${emberCliArgs.join(' ')}`);
+  }
+
+  let result = await execa('ember', emberCliArgs, {
+    ...options,
+    env: { ...options.env, EMBER_CLI_PNPM: 'true' },
+    preferLocal: true,
+  });
 
   // Light work-around for an upstream `@babel/core` peer issue
   if (typeof options.cwd === 'string') {

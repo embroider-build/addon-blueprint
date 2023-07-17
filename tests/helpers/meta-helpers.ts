@@ -59,7 +59,7 @@ export class AddonHelper {
     }
 
     let { name } = await createAddon({
-      args: this.#args,
+      args,
       options: { cwd: this.#tmpDir },
     });
 
@@ -93,11 +93,13 @@ export class AddonHelper {
     await fs.rm(this.#tmpDir, { recursive: true, force: true });
   }
 
-  async installDeps() {
+  async installDeps(options?: { skipPrepare: boolean }) {
+    let skipPrepare = options?.skipPrepare ?? true;
+
     await install({
       cwd: this.projectRoot,
       packageManager: this.#packageManager,
-      skipPrepare: true,
+      skipPrepare,
     });
   }
 
