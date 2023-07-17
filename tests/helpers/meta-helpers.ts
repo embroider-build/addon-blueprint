@@ -21,10 +21,11 @@ const DEBUG = process.env.DEBUG === 'true';
  *
  */
 export class AddonHelper {
-  #cwd?: string;
+  #projectRoot?: string;
   #tmpDir?: string;
   #scenario: string;
   #packageManager: 'npm' | 'pnpm' | 'yarn';
+  #addonFolder?: string;
   #args: string[];
   #fixtures: AddonFixtureHelper | undefined;
 
@@ -45,20 +46,33 @@ export class AddonHelper {
       console.debug(`Debug test repo at ${this.#tmpDir}`);
     }
 
+    let args = [...this.#args];
+    let needsPackageManagerSet =
+      !args.includes(`--${this.#packageManager}`) &&
+      !args.some((arg) => arg.startsWith('--packageManager')) &&
+      !args.some((arg) => arg.startsWith('--npm')) &&
+      !args.some((arg) => arg.startsWith('--yarn')) &&
+      !args.some((arg) => arg.startsWith('--pnpm'));
+
+    if (needsPackageManagerSet) {
+      args.push(`--${this.#packageManager}`);
+    }
+
     let { name } = await createAddon({
       args: this.#args,
       options: { cwd: this.#tmpDir },
     });
 
     // this is the project root
-    this.#cwd = path.join(this.#tmpDir, name);
+    this.#projectRoot = path.join(this.#tmpDir, name);
+    this.#addonFolder = path.join(this.#projectRoot, name);
 
-    this.#fixtures = new AddonFixtureHelper({ cwd: this.#cwd, scenario: this.#scenario });
+    this.#fixtures = new AddonFixtureHelper({ cwd: this.#projectRoot, scenario: this.#scenario });
   }
 
   async run(scriptName: string) {
     return await runScript({
-      cwd: this.cwd,
+      cwd: this.projectRoot,
       script: scriptName,
       packageManager: this.#packageManager,
     });
@@ -80,19 +94,29 @@ export class AddonHelper {
   }
 
   async installDeps() {
-    await install({ cwd: this.cwd, packageManager: this.#packageManager, skipPrepare: true });
+    await install({
+      cwd: this.projectRoot,
+      packageManager: this.#packageManager,
+      skipPrepare: true,
+    });
   }
 
-  get cwd() {
-    assert(this.#cwd, "Cannot get cwd. Was the Addon Helper's `setup` method called?");
+  get projectRoot() {
+    assert(this.#projectRoot, "Cannot get cwd. Was the Addon Helper's `setup` method called?");
 
-    return this.#cwd;
+    return this.#projectRoot;
   }
 
   get fixtures() {
     assert(this.#fixtures, 'Cannot get fixtures-helper. Was the Addon Helper `setup`?');
 
     return this.#fixtures;
+  }
+
+  get addonFolder() {
+    assert(this.#addonFolder, 'Cannot get addon folder. Was the Addon Helper `setup`?');
+
+    return this.#addonFolder;
   }
 }
 

@@ -17,8 +17,10 @@ describe('--addon-only', () => {
   });
 
   it('is not a monorepo', async () => {
-    let hasPnpmWorkspace = await fse.pathExists(path.join(helper.cwd, 'pnpm-workspace.yaml'));
-    let packageJson = await fse.readJson(path.join(helper.cwd, 'package.json'));
+    let hasPnpmWorkspace = await fse.pathExists(
+      path.join(helper.projectRoot, 'pnpm-workspace.yaml')
+    );
+    let packageJson = await fse.readJson(path.join(helper.projectRoot, 'package.json'));
 
     expect(hasPnpmWorkspace).toBe(false);
     // Pnpm doesn't use this field, but it's good that it doesn't exist.
