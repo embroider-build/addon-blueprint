@@ -10,6 +10,23 @@
 
 
 
+
+## v2.0.0 (2023-07-17)
+
+#### :boom: Breaking Change
+* [#149](https://github.com/embroider-build/addon-blueprint/pull/149) Drop node 14 support ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#155](https://github.com/embroider-build/addon-blueprint/pull/155) Remove node resolve ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#150](https://github.com/embroider-build/addon-blueprint/pull/150) Re-enable typescript tests ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#147](https://github.com/embroider-build/addon-blueprint/pull/147) Reorganize tests in to multiple files so the tests are less overwheming to work with ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#148](https://github.com/embroider-build/addon-blueprint/pull/148) Use a newer pnpm ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v1.7.0 (2023-07-06)
 
 #### :rocket: Enhancement
