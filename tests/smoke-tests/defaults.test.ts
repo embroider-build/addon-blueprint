@@ -1,48 +1,34 @@
 import fse from 'fs-extra';
-import fs from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
+  AddonHelper,
   assertGeneratedCorrectly,
-  createAddon,
-  createTmp,
   dirContents,
-  install,
-  runScript,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../helpers.js';
 
 for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
   describe(`defaults with ${packageManager}`, () => {
-    let cwd = '';
-    let tmpDir = '';
     let distDir = '';
+    let helper = new AddonHelper({ packageManager });
 
     beforeAll(async () => {
-      tmpDir = await createTmp();
+      await helper.setup();
+      await helper.installDeps({ skipPrepare: false });
 
-      console.debug(`Debug test repo at ${tmpDir}`);
-
-      let { name } = await createAddon({
-        args: [`--${packageManager}=true`],
-        options: { cwd: tmpDir },
-      });
-
-      cwd = path.join(tmpDir, name);
-      distDir = path.join(cwd, name, 'dist');
-
-      await install({ cwd, packageManager });
+      distDir = path.join(helper.addonFolder, 'dist');
     });
 
     afterAll(async () => {
-      fs.rm(tmpDir, { recursive: true, force: true });
+      await helper.clean();
     });
 
     it('is using the correct packager', async () => {
-      let npm = path.join(cwd, 'package-lock.json');
-      let yarn = path.join(cwd, 'yarn.lock');
-      let pnpm = path.join(cwd, 'pnpm-lock.yaml');
+      let npm = path.join(helper.projectRoot, 'package-lock.json');
+      let yarn = path.join(helper.projectRoot, 'yarn.lock');
+      let pnpm = path.join(helper.projectRoot, 'pnpm-lock.yaml');
 
       switch (packageManager) {
         case 'npm': {
@@ -79,29 +65,38 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: cwd });
+      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
     });
 
-    it('builds the addon', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'build', packageManager });
+    // Tests are additive, so when running them in order, we want to check linting
+    // before we add files from fixtures
+    it('lints all pass', async () => {
+      let { exitCode } = await helper.run('lint');
 
       expect(exitCode).toEqual(0);
+    });
+
+    it('build and test ', async () => {
+      // Copy over fixtures
+      await helper.fixtures.use('./my-addon/src/components');
+      await helper.fixtures.use('./test-app/tests');
+      // Sync fixture with project's lint / formatting configuration
+      await helper.run('lint:fix');
+
+      let buildResult = await helper.build();
+
+      expect(buildResult.exitCode).toEqual(0);
 
       let contents = await dirContents(distDir);
 
-      expect(contents).to.deep.equal(['index.js', 'index.js.map']);
-    });
+      expect(contents).to.deep.equal(['_app_', 'components', 'index.js', 'index.js.map']);
 
-    it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test', packageManager });
+      let testResult = await helper.run('test');
 
-      expect(exitCode).toEqual(0);
-    });
-
-    it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager });
-
-      expect(exitCode).toEqual(0);
+      expect(testResult.exitCode).toEqual(0);
+      expect(testResult.stdout).to.include('# tests 3');
+      expect(testResult.stdout).to.include('# pass  3');
+      expect(testResult.stdout).to.include('# fail  0');
     });
   });
 }
