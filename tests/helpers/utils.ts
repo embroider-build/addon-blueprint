@@ -1,3 +1,4 @@
+import debug from 'debug';
 import { type Options, execa } from 'execa';
 import fse from 'fs-extra';
 import fs from 'node:fs/promises';
@@ -5,7 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const DEBUG = process.env.DEBUG === 'true';
+const debugLog = debug('addon-blueprint:utils');
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // repo-root
@@ -91,7 +93,11 @@ export async function runScript({
   let promise = execa(packageManager, ['run', script], { cwd });
 
   try {
-    await promise;
+    const result = await promise;
+
+    debugLog(`Finished running script ${script}`);
+    debugLog(result.stdout);
+    debugLog(result.stderr);
 
     return promise;
   } catch (e) {
@@ -131,10 +137,8 @@ export async function createAddon({
 }) {
   let emberCliArgs = ['addon', name, '-b', blueprintPath, '--skip-npm', '--skip-git', ...args];
 
-  if (DEBUG) {
-    console.debug(`Running ember-cli in ${options.cwd}`);
-    console.debug(`\tember ${emberCliArgs.join(' ')}`);
-  }
+  debugLog(`Running ember-cli in ${options.cwd}`);
+  debugLog(`\tember ${emberCliArgs.join(' ')}`);
 
   let result = await execa('ember', emberCliArgs, {
     ...options,
