@@ -1,58 +1,79 @@
-import fs from 'node:fs/promises';
+import { execa } from 'execa';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
+  AddonHelper,
   assertGeneratedCorrectly,
-  createAddon,
-  createTmp,
   dirContents,
-  install,
-  runScript,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../helpers.js';
 
 for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
   describe(`--typescript with ${packageManager}`, () => {
-    let cwd = '';
-    let tmpDir = '';
     let distDir = '';
     let declarationsDir = '';
+    let helper = new AddonHelper({
+      packageManager,
+      args: ['--typescript'],
+      scenario: 'typescript',
+    });
 
     beforeAll(async () => {
-      tmpDir = await createTmp();
+      await helper.setup();
+      await helper.installDeps();
 
-      let { name } = await createAddon({
-        args: ['--typescript', `--${packageManager}=true`, '--skip-npm'],
-        options: { cwd: tmpDir },
-      });
-
-      cwd = path.join(tmpDir, name);
-      distDir = path.join(cwd, name, 'dist');
-      declarationsDir = path.join(cwd, name, 'declarations');
-
-      await install({ cwd, packageManager, skipPrepare: true });
+      distDir = path.join(helper.addonFolder, 'dist');
+      declarationsDir = path.join(helper.addonFolder, 'declarations');
     });
 
     afterAll(async () => {
-      await fs.rm(tmpDir, { recursive: true, force: true });
+      await helper.clean();
     });
 
     it('was generated correctly', async () => {
-      await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
+      await helper.build();
 
-      assertGeneratedCorrectly({ projectRoot: cwd });
+      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
     });
 
-    it('builds the addon', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'build', packageManager: 'pnpm' });
+    // Tests are additive, so when running them in order, we want to check linting
+    // before we add files from fixtures
+    it('lints all pass', async () => {
+      let { exitCode } = await helper.run('lint');
 
       expect(exitCode).toEqual(0);
+    });
 
-      let distContents = await dirContents(distDir);
+    it('build and test', async () => {
+      // Copy over fixtures
+      await helper.fixtures.use('./my-addon/src/components');
+      await helper.fixtures.use('./test-app/tests');
+      // Sync fixture with project's lint / formatting configuration
+      // (controlled by ember-cli)
+      await helper.run('lint:fix');
+
+      /**
+       * In order to use build with components, we need to add more dependencies
+       * We may want to consider making these default
+       */
+      await execa('pnpm', ['add', '--save-peer', '@glimmer/component'], {
+        cwd: helper.addonFolder,
+      });
+
+      let buildResult = await helper.build();
+
+      expect(buildResult.exitCode).toEqual(0);
+
+      let distContents = (await dirContents(distDir)).filter(
+        // these files have a hash that changes based on file contents
+        (distFile) => !distFile.startsWith('_rollupPluginBabelHelpers')
+      );
       let declarationsContents = await dirContents(declarationsDir);
 
       expect(distContents).to.deep.equal([
+        '_app_',
+        'components',
         'index.js',
         'index.js.map',
         'template-registry.js',
@@ -65,18 +86,13 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         'template-registry.d.ts',
         'template-registry.d.ts.map',
       ]);
-    });
 
-    it('runs tests', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'test', packageManager: 'pnpm' });
+      let testResult = await helper.run('test');
 
-      expect(exitCode).toEqual(0);
-    });
-
-    it('lints all pass', async () => {
-      let { exitCode } = await runScript({ cwd, script: 'lint', packageManager: 'pnpm' });
-
-      expect(exitCode).toEqual(0);
+      expect(testResult.exitCode).toEqual(0);
+      expect(testResult.stdout).to.include('# tests 4');
+      expect(testResult.stdout).to.include('# pass  4');
+      expect(testResult.stdout).to.include('# fail  0');
     });
   });
 }
