@@ -65,7 +65,12 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     it('was generated correctly', async () => {
-      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+      await assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+
+      let contents = await dirContents(helper.addonFolder);
+
+      expect(contents).to.not.include('type-tests');
+      expect(contents).to.not.include('tsconfig.json');
     });
 
     // Tests are additive, so when running them in order, we want to check linting

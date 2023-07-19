@@ -25,6 +25,7 @@
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",<% if (typescript) { %>
     "lint:types": "glint",
+    "lint:types-tests": "glint --project type-tests",
     "start": "concurrently 'npm:start:*'",
     "start:js": "rollup --config --watch --no-watch.clearScreen",
     "start:types": "glint --declaration --watch",<% } else { %>
@@ -73,7 +74,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^11.6.0",
     "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.0.0",<% if (typescript) { %>
+    "expect-type": "^0.16.0",<% } %>
     "prettier": "^2.5.1",
     "rollup": "^3.21.8"<% if (!isExistingMonorepo) { %>,
     "rollup-plugin-copy": "^3.4.0"<% } %><% if (typescript) { %>,

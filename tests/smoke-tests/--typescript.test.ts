@@ -13,6 +13,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
   describe(`--typescript with ${packageManager}`, () => {
     let distDir = '';
     let declarationsDir = '';
+    let typeTestsDir = '';
     let helper = new AddonHelper({
       packageManager,
       args: ['--typescript'],
@@ -25,6 +26,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       distDir = path.join(helper.addonFolder, 'dist');
       declarationsDir = path.join(helper.addonFolder, 'declarations');
+      typeTestsDir = path.join(helper.addonFolder, 'type-tests');
     });
 
     afterAll(async () => {
@@ -34,15 +36,23 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     it('was generated correctly', async () => {
       await helper.build();
 
-      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+      await assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+
+      let contents = await dirContents(helper.addonFolder);
+
+      expect(contents).to.include('type-tests');
+      expect(contents).to.include('tsconfig.json');
+
+      expect(await dirContents(typeTestsDir)).to.deep.equal(['index.test.ts', 'tsconfig.json']);
     });
 
     // Tests are additive, so when running them in order, we want to check linting
     // before we add files from fixtures
     it('lints all pass', async () => {
-      let { exitCode } = await helper.run('lint');
+      let { exitCode, stdout } = await helper.run('lint');
 
       expect(exitCode).toEqual(0);
+      expect(stdout).to.include('lint:types-tests');
     });
 
     it('build and test', async () => {

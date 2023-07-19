@@ -310,6 +310,8 @@ module.exports = {
       files = files.filter(
         (filename) => !filename.match(/.*\.ts$/) && !ignoredFiles.includes(filename)
       );
+
+      files = files.filter((filename) => !filename.includes('type-tests'));
     }
 
     if (this.isExistingMonorepo) {
