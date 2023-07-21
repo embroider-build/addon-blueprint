@@ -93,8 +93,6 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       // Copy over fixtures
       await helper.fixtures.use('./my-addon/src/components');
       await helper.fixtures.use('./test-app/tests');
-      // Sync fixture with project's lint / formatting configuration
-      await helper.run('lint:fix');
 
       let buildResult = await helper.build();
 
