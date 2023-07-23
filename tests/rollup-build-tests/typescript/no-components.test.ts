@@ -38,14 +38,7 @@ describe(`rollup-build | typescript-utils`, () => {
     );
     let declarationsContents = await dirContents(declarationsDir);
 
-    expect(distContents).to.deep.equal([
-      '_app_',
-      'components',
-      'index.js',
-      'index.js.map',
-      'template-registry.js',
-      'template-registry.js.map',
-    ]);
+    expect(distContents).to.deep.equal(['index.js', 'index.js.map']);
 
     expect(declarationsContents).to.deep.equal([
       'index.d.ts',
