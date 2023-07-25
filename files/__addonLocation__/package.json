@@ -5,6 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
+  "type": "module",
   "repository": "",
   "license": "MIT",
   "author": "",
