@@ -53,7 +53,7 @@ export async function assertGeneratedCorrectly({
     expect(await fse.pathExists(pathToFile), `${pathToFile} exists`).toBe(true);
   }
 
-  await matchesFixture('.prettierrc.js', { cwd: projectRoot });
+  await matchesFixture('.prettierrc.cjs', { cwd: projectRoot });
 }
 
 export async function matchesFixture(
