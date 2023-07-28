@@ -13,7 +13,7 @@ import {
 } from '../../helpers.js';
 
 let commonFixtures = {
-  '.prettierrc.cjs': await readFixture('.prettierrc.cjs'),
+  '.prettierrc.js': await readFixture('.prettierrc.js'),
 };
 
 describe('custom locations', () => {
