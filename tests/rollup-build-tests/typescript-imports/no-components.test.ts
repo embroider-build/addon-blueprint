@@ -3,13 +3,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AddonHelper, dirContents } from '../../helpers.js';
 
-describe(`rollup-build | typescript-utils`, () => {
+describe(`rollup-build | typescript-imports`, () => {
   let distDir = '';
   let declarationsDir = '';
   let helper = new AddonHelper({
     packageManager: 'pnpm',
     args: ['--typescript'],
-    scenario: 'typescript-utils',
+    scenario: 'typescript-imports',
   });
 
   beforeAll(async () => {
@@ -52,5 +52,12 @@ describe(`rollup-build | typescript-utils`, () => {
       'template-registry.d.ts',
       'template-registry.d.ts.map',
     ]);
+
+    let testResult = await helper.run('test');
+
+    expect(testResult.exitCode).toEqual(0);
+    expect(testResult.stdout).to.include('# tests 2');
+    expect(testResult.stdout).to.include('# pass  2');
+    expect(testResult.stdout).to.include('# fail  0');
   });
 });
