@@ -81,6 +81,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       ]);
 
       expect(declarationsContents).to.deep.equal([
+        'components',
         'index.d.ts',
         'index.d.ts.map',
         'template-registry.d.ts',
