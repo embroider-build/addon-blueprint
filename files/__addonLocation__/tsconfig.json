@@ -8,6 +8,7 @@
     "environment": "ember-loose"
   },
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "declarationDir": "declarations"
   }
 }

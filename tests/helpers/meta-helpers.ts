@@ -131,10 +131,24 @@ export class AddonFixtureHelper {
     this.#scenario = options.scenario || 'default';
   }
 
+  /**
+   * Copies all files over from the fixture
+   */
+  async useAll() {
+    await this.use('.');
+  }
+
+  /**
+   * Copies some files over from the fixture
+   */
   async use(file: string) {
     await copyFixture(file, { scenario: this.#scenario, cwd: this.#cwd });
   }
 
+  /**
+   * Throws an error if the specified outputFile does not
+   * have matching contents in the fixture.
+   */
   async matches(outputFile: string) {
     await matchesFixture(outputFile, { scenario: this.#scenario, cwd: this.#cwd });
   }

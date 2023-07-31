@@ -65,6 +65,9 @@ jobs:
           - monorepo with npm
           - monorepo with yarn
           - monorepo with pnpm
+
+          # build-only tests for testing if the rollup config works at all
+          - rollup-build
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
