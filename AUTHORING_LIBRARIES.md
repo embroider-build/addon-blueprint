@@ -46,12 +46,17 @@ A couple caveats with older, co-located components,
 
 ## CSS
 
+As mentioned in the [RFC for Native Packages](https://github.com/emberjs/rfcs/blob/master/text/0507-embroider-v2-package-format.md#css), 
+
+> If any of the Own Javascript or App Javascript modules depend on the presence of a CSS file in the same package, it should say so explicitly via an ECMA relative import, like:
+> 
+> import '../css/some-component.css';
+>
+> This is interpreted as a build-time directive that ensures that before the Javascript module is evaluated, the CSS file's contents will be present in the DOM. ECMA import of CSS files must always include the explicit .css extension.
+
 The broader JavaScript ecosystem does not yet have a standardized way of handling CSS form libraries, but there are some things aligning. This [proposal-import-attributes](https://github.com/tc39/proposal-import-attributes) describes how packagers (such as Webpack, Vite, etc), can consistently, cross-ecosystem-ly, interpreted CSS imports and have CSS participate in the module graph. 
 
 We want CSS to participate in the module graph so that tree-shaking and bundle splitting can work for CSS as well as JS. Though, this applies to more than just CSS, and it will work for any file extension that you want to import. For example, importing SVG files could give you the SVG, the URL to the SVG, or a reference to a spritesheet.
-
-For now though, importing CSS in libraries requires some assumptions about what the consumers' build configuration is, and _may_ be packager-specific.
-
 
 [^anywhere]: no reliance on ember-cli. Eventually this'll mean that you can use CDN-imports to import your libraries in REPLs.
 [^gjs]: this is one of the reasons ember is moving to gjs/gts for components, because the concept of a "module" is important, and easily represented by this file type.
