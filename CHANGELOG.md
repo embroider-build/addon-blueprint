@@ -11,6 +11,23 @@
 
 
 
+
+## v2.1.0 (2023-08-01)
+
+#### :rocket: Enhancement
+* [#146](https://github.com/embroider-build/addon-blueprint/pull/146) Add CI workflow to push dist output to separate branch ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#160](https://github.com/embroider-build/addon-blueprint/pull/160) Fix TS Imports by recommending folks add the .ts extension to their import paths ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#158](https://github.com/embroider-build/addon-blueprint/pull/158) Add typescript component building / testing tests ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#156](https://github.com/embroider-build/addon-blueprint/pull/156) Component compilation tests ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#151](https://github.com/embroider-build/addon-blueprint/pull/151) Add some fixture utils ... ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.0.0 (2023-07-17)
 
 #### :boom: Breaking Change
