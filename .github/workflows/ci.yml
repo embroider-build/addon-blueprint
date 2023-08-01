@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action-setup-pnpm@v2
       - name: ESLint
         run: pnpm lint
 
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action-setup-pnpm@v2
       - run: pnpm tsc --noEmit
         working-directory: tests
 
@@ -70,7 +70,7 @@ jobs:
           - rollup-build
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action-setup-pnpm@v2
       - run: pnpm add --global ember-cli yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
