@@ -83,8 +83,17 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
     // Tests are additive, so when running them in order, we want to check linting
     // before we add files from fixtures
-    it('lints all pass', async () => {
+    it('lints with no fixtures all pass', async () => {
       let { exitCode } = await helper.run('lint');
+
+      expect(exitCode).toEqual(0);
+    });
+
+    it('lint with fixtures pass', async () => {
+      await helper.fixtures.use('./my-addon/src/components');
+      await helper.fixtures.use('./test-app/tests');
+
+      let { exitCode } = await helper.run('lint:fix');
 
       expect(exitCode).toEqual(0);
     });
