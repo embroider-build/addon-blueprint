@@ -80,20 +80,13 @@ describe(`rollup-build | explicit-imports`, () => {
       'my-service.d.ts.map',
     ]);
 
-    expect(await dirContents(path.join(distDir, 'components'))).to.deep.equal(
-      [
-        'js-component.d.js',
-        'js-component.d.js.map',
-        'js-component.js',
-        'js-component.js.map',
-        'nested',
-        'template-only.d.js',
-        'template-only.d.js.map',
-        'ts-component.js',
-        'ts-component.js.map',
-      ],
-      'mixing JS and TS leads to extraneous files... type declarations should not be "compiled" like this, but it is at least "safe" to do'
-    );
+    expect(await dirContents(path.join(distDir, 'components'))).to.deep.equal([
+      'js-component.js',
+      'js-component.js.map',
+      'nested',
+      'ts-component.js',
+      'ts-component.js.map',
+    ]);
 
     expect(await dirContents(path.join(declarationsDir, 'components'))).to.deep.equal([
       'js-component.d.ts',
