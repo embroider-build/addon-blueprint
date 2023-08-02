@@ -102,7 +102,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       expect(contents).to.deep.equal(['_app_', 'components', 'index.js', 'index.js.map']);
 
-      let testResult = await helper.run('test');
+      let testResult = await helper.run('test:ember');
 
       expect(testResult.exitCode).toEqual(0);
       expect(testResult.stdout).to.include('# tests 3');
