@@ -55,6 +55,7 @@ let scripts = {
       'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
       'start:test-app': `npm start --workspace ${testAppName}`,
       test: 'npm run test --workspaces --if-present',
+      'test:ember': 'npm run test:ember --workspaces --if-present',
     };
   },
 
@@ -77,6 +78,8 @@ let scripts = {
       'start:addon': `yarn workspace ${addonName} run start`,
       'start:test-app': `yarn workspace ${testAppName} run start`,
       test: 'yarn workspaces run test',
+      // yarn doesn't support --skip-missing style for workspaces so we have to specify the test app workspace here :(
+      'test:ember': `yarn workspace ${testAppName} run test:ember`,
     };
   },
 
@@ -118,6 +121,7 @@ let scripts = {
        *  (this is a consequence of enforced strict peers)
        */
       test: "pnpm --filter '*' test",
+      'test:ember': "pnpm --filter '*' test:ember",
     };
   },
 };
