@@ -136,7 +136,7 @@ export async function createAddon({
     console.debug(`\tember ${emberCliArgs.join(' ')}`);
   }
 
-  let result = await execa('ember', emberCliArgs, {
+  let result = await execa('npx', ['ember-cli@beta', ...emberCliArgs], {
     ...options,
     env: { ...options.env, EMBER_CLI_PNPM: 'true' },
     preferLocal: true,
