@@ -44,11 +44,6 @@ export async function install({
         installOptions.push('--no-frozen-lockfile');
       }
 
-      if (packageManager === 'npm') {
-        // when using ember-cli beta, we fail the >= semver check
-        installOptions.push('--force');
-      }
-
       await execa(packageManager, ['install', '--ignore-scripts', ...installOptions], { cwd });
     } catch (e) {
       if (e instanceof Error) {
@@ -141,7 +136,7 @@ export async function createAddon({
     console.debug(`\tember ${emberCliArgs.join(' ')}`);
   }
 
-  let result = await execa('npx', ['ember-cli@beta', ...emberCliArgs], {
+  let result = await execa('ember', emberCliArgs, {
     ...options,
     env: { ...options.env, EMBER_CLI_PNPM: 'true' },
     preferLocal: true,
