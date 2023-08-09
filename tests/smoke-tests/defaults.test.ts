@@ -114,8 +114,9 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let testResult = await helper.run('test:ember');
 
       expect(testResult.exitCode).toEqual(0);
-      expect(testResult.stdout).to.include('# tests 3');
-      expect(testResult.stdout).to.include('# pass  3');
+
+      expect(testResult.stdout).to.include('# tests 4');
+      expect(testResult.stdout).to.include('# pass  4');
       expect(testResult.stdout).to.include('# fail  0');
     });
   });

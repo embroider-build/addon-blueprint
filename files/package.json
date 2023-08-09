@@ -6,7 +6,8 @@
   "scripts": {},
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "prettier-plugin-ember-template-tag": "^1.0.0"
   },
   "workspaces": [
     "<%= addonInfo.location %>",

@@ -7,9 +7,6 @@ const addon = new Addon({
   destDir: 'dist',
 });
 
-// Add extensions here, such as ts, gjs, etc that you may import
-const extensions = ['.js'<% if (typescript) { %>, '.ts'<% } %>];
-
 export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
   // You can augment this if you need to.
@@ -37,12 +34,15 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
-      extensions,
+      extensions: ['.js', '.gjs'<% if (typescript) { %>, '.ts', '.gts'<% } %>],
       babelHelpers: 'bundled',
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+
+    // Ensure that .gjs files are properly integrated as Javascript
+    addon.gjs(),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
