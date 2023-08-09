@@ -16,8 +16,8 @@
   "scripts": {<% if (typescript) { %>
     "build": "concurrently 'npm:build:*'",
     "build:js": "rollup --config",
-    "build:types": "glint --declaration", <% } else { %>
-    "build": "rollup --config", <% } %>
+    "build:types": "glint --declaration",<% } else { %>
+    "build": "rollup --config",<% } %>
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
@@ -28,7 +28,7 @@
     "start": "concurrently 'npm:start:*'",
     "start:js": "rollup --config --watch --no-watch.clearScreen",
     "start:types": "glint --declaration --watch",<% } else { %>
-    "start": "rollup --config --watch", <% } %>
+    "start": "rollup --config --watch",<% } %>
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
     "prepack": "rollup --config"
   },
