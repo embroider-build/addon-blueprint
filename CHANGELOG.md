@@ -12,6 +12,29 @@
 
 
 
+
+## v2.2.0 (2023-08-10)
+
+#### :rocket: Enhancement
+* [#167](https://github.com/embroider-build/addon-blueprint/pull/167) Review lint / dotfiles ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#159](https://github.com/embroider-build/addon-blueprint/pull/159) Add GJS to the default addon blueprint ([@mansona](https://github.com/mansona))
+* [#163](https://github.com/embroider-build/addon-blueprint/pull/163) bump addon-dev version ([@mansona](https://github.com/mansona))
+* [#161](https://github.com/embroider-build/addon-blueprint/pull/161) Use wyvox/action-setup-pnpm ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#166](https://github.com/embroider-build/addon-blueprint/pull/166) update concurrently version in top-level monorepo ([@mansona](https://github.com/mansona))
+
+#### :memo: Documentation
+* [#162](https://github.com/embroider-build/addon-blueprint/pull/162) Add docs about things people should know when authoring V2 addons ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#165](https://github.com/embroider-build/addon-blueprint/pull/165) Reduce post-blueprint generated diff after running `lint:fix` ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#164](https://github.com/embroider-build/addon-blueprint/pull/164) Separate lint tests ([@mansona](https://github.com/mansona))
+
+#### Committers: 2
+- Chris Manson ([@mansona](https://github.com/mansona))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.1.0 (2023-08-01)
 
 #### :rocket: Enhancement
