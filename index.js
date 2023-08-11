@@ -100,6 +100,15 @@ module.exports = {
         `Make sure your workspaces are configured correctly to cover the newly created ${addonInfo.location} and ${testAppInfo.location} packages!`
       );
     }
+
+    await this.sortAddonPackageJson(addonInfo);
+  },
+
+  async sortAddonPackageJson(addonInfo) {
+    let addonPackageJsonPath = path.join(addonInfo.location, 'package.json');
+    let addonPackageJson = await fs.readJSON(addonPackageJsonPath);
+
+    await fs.writeJSON(addonPackageJsonPath, sortPackageJson(addonPackageJson), { spaces: 2 });
   },
 
   // EmberCLI will always create a <addon-name> root folder for us, which makes no sense in an existing repo
