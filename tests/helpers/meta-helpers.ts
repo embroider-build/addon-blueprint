@@ -1,3 +1,4 @@
+import debug from 'debug';
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import { matchesFixture } from './assertions.js';
 import { copyFixture } from './fixtures.js';
 import { createAddon, createTmp, install, runScript } from './utils.js';
 
-const DEBUG = process.env.DEBUG === 'true';
+const debugLog = debug('addon-blueprint:temp');
 
 /**
  * Helps with common addon testing concerns.
@@ -14,8 +15,8 @@ const DEBUG = process.env.DEBUG === 'true';
  *   it's a wrapper around ember addon -b (so we can pass our flags with less duplication)
  *   it lets us set compare against a fixture set / scenario
  *
- * To DEBUG the intermediate output (in tmp),
- * re-start your tests with `DEBUG=true`, and the tmpdir will be printed
+ * To debug the intermediate output (in tmp),
+ * re-start your tests with `DEBUG=addon-blueprint:temp`, and the tmpdir will be printed
  * as well as the `clean` function will not run so that if a test finishes,
  * you can still inspect the folder contents
  *
@@ -42,9 +43,7 @@ export class AddonHelper {
   async setup() {
     this.#tmpDir = await createTmp();
 
-    if (DEBUG) {
-      console.debug(`Debug test repo at ${this.#tmpDir}`);
-    }
+    debugLog(`Debug test repo at ${this.#tmpDir}`);
 
     let args = [...this.#args];
     let needsPackageManagerSet =
@@ -83,7 +82,7 @@ export class AddonHelper {
   }
 
   async clean() {
-    if (DEBUG) return;
+    if (process.env.SKIP_CLEANUP) return;
 
     assert(
       this.#tmpDir,

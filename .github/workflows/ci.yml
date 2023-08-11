@@ -72,5 +72,5 @@ jobs:
       - uses: actions/checkout@v3
       - uses: wyvox/action-setup-pnpm@v2
       - run: pnpm add --global ember-cli yarn
-      - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
+      - run: DEBUG=addon-blueprint:utils pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
