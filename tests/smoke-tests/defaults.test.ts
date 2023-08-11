@@ -37,6 +37,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
           expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
+          await matchesFixture('.github/workflows/ci.yml', { cwd: helper.projectRoot });
           await matchesFixture('.github/workflows/push-dist.yml', { cwd: helper.projectRoot });
 
           break;
@@ -46,6 +47,10 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
           expect(await fse.pathExists(pnpm), 'pnpm-lock.yaml does not exist').toBe(false);
 
+          await matchesFixture('.github/workflows/ci.yml', {
+            cwd: helper.projectRoot,
+            scenario: 'yarn',
+          });
           await matchesFixture('.github/workflows/push-dist.yml', {
             cwd: helper.projectRoot,
             scenario: 'yarn',
@@ -58,6 +63,10 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           expect(await fse.pathExists(npm), 'package-lock.json does not exist').toBe(false);
           expect(await fse.pathExists(yarn), 'yarn.lock does not exist').toBe(false);
 
+          await matchesFixture('.github/workflows/ci.yml', {
+            cwd: helper.projectRoot,
+            scenario: 'pnpm',
+          });
           await matchesFixture('.github/workflows/push-dist.yml', {
             cwd: helper.projectRoot,
             scenario: 'pnpm',
