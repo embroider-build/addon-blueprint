@@ -13,6 +13,20 @@
 
 
 
+
+## v2.2.1 (2023-08-11)
+
+#### :rocket: Enhancement
+* [#170](https://github.com/embroider-build/addon-blueprint/pull/170) Make sure the addon's `package.json` file is always sorted ([@bertdeblock](https://github.com/bertdeblock))
+* [#171](https://github.com/embroider-build/addon-blueprint/pull/171) Update `ember-try` scenarios ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :bug: Bug Fix
+* [#169](https://github.com/embroider-build/addon-blueprint/pull/169) Make sure the `node_modules` folder is ignored by Git ([@bertdeblock](https://github.com/bertdeblock))
+* [#168](https://github.com/embroider-build/addon-blueprint/pull/168) Update addon ignore files ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 1
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+
 ## v2.2.0 (2023-08-10)
 
 #### :rocket: Enhancement
