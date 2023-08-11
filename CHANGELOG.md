@@ -14,6 +14,15 @@
 
 
 
+
+## v2.3.0 (2023-08-11)
+
+#### :rocket: Enhancement
+* [#172](https://github.com/embroider-build/addon-blueprint/pull/172) Make sure `node-version` is always specified in the GitHub CI file ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 1
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+
 ## v2.2.1 (2023-08-11)
 
 #### :rocket: Enhancement
