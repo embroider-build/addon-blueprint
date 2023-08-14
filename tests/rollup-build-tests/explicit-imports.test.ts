@@ -1,5 +1,6 @@
-import { execa } from 'execa';
 import path from 'node:path';
+
+import { execa } from 'execa';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AddonHelper, dirContents } from '../helpers.js';

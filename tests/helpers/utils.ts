@@ -1,9 +1,10 @@
-import { type Options, execa } from 'execa';
-import fse from 'fs-extra';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { execa, type Options } from 'execa';
+import fse from 'fs-extra';
 
 const DEBUG = process.env.DEBUG === 'true';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

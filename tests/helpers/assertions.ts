@@ -1,6 +1,7 @@
-import fse from 'fs-extra';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+
+import fse from 'fs-extra';
 import { expect } from 'vitest';
 
 import { readFixture } from './fixtures.js';

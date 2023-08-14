@@ -1,6 +1,7 @@
-import fixturify from 'fixturify';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+
+import fixturify from 'fixturify';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {

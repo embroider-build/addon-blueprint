@@ -12,7 +12,7 @@
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:js": "eslint . --cache",
-    "lint:fix:js": "eslint . --fix",
+    "lint:js:fix": "eslint . --fix",
     "lint:prettier": "prettier -c .",
     "lint:prettier:fix": "prettier -w .",
     "test": "pnpm --filter 'blueprint-tests' test"
@@ -29,9 +29,10 @@
     "sort-package-json": "^1.54.0"
   },
   "devDependencies": {
-    "@nullvoxpopuli/eslint-configs": "^2.2.35",
+    "@nullvoxpopuli/eslint-configs": "^3.2.0",
     "@release-it-plugins/lerna-changelog": "^5.0.0",
-    "@typescript-eslint/parser": "^5.30.6",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
     "concurrently": "^8.2.0",
     "eslint": "^8.19.0",
     "prettier": "^3.0.1",

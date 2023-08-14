@@ -1,5 +1,4 @@
 // @ts-check
-const assert = require('assert');
 
 /**
  * @typedef {import('./types').Options} Options

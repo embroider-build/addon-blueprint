@@ -1,5 +1,6 @@
-import fse from 'fs-extra';
 import path from 'node:path';
+
+import fse from 'fs-extra';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {

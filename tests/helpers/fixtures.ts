@@ -1,8 +1,9 @@
-import fse from 'fs-extra';
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import fse from 'fs-extra';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
