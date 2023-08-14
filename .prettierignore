@@ -1,1 +1,8 @@
-tests/fixtures/
+# Blueprint files
+# We want the blueprint to run lint:fix on these
+files/
+
+# Configuration or documentation files
+*.md
+*.yaml
+*.yml
