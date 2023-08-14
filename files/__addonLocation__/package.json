@@ -77,8 +77,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^11.6.0",
     "eslint-plugin-n": "^16.0.0",
-    "prettier": "^2.5.1",
-    "prettier-plugin-ember-template-tag": "^1.0.0",
+    "prettier": "^3.0.1",
+    "prettier-plugin-ember-template-tag": "^1.0.2",
     "rollup": "^3.21.8"<% if (!isExistingMonorepo) { %>,
     "rollup-plugin-copy": "^3.4.0"<% } %><% if (typescript) { %>,
     "typescript": "^5.0.4"<% } %>
