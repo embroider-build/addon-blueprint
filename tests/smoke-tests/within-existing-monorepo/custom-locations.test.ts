@@ -64,7 +64,7 @@ describe('custom locations', () => {
       fixturify.readSync(cwd, {
         ignore: ['addons', 'tests', 'node_modules', 'pnpm-lock.yaml', '.npmrc'],
       }),
-      'root files have not been touched'
+      'root files have not been touched',
     ).toEqual(rootFiles);
   });
 
