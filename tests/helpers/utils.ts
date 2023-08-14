@@ -148,7 +148,7 @@ export async function createAddon({
       fse.existsSync(path.join(options.cwd, name))
         ? path.join(options.cwd, name, '.npmrc')
         : path.join(options.cwd, '.npmrc'),
-      'auto-install-peers=true'
+      'auto-install-peers=true',
     );
   }
 

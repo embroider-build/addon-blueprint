@@ -29,7 +29,7 @@ describe('--addon-only', () => {
 
   it('is not a monorepo', async () => {
     let hasPnpmWorkspace = await fse.pathExists(
-      path.join(helper.projectRoot, 'pnpm-workspace.yaml')
+      path.join(helper.projectRoot, 'pnpm-workspace.yaml'),
     );
     let packageJson = await fse.readJson(path.join(helper.projectRoot, 'package.json'));
 

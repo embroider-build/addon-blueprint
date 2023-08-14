@@ -12,7 +12,7 @@ module('Rendering | template-only', function (hooks) {
     assert
       .dom()
       .hasText(
-        'Hello from a GJS file but also Hello from a template-only component'
+        'Hello from a GJS file but also Hello from a template-only component',
       );
   });
 });
