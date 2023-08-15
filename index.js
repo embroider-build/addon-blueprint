@@ -252,33 +252,6 @@ module.exports = {
   locals(options) {
     let addonInfo = addonInfoFromOptions(options);
     let testAppInfo = testAppInfoFromOptions(options);
-
-    let hasOptions = options.welcome || options.yarn || options.ciProvider;
-
-    let blueprintOptions = '';
-
-    if (hasOptions) {
-      let indent = `\n            `;
-      let outdent = `\n          `;
-
-      blueprintOptions =
-        indent +
-        [
-          options.welcome && '"--welcome"',
-          options.yarn && '"--yarn"',
-          options.pnpm && '"--pnpm"',
-          options.ciProvider && `"--ci-provider=${options.ciProvider}"`,
-          options.addonLocation && `"--addon-location=${options.addonLocation}"`,
-          options.testAppLocation && `"--test-app-location=${options.testAppLocation}"`,
-          options.testAppName && `"--test-app-name=${options.testAppName}"`,
-          options.releaseIt && `"--release-it"`,
-          options.typescript && `"--typescript"`,
-        ]
-          .filter(Boolean)
-          .join(',\n            ') +
-        outdent;
-    }
-
     let pathFromAddonToRoot = addonInfo.location
       .split('/')
       .map(() => '..')
@@ -294,11 +267,19 @@ module.exports = {
       yarn: options.yarn,
       pnpm: options.pnpm,
       npm: options.npm,
-      welcome: options.welcome,
       typescript: options.typescript,
       ext: options.typescript ? 'ts' : 'js',
       blueprint: 'addon',
-      blueprintOptions,
+      blueprintOptions: buildBlueprintOptions({
+        [`--addon-location=${options.addonLocation}`]: options.addonLocation,
+        [`--ci-provider=${options.ciProvider}`]: options.ciProvider,
+        '--pnpm': options.pnpm,
+        '--release-it': options.releaseIt,
+        [`--test-app-location=${options.testAppLocation}`]: options.testAppLocation,
+        [`--test-app-name=${options.testAppName}`]: options.testAppName,
+        '--typescript': options.typescript,
+        '--yarn': options.yarn,
+      }),
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,
       filesToCopyFromRootToAddon: filesToCopyFromRootToAddonDuringBuild,
@@ -342,3 +323,19 @@ module.exports = {
     return entityName;
   },
 };
+
+function buildBlueprintOptions(blueprintOptions) {
+  let blueprintOptionsFiltered = Object.keys(blueprintOptions).filter((option) => {
+    return Boolean(blueprintOptions[option]);
+  });
+
+  if (blueprintOptionsFiltered.length > 0) {
+    return (
+      `\n            ` +
+      blueprintOptionsFiltered.map((option) => `"${option}"`).join(',\n            ') +
+      `\n          `
+    );
+  }
+
+  return '';
+}
