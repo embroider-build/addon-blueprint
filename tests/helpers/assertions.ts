@@ -45,7 +45,7 @@ export async function assertGeneratedCorrectly({
       ...Object.keys(testAppPackageJson.dependencies || {}),
       ...Object.keys(testAppPackageJson.devDependencies || {}),
     ],
-    `The test app has a (dev)dependency on the addon`
+    `The test app has a (dev)dependency on the addon`,
   ).to.include(addonName);
 
   for (let expectedFile of expectedStaticFiles) {
@@ -80,7 +80,7 @@ export async function matchesFixture(
      * The working directory to use for the relative paths. Defaults to process.cwd() (node default)
      */
     cwd?: string;
-  }
+  },
 ) {
   let scenario = options?.scenario ?? 'default';
   let fixtureFile = options?.file ?? testFilePath;
@@ -99,6 +99,6 @@ export async function matchesFixture(
    */
   expect(sourceContents.trim()).to.equal(
     fixtureContents.trim(),
-    `${testFilePath} matches ${fixtureFile}`
+    `${testFilePath} matches ${fixtureFile}`,
   );
 }

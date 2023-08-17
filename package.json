@@ -33,6 +33,7 @@
     "@release-it-plugins/lerna-changelog": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
+    "concurrently": "^8.2.0",
     "eslint": "^8.19.0",
     "prettier": "^3.0.2",
     "release-it": "^15.5.0",

@@ -27,7 +27,7 @@ export async function readFixture(
      * Which fixture set to use
      */
     scenario?: string;
-  }
+  },
 ) {
   let scenario = options?.scenario ?? 'default';
   let fixtureFilePath = path.isAbsolute(file) ? file : path.join(fixturesPath, scenario, file);
@@ -36,7 +36,7 @@ export async function readFixture(
 
   assert(
     exists,
-    `Fixture file '${file}' does not exist. To make this work, place a new file '${file}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fixtureFilePath}'.`
+    `Fixture file '${file}' does not exist. To make this work, place a new file '${file}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fixtureFilePath}'.`,
   );
 
   let contents = await fs.readFile(fixtureFilePath);
@@ -66,7 +66,7 @@ export async function copyFixture(
      * The working directory to use for the relative paths. Defaults to process.cwd() (node default)
      */
     cwd?: string;
-  }
+  },
 ) {
   let scenario = options?.scenario ?? 'default';
   let fixtureFile = options?.file ?? newFile;
@@ -80,7 +80,7 @@ export async function copyFixture(
 
   assert(
     exists,
-    `Fixture path '${fixtureFile}' does not exist. To make this work, place a new file/folder '${fixtureFile}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fullFixturePath}'.`
+    `Fixture path '${fixtureFile}' does not exist. To make this work, place a new file/folder '${fixtureFile}' in the 'tests/fixtures/${scenario}' directory. Checked the absolute path: '${fullFixturePath}'.`,
   );
 
   if (await isDirectory(fullFixturePath)) {

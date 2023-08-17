@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { execa,type Options } from 'execa';
+import { execa, type Options } from 'execa';
 import fse from 'fs-extra';
 
 const DEBUG = process.env.DEBUG === 'true';
@@ -149,7 +149,7 @@ export async function createAddon({
       fse.existsSync(path.join(options.cwd, name))
         ? path.join(options.cwd, name, '.npmrc')
         : path.join(options.cwd, '.npmrc'),
-      'auto-install-peers=true'
+      'auto-install-peers=true',
     );
   }
 

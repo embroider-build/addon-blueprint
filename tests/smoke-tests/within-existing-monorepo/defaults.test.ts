@@ -91,7 +91,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         fixturify.readSync(cwd, {
           ignore: ['my-addon', 'test-app', 'node_modules', lockFile, '.npmrc'],
         }),
-        'root files have not been touched'
+        'root files have not been touched',
       ).toEqual(rootFiles);
     });
 
