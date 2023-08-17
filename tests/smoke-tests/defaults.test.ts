@@ -32,6 +32,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let yarn = path.join(helper.projectRoot, 'yarn.lock');
       let pnpm = path.join(helper.projectRoot, 'pnpm-lock.yaml');
 
+      let testManifest = await fse.readJson(path.join(helper.projectRoot, 'test-app', 'package.json'));
+
       switch (packageManager) {
         case 'npm': {
           expect(await fse.pathExists(npm), 'for NPM: package-lock.json exists').toBe(true);
@@ -40,6 +42,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
           await matchesFixture('.github/workflows/ci.yml', { cwd: helper.projectRoot });
           await matchesFixture('.github/workflows/push-dist.yml', { cwd: helper.projectRoot });
+
+          expect(testManifest.devDependencies['my-addon']).toBe('^0.0.0');
 
           break;
         }
@@ -57,6 +61,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
             scenario: 'yarn',
           });
 
+          expect(testManifest.devDependencies['my-addon']).toBe('^0.0.0');
+
           break;
         }
         case 'pnpm': {
@@ -72,6 +78,9 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
             cwd: helper.projectRoot,
             scenario: 'pnpm',
           });
+
+
+          expect(testManifest.devDependencies['my-addon']).toBe('workspace:*');
 
           break;
         }

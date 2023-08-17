@@ -178,7 +178,7 @@ module.exports = {
     await appBlueprint.install(appOptions);
 
     await Promise.all([
-      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json')),
+      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), options.pnpm),
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
@@ -200,7 +200,7 @@ module.exports = {
     }
   },
 
-  async updateTestAppPackageJson(packageJsonPath) {
+  async updateTestAppPackageJson(packageJsonPath, useWorkspaceProtocol) {
     const pkg = await fs.readJSON(packageJsonPath);
     const additions = require('./additional-test-app-package.json');
 
@@ -209,7 +209,13 @@ module.exports = {
     pkg.description = `Test app for ${this.locals(this.options).addonName} addon`;
 
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
-    pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
+    if (useWorkspaceProtocol) {
+      // https://pnpm.io/workspaces#workspace-protocol-workspace
+      // For an app, `*` is fine, but if we were wiring this up to multiple packages, we'd want `^`
+      pkg.devDependencies[this.locals(this.options).addonName] = 'workspace:*';
+    } else {
+      pkg.devDependencies[this.locals(this.options).addonName] = '^0.0.0';
+    }
 
     return fs.writeFile(packageJsonPath, JSON.stringify(sortPackageJson(pkg), undefined, 2));
   },
