@@ -1,4 +1,6 @@
 files/
 tests/fixtures/
 
+*.yml
+*.yaml
 *.md
