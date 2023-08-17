@@ -1,18 +1,19 @@
 'use strict';
 
 const { configs } = require('@nullvoxpopuli/eslint-configs');
-const { baseConfig: CJS } = require('@nullvoxpopuli/eslint-configs/configs/node');
 
-let mts = configs.nodeTS();
+let config = configs.node();
 
 module.exports = {
-  ...mts,
+  ...config,
   overrides: [
-    ...mts.overrides,
+    ...config.overrides,
     {
-      // Top-level JS files are CJS
-      files: ['*.js'],
-      ...CJS,
+      files: ['**/*.ts'],
+      rules: {
+        // Requires passing your tsconfig to eslint, which we can do later
+        '@typescript-eslint/prefer-optional-chain': 'off',
+      },
     },
   ],
 };
