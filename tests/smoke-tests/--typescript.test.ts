@@ -68,7 +68,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       let distContents = (await dirContents(distDir)).filter(
         // these files have a hash that changes based on file contents
-        (distFile) => !distFile.startsWith('_rollupPluginBabelHelpers')
+        (distFile) => !distFile.startsWith('_rollupPluginBabelHelpers'),
       );
       let declarationsContents = await dirContents(declarationsDir);
 

@@ -3,4 +3,3 @@ packages:
   - '*'
   # ignore everything in the files directory
   - '!files'
-

@@ -24,6 +24,8 @@
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",<% if (typescript) { %>
+    "lint:prettier": "prettier --check .",
+    "lint:prettier:fix": "prettier --write .",
     "lint:types": "glint",
     "start": "concurrently 'npm:start:*'",
     "start:js": "rollup --config --watch --no-watch.clearScreen",
@@ -75,7 +77,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^11.10.0",
     "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
     "prettier-plugin-ember-template-tag": "^1.0.0",
     "rollup": "^3.21.8"<% if (!isExistingMonorepo) { %>,
