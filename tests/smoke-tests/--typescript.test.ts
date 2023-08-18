@@ -52,6 +52,11 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       await helper.fixtures.use('./test-app/tests');
       // Sync fixture with project's lint / formatting configuration
       // (controlled by ember-cli)
+      //
+      // Ensure that we have no lint errors.
+      // It's important to keep this along with the tests, 
+      // so that we can have confidence that the lints aren't destructively changing
+      // the files in a way that would break consumers
       await helper.run('lint:fix');
 
       /**
