@@ -15,6 +15,27 @@
 
 
 
+
+## v2.4.0 (2023-08-18)
+
+#### :rocket: Enhancement
+* [#177](https://github.com/embroider-build/addon-blueprint/pull/177) Upgrade @embroider/test-setup ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#179](https://github.com/embroider-build/addon-blueprint/pull/179) Upgrade ember-try ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#181](https://github.com/embroider-build/addon-blueprint/pull/181) Upgrade eslint-plugin-ember ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#178](https://github.com/embroider-build/addon-blueprint/pull/178) Upgrade ember-template-lint ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#185](https://github.com/embroider-build/addon-blueprint/pull/185) Fix issue while saving gjs/gts where prettier deletes the contents of the file: Downgrade prettier-plugin-ember-template-tag until we're on prettier@v3 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#186](https://github.com/embroider-build/addon-blueprint/pull/186) pnpm: Use the workspace protocol for pnpm for the test-app's dependency on the addon ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#173](https://github.com/embroider-build/addon-blueprint/pull/173) Improve building the `ember-cli-update` blueprint options ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :house: Internal
+* [#175](https://github.com/embroider-build/addon-blueprint/pull/175) Lint upgrade only ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.3.0 (2023-08-11)
 
 #### :rocket: Enhancement
