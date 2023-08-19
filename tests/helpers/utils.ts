@@ -143,15 +143,5 @@ export async function createAddon({
     preferLocal: true,
   });
 
-  // Light work-around for an upstream `@babel/core` peer issue
-  if (typeof options.cwd === 'string') {
-    await fs.writeFile(
-      fse.existsSync(path.join(options.cwd, name))
-        ? path.join(options.cwd, name, '.npmrc')
-        : path.join(options.cwd, '.npmrc'),
-      'auto-install-peers=true'
-    );
-  }
-
   return { result, name };
 }
