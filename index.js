@@ -320,7 +320,7 @@ module.exports = {
       files = files.filter((filename) => filename !== '__addonLocation__/gitignore');
       // In an existing monorepo, we typically have a single .npmrc for the whole repo.
       // We don't want to generate an .npmrc for those situations.
-      files = files.filter((filename) => filename.endsWith('.npmrc'));
+      files = files.filter((filename) => !filename.endsWith('.npmrc'));
     }
 
     return files;

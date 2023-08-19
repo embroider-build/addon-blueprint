@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 import * as myModule from 'my-addon';
 
-module('imports', function (hooks) {
+module('imports', function () {
   test('did they work', async function (assert) {
     assert.ok(myModule.MyService);
     assert.ok(myModule.JSComponent);
