@@ -300,6 +300,10 @@ module.exports = {
 
     if (options.addonOnly) {
       files = files.filter((filename) => filename.includes('__addonLocation__'));
+    } else {
+      // filter out the addon-specific npmrc, as it
+      // is only applicable during --addon-only
+      files = files.filter((filename) => !filename.includes('__addonLocation__/.npmrc'));
     }
 
     if (!options.typescript) {
@@ -314,6 +318,9 @@ module.exports = {
       // The .gitignore is used for ignoring files that are moved to the addon from the root folder at build time
       // But this setup does not apply for an existing monorepo (all root files are ignored), so we don't need the .gitignore
       files = files.filter((filename) => filename !== '__addonLocation__/gitignore');
+      // In an existing monorepo, we typically have a single .npmrc for the whole repo.
+      // We don't want to generate an .npmrc for those situations.
+      files = files.filter((filename) => !filename.endsWith('.npmrc'));
     }
 
     return files;

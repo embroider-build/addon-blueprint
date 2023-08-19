@@ -3,7 +3,7 @@ import path from 'node:path';
 import fse from 'fs-extra';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { AddonHelper, dirContents } from '../helpers.js';
+import { AddonHelper, dirContents, matchesFixture } from '../helpers.js';
 
 describe('--addon-only', () => {
   let helper = new AddonHelper({ packageManager: 'pnpm', args: ['--addon-only'] });
@@ -20,6 +20,9 @@ describe('--addon-only', () => {
   it('has all the dot files', async () => {
     let contents = await dirContents(helper.projectRoot);
 
+    await matchesFixture('.npmrc', { cwd: helper.projectRoot, scenario: 'pnpm-addon-only' });
+
+    expect(contents).to.include('.npmrc');
     expect(contents).to.include('.eslintrc.cjs');
     expect(contents).to.include('.eslintignore');
     expect(contents).to.include('.prettierrc.cjs');

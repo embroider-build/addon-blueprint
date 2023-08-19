@@ -83,6 +83,10 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
             scenario: 'pnpm',
           });
           await matchesFixture('CONTRIBUTING.md', { cwd: helper.projectRoot, scenario: 'pnpm' });
+          await matchesFixture('.npmrc', {
+            cwd: helper.projectRoot,
+            scenario: 'pnpm',
+          });
 
           expect(testManifest.devDependencies['my-addon']).toBe('workspace:*');
 

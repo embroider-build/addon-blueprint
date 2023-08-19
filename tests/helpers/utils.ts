@@ -4,7 +4,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { execa,type Options } from 'execa';
-import fse from 'fs-extra';
 
 const DEBUG = process.env.DEBUG === 'true';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -142,16 +141,6 @@ export async function createAddon({
     env: { ...options.env, EMBER_CLI_PNPM: 'true' },
     preferLocal: true,
   });
-
-  // Light work-around for an upstream `@babel/core` peer issue
-  if (typeof options.cwd === 'string') {
-    await fs.writeFile(
-      fse.existsSync(path.join(options.cwd, name))
-        ? path.join(options.cwd, name, '.npmrc')
-        : path.join(options.cwd, '.npmrc'),
-      'auto-install-peers=true'
-    );
-  }
 
   return { result, name };
 }

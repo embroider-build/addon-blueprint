@@ -89,7 +89,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     it('ignores root files', async () => {
       expect(
         fixturify.readSync(cwd, {
-          ignore: ['my-addon', 'test-app', 'node_modules', lockFile, '.npmrc'],
+          ignore: ['my-addon', 'test-app', 'node_modules', lockFile],
         }),
         'root files have not been touched'
       ).toEqual(rootFiles);
