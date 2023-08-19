@@ -32,7 +32,9 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let yarn = path.join(helper.projectRoot, 'yarn.lock');
       let pnpm = path.join(helper.projectRoot, 'pnpm-lock.yaml');
 
-      let testManifest = await fse.readJson(path.join(helper.projectRoot, 'test-app', 'package.json'));
+      let testManifest = await fse.readJson(
+        path.join(helper.projectRoot, 'test-app', 'package.json')
+      );
 
       switch (packageManager) {
         case 'npm': {
@@ -42,6 +44,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
           await matchesFixture('.github/workflows/ci.yml', { cwd: helper.projectRoot });
           await matchesFixture('.github/workflows/push-dist.yml', { cwd: helper.projectRoot });
+          await matchesFixture('CONTRIBUTING.md', { cwd: helper.projectRoot });
 
           expect(testManifest.devDependencies['my-addon']).toBe('^0.0.0');
 
@@ -60,6 +63,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
             cwd: helper.projectRoot,
             scenario: 'yarn',
           });
+          await matchesFixture('CONTRIBUTING.md', { cwd: helper.projectRoot, scenario: 'yarn' });
 
           expect(testManifest.devDependencies['my-addon']).toBe('^0.0.0');
 
@@ -78,7 +82,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
             cwd: helper.projectRoot,
             scenario: 'pnpm',
           });
-
+          await matchesFixture('CONTRIBUTING.md', { cwd: helper.projectRoot, scenario: 'pnpm' });
 
           expect(testManifest.devDependencies['my-addon']).toBe('workspace:*');
 
@@ -114,7 +118,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       await helper.fixtures.use('./test-app/tests');
 
       // Ensure that we have no lint errors.
-      // It's important to keep this along with the tests, 
+      // It's important to keep this along with the tests,
       // so that we can have confidence that the lints aren't destructively changing
       // the files in a way that would break consumers
       let { exitCode } = await helper.run('lint:fix');
