@@ -301,7 +301,9 @@ module.exports = {
     if (options.addonOnly) {
       files = files.filter((filename) => filename.includes('__addonLocation__'));
     } else {
-      files = files.filter((filename) => filename.includes('__addonLocation__/.npmrc'));
+      // filter out the addon-specific npmrc, as it
+      // is only applicable during --addon-only
+      files = files.filter((filename) => !filename.includes('__addonLocation__/.npmrc'));
     }
 
     if (!options.typescript) {
