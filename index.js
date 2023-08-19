@@ -300,6 +300,8 @@ module.exports = {
 
     if (options.addonOnly) {
       files = files.filter((filename) => filename.includes('__addonLocation__'));
+    } else {
+      files = files.filter((filename) => filename.includes('__addonLocation__/.npmrc'));
     }
 
     if (!options.typescript) {
