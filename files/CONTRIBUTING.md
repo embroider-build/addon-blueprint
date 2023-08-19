@@ -1,12 +1,12 @@
 # How To Contribute
 
-## Installation
+<% if (!isExistingMonorepo) { %>## Installation
 
 - `git clone <repository-url>`
-- `cd <%= addonName %>`
+- `cd <%= rootDirectory %>`
 - `<% if (yarn) { %>yarn<% } else if (pnpm) { %>pnpm<% } else { %>npm<% } %> install`
 
-## Linting
+<% } %>## Linting
 
 - `<% if (yarn) { %>yarn lint<% } else if (pnpm) { %>pnpm lint<% } else { %>npm run lint<% } %>`
 - `<% if (yarn) { %>yarn lint:fix<% } else if (pnpm) { %>pnpm lint:fix<% } else { %>npm run lint:fix<% } %>`

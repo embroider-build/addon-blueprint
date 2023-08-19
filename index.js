@@ -16,6 +16,7 @@ let date = new Date();
 const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
 const { scripts } = require('./src/root-package-json');
 const pnpm = require('./src/pnpm');
+const directoryForPackageName = require('./src/directory-for-package-name');
 
 const description = 'The default blueprint for Embroider v2 addons.';
 
@@ -264,6 +265,7 @@ module.exports = {
       .join('/');
 
     return {
+      rootDirectory: directoryForPackageName(addonInfo.name.raw),
       addonInfo,
       testAppInfo,
       addonName: addonInfo.name.dashed,
