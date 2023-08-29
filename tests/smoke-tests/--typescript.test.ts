@@ -97,8 +97,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let testResult = await helper.run('test');
 
       expect(testResult.exitCode).toEqual(0);
-      expect(testResult.stdout).to.include('# tests 4');
-      expect(testResult.stdout).to.include('# pass  4');
+      expect(testResult.stdout).to.include('# tests 5');
+      expect(testResult.stdout).to.include('# pass  5');
       expect(testResult.stdout).to.include('# fail  0');
     });
   });
