@@ -7,8 +7,8 @@ module('Rendering | template-import', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`<TemplateImport />`);
+    await render(hbs`<TemplateImport @saying="what" />`);
 
-    assert.dom().hasText('Hello from a GJS file but also Hello from a template-only component');
+    assert.dom().hasText('Hello from a GTS file but also Hello from a template-only component and Hello from another GTS file!');
   })
 });
