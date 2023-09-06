@@ -16,6 +16,27 @@
 
 
 
+
+## v2.5.0 (2023-09-06)
+
+#### :rocket: Enhancement
+* [#191](https://github.com/embroider-build/addon-blueprint/pull/191) Remove `ember-disable-prototype-extensions` from test app ([@bertdeblock](https://github.com/bertdeblock))
+* [#188](https://github.com/embroider-build/addon-blueprint/pull/188) pnpm: suggest stricter dep management ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#190](https://github.com/embroider-build/addon-blueprint/pull/190) Update config templates to properly handle .gts files ([@lukemelia](https://github.com/lukemelia))
+* [#128](https://github.com/embroider-build/addon-blueprint/pull/128) Fix `cd <path>` in CONTRIBUTING.md ([@simonihmig](https://github.com/simonihmig))
+
+#### :house: Internal
+* [#182](https://github.com/embroider-build/addon-blueprint/pull/182) cjs for all prettier configs ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 5
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- Ignace Maes ([@IgnaceMaes](https://github.com/IgnaceMaes))
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.4.0 (2023-08-18)
 
 #### :rocket: Enhancement
