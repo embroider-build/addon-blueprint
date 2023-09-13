@@ -43,9 +43,10 @@
     "@babel/plugin-transform-class-static-block": "^7.20.0",
     "@babel/runtime": "^7.17.0",
     "@embroider/addon-dev": "^4.1.0",<% if (typescript) { %>
-    "@glint/core": "^1.0.2",
-    "@glint/environment-ember-loose": "^1.0.2",
-    "@glint/template": "^1.0.2",
+    "@glint/core": "^1.1.0",
+    "@glint/environment-ember-loose": "^1.1.0",
+    "@glint/environment-ember-template-imports": "^1.1.0",
+    "@glint/template": "^1.1.0",
     "@tsconfig/ember": "^2.0.0",
     "@types/ember": "^4.0.4",
     "@types/ember__object": "^4.0.6",

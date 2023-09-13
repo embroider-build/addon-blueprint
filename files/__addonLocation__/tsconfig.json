@@ -5,7 +5,7 @@
     "unpublished-development-types/**/*"
   ],
   "glint": {
-    "environment": "ember-loose"
+    "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
     "allowJs": true,
