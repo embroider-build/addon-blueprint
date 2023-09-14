@@ -36,7 +36,7 @@ module.exports = {
     {
       files: [
         './.eslintrc.cjs',
-        './.prettierrc.js',
+        './.prettierrc.cjs',
         './.template-lintrc.cjs',
         './addon-main.cjs',
       ],
