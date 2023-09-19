@@ -17,6 +17,21 @@
 
 
 
+
+## v2.6.0 (2023-09-19)
+
+#### :rocket: Enhancement
+* [#198](https://github.com/embroider-build/addon-blueprint/pull/198) Use put-built-npm-pacakge-contents@v2.0.0 ([@chancancode](https://github.com/chancancode))
+
+#### :bug: Bug Fix
+* [#202](https://github.com/embroider-build/addon-blueprint/pull/202) Upgrade @typescript-eslint dependencies ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#201](https://github.com/embroider-build/addon-blueprint/pull/201) Use correct extension for Prettier config file in ESLint config ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 3
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- Godfrey Chan ([@chancancode](https://github.com/chancancode))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.5.0 (2023-09-06)
 
 #### :rocket: Enhancement
