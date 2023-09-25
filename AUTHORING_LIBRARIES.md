@@ -39,9 +39,20 @@ If you've done ESM in node, this should feel familiar, and we can be be consiste
 import { AnotherThing } from './path/to/file.js';
 ```
 
+Generally, import:
+- gjs with `./path/to/file.gjs`
+- gts with `./path/to/file.gts`
+- js with `./path/to/file.js`
+- ts with `./path/to/file.ts`
+- hbs with `./path/to/file.js` or `./path/to/file`
+
 A couple caveats with older, co-located components,
- - for `.hbs` / template-only components, the import path is still `.js`, because we transform it.
+ - for `.hbs` / template-only components, no extension is needed, but the js extension can be used.
  - for co-located components, where the template is in a separate `.hbs` file, you may not import that `.hbs` file directly, because it is merged in with the associated `.js` or `.ts` file.
+
+For consumers of your library, they will not need to worry about the extensions, because:
+- rollup compiles away the implementation details (non-js modules)
+- package.json#exports declares what is importable under what path, and maps non-extension imports to files with extensions
 
 
 ## CSS

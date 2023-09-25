@@ -7,6 +7,7 @@ import {
   AddonHelper,
   assertGeneratedCorrectly,
   dirContents,
+  splitHashedFiles,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../helpers.js';
 
@@ -71,13 +72,12 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       expect(buildResult.exitCode).toEqual(0);
 
-      let distContents = (await dirContents(distDir)).filter(
-        // these files have a hash that changes based on file contents
-        (distFile) => !distFile.startsWith('_rollupPluginBabelHelpers')
-      );
+      let distContents = splitHashedFiles(await dirContents(distDir));
       let declarationsContents = await dirContents(declarationsDir);
 
-      expect(distContents).to.deep.equal([
+       
+
+      expect(distContents.unhashed).to.deep.equal([
         '_app_',
         'components',
         'index.js',
@@ -85,6 +85,18 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         'template-registry.js',
         'template-registry.js.map',
       ]);
+
+      expect(distContents.hashed.length).toBe(4);
+      expect(
+        distContents.hashed
+          .filter(file => file.includes('_rollup'))
+          .map(file => file.split('.js')[1])
+      ).to.deep.equal(["", '.map'], 'the rollup helpers are emitted with a source map');
+      expect(
+        distContents.hashed
+          .filter(file => file.includes('template-only'))
+          .map(file => file.split('.js')[1])
+      ).to.deep.equal(["", '.map'], 'the template-only component is emitted with a source map');
 
       expect(declarationsContents).to.deep.equal([
         'components',
