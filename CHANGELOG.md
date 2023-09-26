@@ -18,6 +18,19 @@
 
 
 
+
+## v2.6.1 (2023-09-26)
+
+#### :bug: Bug Fix
+* [#206](https://github.com/embroider-build/addon-blueprint/pull/206) Assure gts works ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* [#205](https://github.com/embroider-build/addon-blueprint/pull/205) local dev: upgrade pnpm so that we have the resolution-mode=highest change ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#204](https://github.com/embroider-build/addon-blueprint/pull/204) Add workflow_dispatch to ci ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.6.0 (2023-09-19)
 
 #### :rocket: Enhancement
