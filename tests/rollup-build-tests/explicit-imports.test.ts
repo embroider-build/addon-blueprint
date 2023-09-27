@@ -48,8 +48,8 @@ describe(`rollup-build | explicit-imports`, () => {
         expect(files).to.include(
           file,
           `expected ${file} to be included in the expected list of files: ${expected.join(
-            ' '
-          )}, however, only ${files.join(', ')} were found.`
+            ' ',
+          )}, however, only ${files.join(', ')} were found.`,
         );
       }
     }
@@ -57,6 +57,7 @@ describe(`rollup-build | explicit-imports`, () => {
     hasEachOf(await dirContents(distDir), [
       '_app_',
       'components',
+      'services',
       'index.js',
       'index.js.map',
       'template-registry.js',
@@ -72,10 +73,10 @@ describe(`rollup-build | explicit-imports`, () => {
       'template-registry.d.ts.map',
     ]);
 
-    expect(await dirContents(path.join(distDir, 'services'))).to.deep.equal(
-      [],
-      'my-service.js is not in the app-re-exports'
-    );
+    expect(await dirContents(path.join(distDir, 'services'))).to.deep.equal([
+      'my-service.js',
+      'my-service.js.map',
+    ]);
     expect(await dirContents(path.join(declarationsDir, 'services'))).to.deep.equal([
       'my-service.d.ts',
       'my-service.d.ts.map',
