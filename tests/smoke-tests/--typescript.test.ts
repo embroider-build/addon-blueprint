@@ -49,7 +49,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
     it('build and test', async () => {
       // Copy over fixtures
-      await helper.fixtures.use('./my-addon/src/components');
+      await helper.fixtures.use('./my-addon/src');
       await helper.fixtures.use('./test-app/tests');
       // Sync fixture with project's lint / formatting configuration
       // (controlled by ember-cli)
@@ -82,6 +82,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         'components',
         'index.js',
         'index.js.map',
+        'services',
         'template-registry.js',
         'template-registry.js.map',
       ]);
@@ -102,6 +103,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         'components',
         'index.d.ts',
         'index.d.ts.map',
+        'services',
         'template-registry.d.ts',
         'template-registry.d.ts.map',
       ]);
