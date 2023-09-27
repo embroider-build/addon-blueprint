@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import Example from '../services/example';
+import type Example from '../services/example.ts';
 
 export default class CoLocatedTs extends Component {
   @service declare example: Example;
