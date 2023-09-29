@@ -19,6 +19,19 @@
 
 
 
+
+## v2.7.0 (2023-09-29)
+
+#### :rocket: Enhancement
+* [#209](https://github.com/embroider-build/addon-blueprint/pull/209) Better defaults for publicEntrypoints and appReexports ([@simonihmig](https://github.com/simonihmig))
+
+#### :bug: Bug Fix
+* [#210](https://github.com/embroider-build/addon-blueprint/pull/210) Add a service usage to the TS tests to help guide our babel config for TS. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 2
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.6.1 (2023-09-26)
 
 #### :bug: Bug Fix
