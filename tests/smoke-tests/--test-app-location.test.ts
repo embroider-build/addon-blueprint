@@ -34,7 +34,7 @@ describe('--test-app-location', () => {
   });
 
   it('was generated correctly', async () => {
-    assertGeneratedCorrectly({ projectRoot: cwd, testAppLocation });
+    assertGeneratedCorrectly({ projectRoot: cwd, testAppLocation, packageManager: 'pnpm' });
   });
 
   it('runs tests', async () => {

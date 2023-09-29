@@ -65,7 +65,7 @@ describe('custom locations', () => {
       fixturify.readSync(cwd, {
         ignore: ['addons', 'tests', 'node_modules', 'pnpm-lock.yaml', '.npmrc'],
       }),
-      'root files have not been touched'
+      'root files have not been touched',
     ).toEqual(rootFiles);
   });
 
@@ -75,6 +75,8 @@ describe('custom locations', () => {
       addonLocation,
       testAppLocation,
       expectedStaticFiles: ['README.md', 'CONTRIBUTING.md'],
+      packageManager: 'pnpm',
+      existingMonorepo: true,
     });
   });
 
