@@ -34,7 +34,7 @@ describe('--addon-location', () => {
   });
 
   it('was generated correctly', async () => {
-    assertGeneratedCorrectly({ projectRoot: cwd, addonLocation });
+    assertGeneratedCorrectly({ projectRoot: cwd, addonLocation, packageManager: 'pnpm' });
   });
 
   it('runs tests', async () => {

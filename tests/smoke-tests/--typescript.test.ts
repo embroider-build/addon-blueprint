@@ -36,7 +36,11 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     it('was generated correctly', async () => {
       await helper.build();
 
-      assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+      assertGeneratedCorrectly({
+        projectRoot: helper.projectRoot,
+        packageManager,
+        typeScript: true,
+      });
     });
 
     // Tests are additive, so when running them in order, we want to check linting
@@ -55,7 +59,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       // (controlled by ember-cli)
       //
       // Ensure that we have no lint errors.
-      // It's important to keep this along with the tests, 
+      // It's important to keep this along with the tests,
       // so that we can have confidence that the lints aren't destructively changing
       // the files in a way that would break consumers
       await helper.run('lint:fix');
@@ -75,8 +79,6 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let distContents = splitHashedFiles(await dirContents(distDir));
       let declarationsContents = await dirContents(declarationsDir);
 
-       
-
       expect(distContents.unhashed).to.deep.equal([
         '_app_',
         'components',
@@ -89,14 +91,14 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       expect(distContents.hashed.length).toBe(4);
       expect(
         distContents.hashed
-          .filter(file => file.includes('_rollup'))
-          .map(file => file.split('.js')[1])
-      ).to.deep.equal(["", '.map'], 'the rollup helpers are emitted with a source map');
+          .filter((file) => file.includes('_rollup'))
+          .map((file) => file.split('.js')[1]),
+      ).to.deep.equal(['', '.map'], 'the rollup helpers are emitted with a source map');
       expect(
         distContents.hashed
-          .filter(file => file.includes('template-only'))
-          .map(file => file.split('.js')[1])
-      ).to.deep.equal(["", '.map'], 'the template-only component is emitted with a source map');
+          .filter((file) => file.includes('template-only'))
+          .map((file) => file.split('.js')[1]),
+      ).to.deep.equal(['', '.map'], 'the template-only component is emitted with a source map');
 
       expect(declarationsContents).to.deep.equal([
         'components',

@@ -91,7 +91,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         fixturify.readSync(cwd, {
           ignore: ['my-addon', 'test-app', 'node_modules', lockFile],
         }),
-        'root files have not been touched'
+        'root files have not been touched',
       ).toEqual(rootFiles);
     });
 
@@ -99,6 +99,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       await assertGeneratedCorrectly({
         projectRoot: cwd,
         expectedStaticFiles: ['README.md', 'CONTRIBUTING.md'],
+        packageManager,
+        existingMonorepo: true,
       });
     });
 

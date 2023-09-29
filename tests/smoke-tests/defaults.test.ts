@@ -33,7 +33,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       let pnpm = path.join(helper.projectRoot, 'pnpm-lock.yaml');
 
       let testManifest = await fse.readJson(
-        path.join(helper.projectRoot, 'test-app', 'package.json')
+        path.join(helper.projectRoot, 'test-app', 'package.json'),
       );
 
       switch (packageManager) {
@@ -105,7 +105,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     });
 
     it('was generated correctly', async () => {
-      await assertGeneratedCorrectly({ projectRoot: helper.projectRoot });
+      await assertGeneratedCorrectly({ projectRoot: helper.projectRoot, packageManager });
     });
 
     // Tests are additive, so when running them in order, we want to check linting
