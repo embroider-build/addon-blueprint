@@ -323,6 +323,12 @@ module.exports = {
       files = files.filter((filename) => !filename.endsWith('.npmrc'));
     }
 
+    if (!this.yarn) {
+      let ignoredFiles = ['.yarnrc.yml'];
+
+      files = files.filter(filename => !ignoredFiles.includes(filename));
+    }
+
     return files;
   },
 
