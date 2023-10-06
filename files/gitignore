@@ -21,6 +21,7 @@ yarn-error.log
 /pnpm-lock.ember-try.yaml
 
 <% if (yarn) { %>
+# https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
 .yarn/*
 !.yarn/cache
 !.yarn/patches
