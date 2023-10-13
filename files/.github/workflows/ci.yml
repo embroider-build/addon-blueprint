@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v2' : 'actions/setup-node@v3' %>
+      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v3' : 'actions/setup-node@v3' %>
         with:
           node-version: 16<% if (!pnpm) { %>
           cache: <%= yarn ? 'yarn' : 'npm' %>
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v2' : 'actions/setup-node@v3' %>
+      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v3' : 'actions/setup-node@v3' %>
         with:
           node-version: 16<% if (!pnpm) { %>
           cache: <%= yarn ? 'yarn' : 'npm' %>
@@ -63,7 +63,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v2' : 'actions/setup-node@v3' %>
+      - uses: <%= pnpm ? 'wyvox/action-setup-pnpm@v3' : 'actions/setup-node@v3' %>
         with:
           node-version: 16<% if (!pnpm) { %>
           cache: <%= yarn ? 'yarn' : 'npm' %>
