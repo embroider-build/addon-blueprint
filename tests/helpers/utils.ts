@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { execa,type Options } from 'execa';
+import { execa, type Options } from 'execa';
 
 const DEBUG = process.env.DEBUG === 'true';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -36,7 +36,7 @@ const ROLLUP_HASH = /[a-f0-9]{8}/
 * a fairly narrow matcher to remove them.
 */
 export function withoutHashes(names: string[]) {
-  return names.filter(name => !ROLLUP_HASH.test(name)); 
+  return names.filter(name => !ROLLUP_HASH.test(name));
 }
 
 /**
@@ -52,7 +52,7 @@ export function withoutHashes(names: string[]) {
 * This a
 */
 export function hashesOnly(names: string[]) {
-  return names.filter(name => ROLLUP_HASH.test(name)); 
+  return names.filter(name => ROLLUP_HASH.test(name));
 }
 
 export function splitHashedFiles(names: string[]) {
@@ -77,33 +77,13 @@ export async function install({
   if (packageManager === 'yarn') {
     await execa('yarn', ['install', '--non-interactive'], { cwd });
   } else {
-    try {
-      let installOptions = [];
+    let installOptions = [];
 
-      if (packageManager === 'pnpm') {
-        installOptions.push('--no-frozen-lockfile');
-      }
-
-      await execa(packageManager, ['install', '--ignore-scripts', ...installOptions], { cwd });
-    } catch (e) {
-      if (e instanceof Error) {
-        // ignore the `@babel/core` peer issue.
-        // this is dependent on ember-cli-babel doing a v8 release
-        // where it declares `@babel/core` as a peer, and removes it from
-        // dependencies
-        let isPeerError = e.message.includes('Peer dependencies that should be installed:');
-        let isExpectedPeer = e.message.includes('@babel/core@">=7.0.0 <8.0.0"');
-
-        if (packageManager === 'pnpm' && isPeerError && isExpectedPeer) {
-          console.info('An error occurred. Are there still upstream issues to resolve?');
-          console.error(e);
-
-          return;
-        }
-      }
-
-      throw e;
+    if (packageManager === 'pnpm') {
+      installOptions.push('--no-frozen-lockfile');
     }
+
+    await execa(packageManager, ['install', '--ignore-scripts', ...installOptions], { cwd });
   }
 
   const pkg = await packageJsonAt(cwd);
