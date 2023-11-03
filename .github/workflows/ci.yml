@@ -44,19 +44,12 @@ jobs:
         # waiting on a an api from vitest for querying
         # the list of tests ahead of time before running them.
         #
+        # https://github.com/vitest-dev/vitest/issues/2901
+        #
         # It would be great if vitest had a flag to give us the JSON of all the tests,
         # so we could be sure we don't miss anything
         # and then generate this list from a previous C.I. job
         slow-test:
-          - defaults with npm
-          - defaults with yarn
-          - defaults with pnpm
-
-          # TypeScript
-          - typescript with npm
-          - typescript with yarn
-          - typescript with pnpm
-
           # flags
           - addon-location
           - test-app-location
@@ -73,5 +66,32 @@ jobs:
       - uses: actions/checkout@v3
       - uses: wyvox/action-setup-pnpm@v2
       - run: pnpm add --global ember-cli yarn
+      - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
+        working-directory: tests
+
+
+  defaults_tests:
+    name: "ember-cli@${{ matrix.ember-cli }} : ${{ matrix.slow-test }}"
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ember-cli:
+          - latest
+          - 5.3.0
+
+        slow-test:
+          - defaults with npm
+          - defaults with yarn
+          - defaults with pnpm
+
+          - typescript with npm
+          - typescript with yarn
+          - typescript with pnpm
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wyvox/action-setup-pnpm@v2
+      - run: pnpm add --global ember-cli@${{ matrix.ember-cli }} yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
