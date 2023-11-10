@@ -102,8 +102,8 @@
       "default": "./dist/index.js"
     },
     "./*": {
-      "types": "./declarations/*.d.ts",
-      "default": "./dist/*.js"
+      "types": ["./declarations/*.d.ts", "./declarations/*/index.d.ts"],
+      "default": ["./dist/*.js", "./dist/*/index.js"]
     },<% } else { %>
     ".": "./dist/index.js",
     "./*": "./dist/*.js",<% } %>
@@ -112,7 +112,8 @@
   "typesVersions": {
     "*": {
       "*": [
-        "declarations/*"
+        "declarations/*",
+        "declarations/*/index"
       ]
     }
   }<% } %>
