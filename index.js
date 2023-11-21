@@ -83,7 +83,7 @@ module.exports = {
         })(),
       );
 
-      if (options.packageManager === 'pnpm' || options.pnpm) {
+      if (isPnpm(options)) {
         tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
       }
 
@@ -324,7 +324,7 @@ module.exports = {
       files = files.filter((filename) => !filename.endsWith('.npmrc'));
     }
 
-    if (!(isYarn(options))) {
+    if (!isYarn(options)) {
       let ignoredFiles = ['.yarnrc.yml'];
 
       files = files.filter((filename) => !ignoredFiles.includes(filename));
@@ -362,10 +362,9 @@ function buildBlueprintOptions(blueprintOptions) {
   return '';
 }
 
-
 // These methods exist because in ember-cli 5.4, package manager handling
 // had changed to solely use the packageManager key, however
-// prior to ember-cli 5.4, pnpm, yarn, and npm, had their own booleans on 
+// prior to ember-cli 5.4, pnpm, yarn, and npm, had their own booleans on
 // the options object.
 function isPnpm(options) {
   return options.packageManager === 'pnpm' || options.pnpm;
@@ -378,3 +377,4 @@ function isYarn(options) {
 function isNpm(options) {
   return options.packageManager === 'npm' || options.npm;
 }
+
