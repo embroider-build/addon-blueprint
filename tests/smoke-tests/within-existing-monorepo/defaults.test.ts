@@ -73,7 +73,7 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
       }
 
       await createAddon({
-        args: [`--${packageManager}=true`],
+        args: [`--${packageManager}`],
         options: { cwd: tmpDir },
       });
 
