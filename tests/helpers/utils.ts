@@ -158,7 +158,6 @@ export async function createAddon({
 
   let result = await execa('ember', emberCliArgs, {
     ...options,
-    env: { ...options.env, EMBER_CLI_PNPM: 'true' },
     preferLocal: true,
   });
 
