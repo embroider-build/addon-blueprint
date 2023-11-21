@@ -79,14 +79,32 @@ jobs:
       matrix:
         ember-cli:
           - 5.4.1
-          # Not testing against 5.3.0, because it has non-passing typechecking
-          # - 5.3.0
+          - 5.3.0
 
         slow-test:
           - defaults with npm
           - defaults with yarn
           - defaults with pnpm
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wyvox/action-setup-pnpm@v2
+      - run: pnpm add --global ember-cli@${{ matrix.ember-cli }} yarn
+      - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
+        working-directory: tests
 
+  typescript_tests:
+    name: "ember-cli@${{ matrix.ember-cli }} : ${{ matrix.slow-test }}"
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ember-cli:
+          - 5.4.1
+          # Not testing against 5.3.0, because it has non-passing typechecking
+          # - 5.3.0
+
+        slow-test:
           - typescript with npm
           - typescript with yarn
           - typescript with pnpm
