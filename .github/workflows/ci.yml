@@ -78,8 +78,9 @@ jobs:
       fail-fast: false
       matrix:
         ember-cli:
-          - 5.4.0
-          - 5.3.0
+          - 5.4.1
+          # Not testing against 5.3.0, because it has non-passing typechecking
+          # - 5.3.0
 
         slow-test:
           - defaults with npm

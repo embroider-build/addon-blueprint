@@ -46,12 +46,6 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
     // Tests are additive, so when running them in order, we want to check linting
     // before we add files from fixtures
     it('lints all pass', async () => {
-      // pending release of https://github.com/ember-cli/ember-cli/commit/df78d15beadbc3b381b82a9d1c26b364436a608d
-      // failing blueprint caused by mistaken minor release of `@tsconfig/ember`
-      // that should have been a major.
-      // verbatimModuleSyntax was added, but ember-cli's TS blueprint wasn't ready for it.
-      await helper.fixtures.use('./test-app/tests/helpers/index.ts');
-
       let { exitCode } = await helper.run('lint');
 
       expect(exitCode).toEqual(0);
