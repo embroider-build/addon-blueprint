@@ -17,18 +17,34 @@ describe('--addon-only', () => {
     await helper.clean();
   });
 
-  it('has all the dot files', async () => {
-    let contents = await dirContents(helper.projectRoot);
+  it('has all the files', async () => {
+    let rootContents = await dirContents(helper.projectRoot);
 
     await matchesFixture('.npmrc', { cwd: helper.projectRoot, scenario: 'pnpm-addon-only' });
 
-    expect(contents).to.include('.npmrc');
-    expect(contents).to.include('.eslintrc.cjs');
-    expect(contents).to.include('.eslintignore');
-    expect(contents).to.include('.prettierrc.cjs');
-    expect(contents).to.include('.prettierignore');
-    expect(contents).to.include('.template-lintrc.cjs');
-    expect(contents).to.include('.gitignore');
+    expect(rootContents).to.include('.editorconfig');
+    expect(rootContents).to.include('.eslintignore');
+    expect(rootContents).to.include('.eslintrc.cjs');
+    expect(rootContents).to.include('.gitignore'); 
+    expect(rootContents).to.include('.npmrc');
+    expect(rootContents).to.include('.prettierignore');
+    expect(rootContents).to.include('.prettierrc.cjs');
+    expect(rootContents).to.include('.template-lintrc.cjs');
+    expect(rootContents).to.include('CONTRIBUTING.md');
+    expect(rootContents).to.include('LICENSE.md');
+    expect(rootContents).to.include('README.md');
+    expect(rootContents).to.include('addon-main.cjs');
+    expect(rootContents).to.include('babel.config.json');
+    expect(rootContents).to.include('package.json');
+    expect(rootContents).to.include('rollup.config.mjs');
+
+    let configContents = await dirContents(path.join(helper.projectRoot, 'config'));
+    
+    expect(configContents).to.include('ember-cli-update.json');
+
+    let srcContents = await dirContents(path.join(helper.projectRoot, 'src'));
+    
+    expect(srcContents).to.include('index.js');
   });
 
   it('is not a monorepo', async () => {
