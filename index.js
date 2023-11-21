@@ -179,7 +179,7 @@ module.exports = {
     await appBlueprint.install(appOptions);
 
     await Promise.all([
-      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), options.packageManager === 'pnpm' || options.pnpm),
+      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), isPnpm(options)),
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
       fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
@@ -273,21 +273,21 @@ module.exports = {
       blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       packageManager: options.packageManager,
-      yarn: options.yarn || options.packageManager === 'yarn',
-      pnpm: options.pnpm || options.packageManager === 'pnpm',
-      npm: options.npm || options.packageManager === 'npm',
+      yarn: isYarn(options),
+      pnpm: isPnpm(options),
+      npm: isNpm(options),
       typescript: options.typescript,
       ext: options.typescript ? 'ts' : 'js',
       blueprint: 'addon',
       blueprintOptions: buildBlueprintOptions({
         [`--addon-location=${options.addonLocation}`]: options.addonLocation,
         [`--ci-provider=${options.ciProvider}`]: options.ciProvider,
-        '--pnpm': options.pnpm || options.packageManager === 'pnpm',
+        '--pnpm': isPnpm(options),
         '--release-it': options.releaseIt,
         [`--test-app-location=${options.testAppLocation}`]: options.testAppLocation,
         [`--test-app-name=${options.testAppName}`]: options.testAppName,
         '--typescript': options.typescript,
-        '--yarn': options.yarn || options.packageManager === 'yarn',
+        '--yarn': isYarn(options),
       }),
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,
@@ -324,7 +324,7 @@ module.exports = {
       files = files.filter((filename) => !filename.endsWith('.npmrc'));
     }
 
-    if (!this.yarn) {
+    if (!(isYarn(options))) {
       let ignoredFiles = ['.yarnrc.yml'];
 
       files = files.filter((filename) => !ignoredFiles.includes(filename));
@@ -360,4 +360,21 @@ function buildBlueprintOptions(blueprintOptions) {
   }
 
   return '';
+}
+
+
+// These methods exist because in ember-cli 5.4, package manager handling
+// had changed to solely use the packageManager key, however
+// prior to ember-cli 5.4, pnpm, yarn, and npm, had their own booleans on 
+// the options object.
+function isPnpm(options) {
+  return options.packageManager === 'pnpm' || options.pnpm;
+}
+
+function isYarn(options) {
+  return options.packageManager === 'yarn' || options.yarn;
+}
+
+function isNpm(options) {
+  return options.packageManager === 'npm' || options.npm;
 }

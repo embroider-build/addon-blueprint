@@ -20,7 +20,7 @@ describe('--addon-location', () => {
     tmpDir = await createTmp();
 
     let { name } = await createAddon({
-      args: [`--addon-location=${addonLocation}`, '--pnpm=true'],
+      args: [`--addon-location=${addonLocation}`, '--pnpm'],
       options: { cwd: tmpDir },
     });
 
