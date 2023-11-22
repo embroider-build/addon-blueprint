@@ -20,6 +20,24 @@
 
 
 
+
+## v2.8.0 (2023-11-22)
+
+#### :rocket: Enhancement
+* [#216](https://github.com/embroider-build/addon-blueprint/pull/216) GH Actions: Swap NVP for wyvox ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#214](https://github.com/embroider-build/addon-blueprint/pull/214) Update tsconfig to have verbatimModuleSyntax and document reasoning for the tsconfig options ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* [#223](https://github.com/embroider-build/addon-blueprint/pull/223) Fix compatibility with ember-cli 5.4+ ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* [#218](https://github.com/embroider-build/addon-blueprint/pull/218) Configure Glint correctly for ember-template-imports ([@lukasnys](https://github.com/lukasnys))
+* [#213](https://github.com/embroider-build/addon-blueprint/pull/213) Properly configure Yarn v3 ([@bartocc](https://github.com/bartocc))
+
+#### Committers: 4
+- Julien Palmas ([@bartocc](https://github.com/bartocc))
+- Lukas Nys ([@lukasnys](https://github.com/lukasnys))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v2.7.0 (2023-09-29)
 
 #### :rocket: Enhancement
