@@ -31,6 +31,15 @@ async function createTmp() {
 
 const filesToCopyFromRootToAddonDuringBuild = ['README.md', 'LICENSE.md'];
 const filesToCopyFromRootToAddonInExistingMonorepo = ['README.md', 'CONTRIBUTING.md'];
+const filesToCopyFromRootToAddonInAddonOnlyMode = [
+  'config/ember-cli-update.json',
+  '.editorconfig',
+  '.prettierignore',
+  '.prettierrc.cjs',
+  'CONTRIBUTING.md',
+  'LICENSE.md',
+  'README.md',
+];
 
 module.exports = {
   description,
@@ -300,7 +309,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (options.addonOnly) {
-      files = files.filter((filename) => filename.includes('__addonLocation__'));
+      files = files.filter((filename) => filename.includes('__addonLocation__') || filesToCopyFromRootToAddonInAddonOnlyMode.includes(filename));
     } else {
       // filter out the addon-specific npmrc, as it
       // is only applicable during --addon-only
