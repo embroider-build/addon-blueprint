@@ -25,7 +25,7 @@ describe('--addon-only', () => {
     expect(rootContents).to.include('.editorconfig');
     expect(rootContents).to.include('.eslintignore');
     expect(rootContents).to.include('.eslintrc.cjs');
-    expect(rootContents).to.include('.gitignore'); 
+    expect(rootContents).to.include('.gitignore');
     expect(rootContents).to.include('.npmrc');
     expect(rootContents).to.include('.prettierignore');
     expect(rootContents).to.include('.prettierrc.cjs');
@@ -39,11 +39,11 @@ describe('--addon-only', () => {
     expect(rootContents).to.include('rollup.config.mjs');
 
     let configContents = await dirContents(path.join(helper.projectRoot, 'config'));
-    
+
     expect(configContents).to.include('ember-cli-update.json');
 
     let srcContents = await dirContents(path.join(helper.projectRoot, 'src'));
-    
+
     expect(srcContents).to.include('index.js');
   });
 
