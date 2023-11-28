@@ -33,7 +33,8 @@
     "prepack": "rollup --config"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.0.0"
+    "@embroider/addon-shim": "^1.0.0",
+    "decorator-transforms": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
