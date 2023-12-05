@@ -101,7 +101,7 @@ ember addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-
 
 By default, `test-app` will be used.
 
-### `--addon-only`
+#### `--addon-only`
 
 Will only create the addon, similar to the v1 addon behavior of `ember addon my-addon`.
 This is useful for incremental migrations of v1 addons to v2 addons where the process from the
