@@ -32,13 +32,27 @@
     "eslint": "^8.19.0",
     "prettier": "^3.0.2",
     "release-it": "^15.5.0",
+    "release-plan": "^0.5.0",
     "typescript": "^4.7.4"
   },
   "engines": {
     "node": "16.* || >= 18"
   },
+  "volta": {
+    "node": "16.20.1",
+    "yarn": "1.22.18",
+    "pnpm": "8.7.6"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
+  },
+  "pnpm": {
+    "overrides": {
+      "@octokit/core": "^4.0.0"
+    },
+    "notes": {
+      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers"
+    }
   },
   "release-it": {
     "plugins": {
@@ -54,18 +68,5 @@
       "release": true,
       "tokenRef": "GITHUB_AUTH"
     }
-  },
-  "pnpm": {
-    "overrides": {
-      "@octokit/core": "^4.0.0"
-    },
-    "notes": {
-      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers"
-    }
-  },
-  "volta": {
-    "node": "16.20.1",
-    "yarn": "1.22.18",
-    "pnpm": "8.7.6"
   }
 }
