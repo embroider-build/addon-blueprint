@@ -1,4 +1,26 @@
 # @embroider/addon-blueprint Changelog
+## Release (2023-12-06)
+
+@embroider/addon-blueprint 2.8.1 (patch)
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#233](https://github.com/embroider-build/addon-blueprint/pull/233) Specify rootDir so that declarations can always be emitted with the correct paths. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :memo: Documentation
+* `@embroider/addon-blueprint`
+  * [#232](https://github.com/embroider-build/addon-blueprint/pull/232) Readme: minor formatting fix ([@lolmaus](https://github.com/lolmaus))
+
+#### :house: Internal
+* `@embroider/addon-blueprint`
+  * [#235](https://github.com/embroider-build/addon-blueprint/pull/235) Dedupe lockfile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#236](https://github.com/embroider-build/addon-blueprint/pull/236) remove release-it & upgrade release-plan ([@mansona](https://github.com/mansona))
+  * [#234](https://github.com/embroider-build/addon-blueprint/pull/234) Setup release plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Andrey Mikhaylov (lolmaus) ([@lolmaus](https://github.com/lolmaus))
+- Chris Manson ([@mansona](https://github.com/mansona))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 
 ## v2.8.0 (2023-11-22)
 
