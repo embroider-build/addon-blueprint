@@ -1,25 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# @embroider/addon-blueprint Changelog
 
 ## v2.8.0 (2023-11-22)
 
