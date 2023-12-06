@@ -14,7 +14,6 @@
     "test": "pnpm --filter 'blueprint-tests' test"
   },
   "dependencies": {
-    "create-rwjblue-release-it-setup": "^4.0.0",
     "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
     "execa": "^5.1.1",
@@ -26,13 +25,11 @@
   },
   "devDependencies": {
     "@nullvoxpopuli/eslint-configs": "^3.2.0",
-    "@release-it-plugins/lerna-changelog": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "eslint": "^8.19.0",
     "prettier": "^3.0.2",
-    "release-it": "^15.5.0",
-    "release-plan": "^0.5.0",
+    "release-plan": "^0.5.1",
     "typescript": "^4.7.4"
   },
   "engines": {
@@ -45,28 +42,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
-  },
-  "pnpm": {
-    "overrides": {
-      "@octokit/core": "^4.0.0"
-    },
-    "notes": {
-      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers"
-    }
-  },
-  "release-it": {
-    "plugins": {
-      "@release-it-plugins/lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
-    }
   }
 }
