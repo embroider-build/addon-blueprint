@@ -89,17 +89,12 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         'template-registry.js.map',
       ]);
 
-      expect(distContents.hashed.length).toBe(4);
-      expect(
-        distContents.hashed
-          .filter((file) => file.includes('_rollup'))
-          .map((file) => file.split('.js')[1]),
-      ).to.deep.equal(['', '.map'], 'the rollup helpers are emitted with a source map');
+      expect(distContents.hashed.length).toBe(2);
       expect(
         distContents.hashed
           .filter((file) => file.includes('template-only'))
           .map((file) => file.split('.js')[1]),
-      ).to.deep.equal(['', '.map'], 'the template-only component is emitted with a source map');
+      ).to.deep.equal(['', '.map'], 'the template-only (private) component is emitted with a source map');
 
       expect(declarationsContents).to.deep.equal([
         'components',
