@@ -6,6 +6,6 @@
       "targetFormat": "hbs",
       "transforms": []
     }],
-    ["decorator-transform", { "runtime": { "import": "decorator-transform/runtime" } }],
+    ["module:decorator-transform", { "runtime": { "import": "decorator-transform/runtime" } }],
   ]
 }
