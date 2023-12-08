@@ -1,4 +1,14 @@
 # @embroider/addon-blueprint Changelog
+## Release (2023-12-08)
+
+@embroider/addon-blueprint 2.9.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#231](https://github.com/embroider-build/addon-blueprint/pull/231) Remove unneeded babel plugins so that shipped addon code is way smaller and easier to debug without sourcemaps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 1
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 ## Release (2023-12-06)
 
 @embroider/addon-blueprint 2.8.1 (patch)
