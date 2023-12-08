@@ -1,25 +1,17 @@
 {
   "solution": {
     "@embroider/addon-blueprint": {
-      "impact": "patch",
-      "oldVersion": "2.8.0",
-      "newVersion": "2.8.1",
+      "impact": "minor",
+      "oldVersion": "2.8.1",
+      "newVersion": "2.9.0",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2023-12-06)\n\n@embroider/addon-blueprint 2.8.1 (patch)\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#233](https://github.com/embroider-build/addon-blueprint/pull/233) Specify rootDir so that declarations can always be emitted with the correct paths. ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#232](https://github.com/embroider-build/addon-blueprint/pull/232) Readme: minor formatting fix ([@lolmaus](https://github.com/lolmaus))\n\n#### :house: Internal\n* `@embroider/addon-blueprint`\n  * [#235](https://github.com/embroider-build/addon-blueprint/pull/235) Dedupe lockfile ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#236](https://github.com/embroider-build/addon-blueprint/pull/236) remove release-it & upgrade release-plan ([@mansona](https://github.com/mansona))\n  * [#234](https://github.com/embroider-build/addon-blueprint/pull/234) Setup release plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Andrey Mikhaylov (lolmaus) ([@lolmaus](https://github.com/lolmaus))\n- Chris Manson ([@mansona](https://github.com/mansona))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2023-12-08)\n\n@embroider/addon-blueprint 2.9.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#231](https://github.com/embroider-build/addon-blueprint/pull/231) Remove unneeded babel plugins so that shipped addon code is way smaller and easier to debug without sourcemaps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
