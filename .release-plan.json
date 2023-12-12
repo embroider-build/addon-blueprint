@@ -2,16 +2,20 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.8.1",
-      "newVersion": "2.9.0",
+      "oldVersion": "2.9.0",
+      "newVersion": "2.10.0",
       "constraints": [
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2023-12-08)\n\n@embroider/addon-blueprint 2.9.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#231](https://github.com/embroider-build/addon-blueprint/pull/231) Remove unneeded babel plugins so that shipped addon code is way smaller and easier to debug without sourcemaps ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2023-12-12)\n\n@embroider/addon-blueprint 2.10.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#222](https://github.com/embroider-build/addon-blueprint/pull/222) Use --skip-cleanup for ember-try for faster-exiting try-scenarios ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#227](https://github.com/embroider-build/addon-blueprint/pull/227) add quotes around path in GitHub workflow ([@basz](https://github.com/basz))\n\n#### Committers: 2\n- Bas Kamer ([@basz](https://github.com/basz))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

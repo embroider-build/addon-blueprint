@@ -1,4 +1,19 @@
 # @embroider/addon-blueprint Changelog
+## Release (2023-12-12)
+
+@embroider/addon-blueprint 2.10.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#222](https://github.com/embroider-build/addon-blueprint/pull/222) Use --skip-cleanup for ember-try for faster-exiting try-scenarios ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#227](https://github.com/embroider-build/addon-blueprint/pull/227) add quotes around path in GitHub workflow ([@basz](https://github.com/basz))
+
+#### Committers: 2
+- Bas Kamer ([@basz](https://github.com/basz))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 ## Release (2023-12-08)
 
 @embroider/addon-blueprint 2.9.0 (minor)
