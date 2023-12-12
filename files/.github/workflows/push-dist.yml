@@ -28,4 +28,4 @@ jobs:
         with:
           branch: dist
           token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: <%= addonInfo.location %>
+          working-directory: '<%= addonInfo.location %>'
