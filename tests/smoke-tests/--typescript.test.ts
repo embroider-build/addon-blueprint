@@ -7,7 +7,6 @@ import {
   AddonHelper,
   assertGeneratedCorrectly,
   dirContents,
-  splitHashedFiles,
   SUPPORTED_PACKAGE_MANAGERS,
 } from '../helpers.js';
 
@@ -76,34 +75,33 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
 
       expect(buildResult.exitCode).toEqual(0);
 
-      let distContents = splitHashedFiles(await dirContents(distDir));
+      let distContents = await dirContents(distDir);
       let declarationsContents = await dirContents(declarationsDir);
 
-      expect(distContents.unhashed).to.deep.equal([
-        '_app_',
-        'components',
-        'index.js',
-        'index.js.map',
-        'services',
-        'template-registry.js',
-        'template-registry.js.map',
-      ]);
+      expect(distContents).toMatchInlineSnapshot(`
+        [
+          "_app_",
+          "components",
+          "index.js",
+          "index.js.map",
+          "services",
+          "template-only-dYTzhOEA.js",
+          "template-only-dYTzhOEA.js.map",
+          "template-registry.js",
+          "template-registry.js.map",
+        ]
+      `);
 
-      expect(distContents.hashed.length).toBe(2);
-      expect(
-        distContents.hashed
-          .filter((file) => file.includes('template-only'))
-          .map((file) => file.split('.js')[1]),
-      ).to.deep.equal(['', '.map'], 'the template-only (private) component is emitted with a source map');
-
-      expect(declarationsContents).to.deep.equal([
-        'components',
-        'index.d.ts',
-        'index.d.ts.map',
-        'services',
-        'template-registry.d.ts',
-        'template-registry.d.ts.map',
-      ]);
+      expect(declarationsContents).toMatchInlineSnapshot(`
+        [
+          "components",
+          "index.d.ts",
+          "index.d.ts.map",
+          "services",
+          "template-registry.d.ts",
+          "template-registry.d.ts.map",
+        ]
+      `);
 
       let testResult = await helper.run('test');
 
