@@ -22,46 +22,6 @@ export async function createTmp() {
   return tmpDirPath;
 }
 
-const ROLLUP_HASH = /[a-f0-9]{8}/
-
-/**
-* Filters out rollup-hashes from a list of files.
-*
-* When there are private files, rollup will add some
-* hash to the emitted file path, 
-* such as:
-*   template-only-ab2e7769.js.map
-*
-* These hashes have predictable length, so we can have
-* a fairly narrow matcher to remove them.
-*/
-export function withoutHashes(names: string[]) {
-  return names.filter(name => !ROLLUP_HASH.test(name));
-}
-
-/**
-* Filters out a list of files, keeping only the rollup-emitted hashed files
-*
-* When there are private files, rollup will add some
-* hash to the emitted file path, 
-* such as:
-*   template-only-ab2e7769.js.map
-*
-* These hashes have predictable length, so we can have
-* a fairly narrow matcher to remove them.
-* This a
-*/
-export function hashesOnly(names: string[]) {
-  return names.filter(name => ROLLUP_HASH.test(name));
-}
-
-export function splitHashedFiles(names: string[]) {
-  return {
-    hashed: hashesOnly(names),
-    unhashed: withoutHashes(names),
-  };
-}
-
 /**
  * Abstraction for install, as the blueprint supports multiple package managers
  */
