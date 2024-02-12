@@ -85,8 +85,8 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
           "index.js",
           "index.js.map",
           "services",
-          "template-only-dYTzhOEA.js",
-          "template-only-dYTzhOEA.js.map",
+          "template-only-B8yJqW69.js",
+          "template-only-B8yJqW69.js.map",
           "template-registry.js",
           "template-registry.js.map",
         ]
