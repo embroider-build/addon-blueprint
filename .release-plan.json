@@ -2,16 +2,20 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.10.0",
-      "newVersion": "2.11.0",
+      "oldVersion": "2.11.0",
+      "newVersion": "2.12.0",
       "constraints": [
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2023-12-18)\n\n@embroider/addon-blueprint 2.11.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#243](https://github.com/embroider-build/addon-blueprint/pull/243) Update dependencies in the addon's package.json ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-02-15)\n\n@embroider/addon-blueprint 2.12.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#253](https://github.com/embroider-build/addon-blueprint/pull/253) Update LTS scenarios ([@bertdeblock](https://github.com/bertdeblock))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#247](https://github.com/embroider-build/addon-blueprint/pull/247) fix indentation in GitHub CI workflow ([@jelhan](https://github.com/jelhan))\n  * [#256](https://github.com/embroider-build/addon-blueprint/pull/256) Add missing .gitignores to better support --addon-only scenarios (no test app) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))\n- Jeldrik Hanschke ([@jelhan](https://github.com/jelhan))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

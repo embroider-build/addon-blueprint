@@ -1,4 +1,21 @@
 # @embroider/addon-blueprint Changelog
+## Release (2024-02-15)
+
+@embroider/addon-blueprint 2.12.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#253](https://github.com/embroider-build/addon-blueprint/pull/253) Update LTS scenarios ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#247](https://github.com/embroider-build/addon-blueprint/pull/247) fix indentation in GitHub CI workflow ([@jelhan](https://github.com/jelhan))
+  * [#256](https://github.com/embroider-build/addon-blueprint/pull/256) Add missing .gitignores to better support --addon-only scenarios (no test app) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- Jeldrik Hanschke ([@jelhan](https://github.com/jelhan))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 ## Release (2023-12-18)
 
 @embroider/addon-blueprint 2.11.0 (minor)
