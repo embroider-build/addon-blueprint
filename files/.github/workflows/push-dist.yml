@@ -16,14 +16,16 @@ jobs:
     name: Push dist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3<% if (pnpm) {%>
-      - uses: wyvox/action-setup-pnpm@v3<%} else {%>
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4<% if (pnpm) { %>
+      - uses: pnpm/action-setup@v3
         with:
-          cache: '<%= yarn ? 'yarn' : 'npm' %>'<% } if (yarn || npm) { %>
+          version: 8<% } %>
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: <%= pnpm ? 'pnpm' : yarn ? 'yarn' : 'npm' %>
       - name: Install Dependencies
-        run: <%= yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %><%}%>
+        run: <%= pnpm ? 'pnpm install --frozen-lockfile' : yarn ? 'yarn install --frozen-lockfile' : 'npm ci' %>
       - uses: kategengler/put-built-npm-package-contents-on-branch@v2.0.0
         with:
           branch: dist
