@@ -16,11 +16,11 @@ jobs:
     name: Push dist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: 'npm'
+          node-version: 18
+          cache: npm
       - name: Install Dependencies
         run: npm ci
       - uses: kategengler/put-built-npm-package-contents-on-branch@v2.0.0
