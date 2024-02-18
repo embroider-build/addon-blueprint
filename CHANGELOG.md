@@ -1,4 +1,20 @@
 # @embroider/addon-blueprint Changelog
+
+## Release (2024-02-18)
+
+@embroider/addon-blueprint 2.13.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#259](https://github.com/embroider-build/addon-blueprint/pull/259) remove wyvox/action-setup-pnpm to realign with ember-cli ([@mansona](https://github.com/mansona))
+
+#### :house: Internal
+* `@embroider/addon-blueprint`
+  * [#262](https://github.com/embroider-build/addon-blueprint/pull/262) fix workspace definition ([@mansona](https://github.com/mansona))
+  * [#260](https://github.com/embroider-build/addon-blueprint/pull/260) update release-plan ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
 ## Release (2024-02-15)
 
 @embroider/addon-blueprint 2.12.0 (minor)

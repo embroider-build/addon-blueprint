@@ -2,8 +2,8 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.11.0",
-      "newVersion": "2.12.0",
+      "oldVersion": "2.12.0",
+      "newVersion": "2.13.0",
       "constraints": [
         {
           "impact": "minor",
@@ -11,11 +11,11 @@
         },
         {
           "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-02-15)\n\n@embroider/addon-blueprint 2.12.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#253](https://github.com/embroider-build/addon-blueprint/pull/253) Update LTS scenarios ([@bertdeblock](https://github.com/bertdeblock))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#247](https://github.com/embroider-build/addon-blueprint/pull/247) fix indentation in GitHub CI workflow ([@jelhan](https://github.com/jelhan))\n  * [#256](https://github.com/embroider-build/addon-blueprint/pull/256) Add missing .gitignores to better support --addon-only scenarios (no test app) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))\n- Jeldrik Hanschke ([@jelhan](https://github.com/jelhan))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-02-18)\n\n@embroider/addon-blueprint 2.13.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#259](https://github.com/embroider-build/addon-blueprint/pull/259) remove wyvox/action-setup-pnpm to realign with ember-cli ([@mansona](https://github.com/mansona))\n\n#### :house: Internal\n* `@embroider/addon-blueprint`\n  * [#262](https://github.com/embroider-build/addon-blueprint/pull/262) fix workspace definition ([@mansona](https://github.com/mansona))\n  * [#260](https://github.com/embroider-build/addon-blueprint/pull/260) update release-plan ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
 }
