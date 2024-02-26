@@ -127,6 +127,16 @@ use the `--release-it` flag
 ember addon my-addon -b @embroider/addon-blueprint --yarn --release-it
 ```
 
+#### `--typescript`
+
+Sets up the new addon with [`typescript`](https://www.typescriptlang.org/) support.
+
+Example:
+
+```bash
+ember addon my-addon -b @embroider/addon-blueprint --typescript
+```
+
 ### Updating the addon
 
 The blueprint supports `ember-cli-update` to update your addon with any changes that occurred in the blueprint since you created the addon. So to update your addons boilerplate, simply run `ember-cli-update` (or `npx ember-cli-update` if you haven't installed it globally).
