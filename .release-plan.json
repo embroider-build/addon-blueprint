@@ -1,21 +1,21 @@
 {
   "solution": {
     "@embroider/addon-blueprint": {
-      "impact": "minor",
-      "oldVersion": "2.12.0",
-      "newVersion": "2.13.0",
+      "impact": "patch",
+      "oldVersion": "2.13.0",
+      "newVersion": "2.13.1",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         },
         {
           "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "reason": "Appears in changelog section :memo: Documentation"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-02-18)\n\n@embroider/addon-blueprint 2.13.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#259](https://github.com/embroider-build/addon-blueprint/pull/259) remove wyvox/action-setup-pnpm to realign with ember-cli ([@mansona](https://github.com/mansona))\n\n#### :house: Internal\n* `@embroider/addon-blueprint`\n  * [#262](https://github.com/embroider-build/addon-blueprint/pull/262) fix workspace definition ([@mansona](https://github.com/mansona))\n  * [#260](https://github.com/embroider-build/addon-blueprint/pull/260) update release-plan ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
+  "description": "## Release (2024-02-27)\n\n@embroider/addon-blueprint 2.13.1 (patch)\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#265](https://github.com/embroider-build/addon-blueprint/pull/265) Add @glint/core to root package.json ([@miguelcobain](https://github.com/miguelcobain))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#263](https://github.com/embroider-build/addon-blueprint/pull/263) Document typescript option ([@miguelcobain](https://github.com/miguelcobain))\n\n#### Committers: 1\n- Miguel Andrade ([@miguelcobain](https://github.com/miguelcobain))\n"
 }

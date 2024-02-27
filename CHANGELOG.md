@@ -1,5 +1,20 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-02-27)
+
+@embroider/addon-blueprint 2.13.1 (patch)
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#265](https://github.com/embroider-build/addon-blueprint/pull/265) Add @glint/core to root package.json ([@miguelcobain](https://github.com/miguelcobain))
+
+#### :memo: Documentation
+* `@embroider/addon-blueprint`
+  * [#263](https://github.com/embroider-build/addon-blueprint/pull/263) Document typescript option ([@miguelcobain](https://github.com/miguelcobain))
+
+#### Committers: 1
+- Miguel Andrade ([@miguelcobain](https://github.com/miguelcobain))
+
 ## Release (2024-02-18)
 
 @embroider/addon-blueprint 2.13.0 (minor)
