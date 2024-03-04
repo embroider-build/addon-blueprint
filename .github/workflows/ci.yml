@@ -91,22 +91,17 @@ jobs:
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - run: pnpm add --global ember-cli yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
 
 
   defaults_tests:
-    name: "ember-cli@${{ matrix.ember-cli }} : ${{ matrix.slow-test }}"
+    name: "Slow tests: ${{ matrix.slow-test }}"
     timeout-minutes: 5
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        ember-cli:
-          - 5.4.1
-          - 5.3.0
-
         slow-test:
           - defaults with npm
           - defaults with yarn
@@ -122,22 +117,16 @@ jobs:
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - run: pnpm add --global ember-cli@${{ matrix.ember-cli }} yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests
 
   typescript_tests:
-    name: "ember-cli@${{ matrix.ember-cli }} : ${{ matrix.slow-test }}"
+    name: "Slow tests: ${{ matrix.slow-test }}"
     timeout-minutes: 5
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        ember-cli:
-          - 5.4.1
-          # Not testing against 5.3.0, because it has non-passing typechecking
-          # - 5.3.0
-
         slow-test:
           - typescript with npm
           - typescript with yarn
@@ -153,6 +142,5 @@ jobs:
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - run: pnpm add --global ember-cli@${{ matrix.ember-cli }} yarn
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
         working-directory: tests

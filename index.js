@@ -11,6 +11,8 @@ const execa = require('execa');
 const { merge } = require('lodash');
 const { lt } = require('semver');
 
+const Blueprint = require('ember-cli/lib/models/blueprint');
+
 let date = new Date();
 
 const { addonInfoFromOptions, testAppInfoFromOptions, withoutAddonOptions } = require('./src/info');
@@ -164,7 +166,7 @@ module.exports = {
         `If you see this error, please open an issue at: https://github.com/embroider-build/addon-blueprint/issues`,
     );
 
-    const appBlueprint = this.lookupBlueprint('app');
+    const appBlueprint = Blueprint.lookup('app');
 
     if (!appBlueprint) {
       throw new SilentError('Cannot find app blueprint for generating test-app!');
