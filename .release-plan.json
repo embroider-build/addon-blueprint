@@ -1,21 +1,21 @@
 {
   "solution": {
     "@embroider/addon-blueprint": {
-      "impact": "patch",
-      "oldVersion": "2.13.0",
-      "newVersion": "2.13.1",
+      "impact": "minor",
+      "oldVersion": "2.13.1",
+      "newVersion": "2.14.0",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         },
         {
           "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-02-27)\n\n@embroider/addon-blueprint 2.13.1 (patch)\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#265](https://github.com/embroider-build/addon-blueprint/pull/265) Add @glint/core to root package.json ([@miguelcobain](https://github.com/miguelcobain))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#263](https://github.com/embroider-build/addon-blueprint/pull/263) Document typescript option ([@miguelcobain](https://github.com/miguelcobain))\n\n#### Committers: 1\n- Miguel Andrade ([@miguelcobain](https://github.com/miguelcobain))\n"
+  "description": "## Release (2024-03-04)\n\n@embroider/addon-blueprint 2.14.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#266](https://github.com/embroider-build/addon-blueprint/pull/266) add a timeout minutes to the CI jobs ([@mansona](https://github.com/mansona))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#268](https://github.com/embroider-build/addon-blueprint/pull/268) use our own version of ember-cli so the test app is always generated with the latest blueprint ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
 }
