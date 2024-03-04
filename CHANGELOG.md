@@ -1,5 +1,20 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-03-04)
+
+@embroider/addon-blueprint 2.14.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#266](https://github.com/embroider-build/addon-blueprint/pull/266) add a timeout minutes to the CI jobs ([@mansona](https://github.com/mansona))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#268](https://github.com/embroider-build/addon-blueprint/pull/268) use our own version of ember-cli so the test app is always generated with the latest blueprint ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## Release (2024-02-27)
 
 @embroider/addon-blueprint 2.13.1 (patch)
