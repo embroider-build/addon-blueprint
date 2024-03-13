@@ -1,6 +1,7 @@
 import { babel } from '@rollup/plugin-babel';
 <% if (!isExistingMonorepo) { %>import copy from 'rollup-plugin-copy';
 <% } %>import { Addon } from '@embroider/addon-dev/rollup';
+import resolve from '@rollup/plugin-node-resolve';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -53,6 +54,10 @@ export default {
 
     // Ensure that .gjs files are properly integrated as Javascript
     addon.gjs(),
+
+    resolve({
+      extensions: ['.js', '.gjs', '.ts', '.gts']
+    }),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
