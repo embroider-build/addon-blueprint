@@ -95,7 +95,9 @@
     "type": "addon",
     "main": "addon-main.cjs"
   },
-  "exports": {<% if (typescript) { %>
+  "exports": {
+    "<%= addonName %>/*": "./src/*",
+    <% if (typescript) { %>
     ".": {
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
