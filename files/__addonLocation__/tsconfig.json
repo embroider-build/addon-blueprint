@@ -24,14 +24,6 @@
     "rootDir": "./src",
 
     /**
-      https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
-
-      We don't want to include types dependencies in our compiled output, so tell TypeScript
-      to enforce using `import type` instead of `import` for Types.
-     */
-    "verbatimModuleSyntax": true,
-
-    /**
       https://www.typescriptlang.org/tsconfig#allowImportingTsExtensions
 
       We want our tooling to know how to resolve our custom files so the appropriate plugins
