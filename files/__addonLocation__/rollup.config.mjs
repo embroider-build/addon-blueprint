@@ -1,6 +1,10 @@
 import { babel } from '@rollup/plugin-babel';
 <% if (!isExistingMonorepo) { %>import copy from 'rollup-plugin-copy';
 <% } %>import { Addon } from '@embroider/addon-dev/rollup';
+<% if (typescript) { %>
+import { execaCommand } from 'execa';
+import { fixBadDeclarationOutput } from 'fix-bad-declaration-output';
+<% } %>
 
 const addon = new Addon({
   srcDir: 'src',
@@ -67,5 +71,30 @@ export default {
 <% filesToCopyFromRootToAddon.forEach((file) => { %>        { src: '<%= pathFromAddonToRoot %>/<%= file %>', dest: '.' },
 <% }); %>      ],
     }),
-<% } %>  ],
+<% } %>
+
+   {
+      name: 'generate-types',
+      closeBundle: async () => {
+        /**
+         * We generate the types here as an inline rollup plugin
+         * so that we can have the correct timing for fixing the types
+         * after they are generated.
+         *
+         * This also provides better CLI output, as Glint and Rollup don't fight
+         * each other to clear the terminal.
+         */
+        console.log('Building types');
+        await execaCommand(`pnpm glint --declaration`, { stdio: 'inherit' });
+
+        console.log('Fixing types');
+        await fixBadDeclarationOutput('declarations/**/*.d.ts', [
+          // https://github.com/microsoft/TypeScript/issues/56571
+          'TypeScript#56571',
+          // https://github.com/typed-ember/glint/issues/628
+          'Glint#628',
+        ]);
+      },
+    },
+  ],
 };
