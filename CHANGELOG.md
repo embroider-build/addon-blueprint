@@ -1,5 +1,24 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-03-29)
+
+@embroider/addon-blueprint 2.15.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#279](https://github.com/embroider-build/addon-blueprint/pull/279) Add ESLint rule to require that relative imports use full extensions ([@SergeAstapov](https://github.com/SergeAstapov))
+  * [#276](https://github.com/embroider-build/addon-blueprint/pull/276) Remove unnecessary verbatimModuleSyntax from tsconfig.json ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#277](https://github.com/embroider-build/addon-blueprint/pull/277)  Because TS addons need to emit declarations, we need to set noEmit to false ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#269](https://github.com/embroider-build/addon-blueprint/pull/269) Sort dependencies in root `package.json` file ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 3
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-03-04)
 
 @embroider/addon-blueprint 2.14.0 (minor)
