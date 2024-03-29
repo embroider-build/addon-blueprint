@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import TemplateOnly from './template-only';
+import TemplateOnly from './template-only.js';
 import { on } from '@ember/modifier';
 
 export default class TemplateImport extends Component {
