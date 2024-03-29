@@ -10,7 +10,7 @@ module.exports = {
       root: __dirname,
     },<% } %>
   },
-  plugins: ['ember'],
+  plugins: ['ember', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
@@ -30,6 +30,20 @@ module.exports = {
       ],
       rules: {
         // Add any custom rules here
+      },
+    },
+    // require relative imports use full extensions
+    {
+      files: ['src/**/*.{js,ts,gjs,gts}'],
+      rules: {
+        'import/extensions': ['error', 'always', { ignorePackages: true }],
+      },
+    },
+<% } else { %>    // require relative imports use full extensions
+    {
+      files: ['src/**/*.{js,gjs}'],
+      rules: {
+        'import/extensions': ['error', 'always', { ignorePackages: true }],
       },
     },
 <% } %>    // node files
