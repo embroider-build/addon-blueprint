@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import TemplateOnly from './template-only';
+import TemplateOnly from './template-only.ts';
 import AnotherGts from './another-gts.gts'; // N.B. relative imports inside a v2 addon should have explicit file extensions (this is consistent with how node treats ES modules)
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
