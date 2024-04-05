@@ -1,5 +1,21 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-04-05)
+
+@embroider/addon-blueprint 2.16.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#280](https://github.com/embroider-build/addon-blueprint/pull/280) Make sure to use the correct package manager in concurrently scripts ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#278](https://github.com/embroider-build/addon-blueprint/pull/278) fix: update prepack hook to account for ts scenario ([@aklkv](https://github.com/aklkv))
+
+#### Committers: 2
+- Alexey Kulakov ([@aklkv](https://github.com/aklkv))
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+
 ## Release (2024-03-29)
 
 @embroider/addon-blueprint 2.15.0 (minor)

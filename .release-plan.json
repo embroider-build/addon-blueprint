@@ -2,8 +2,8 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.14.0",
-      "newVersion": "2.15.0",
+      "oldVersion": "2.15.0",
+      "newVersion": "2.16.0",
       "constraints": [
         {
           "impact": "minor",
@@ -17,5 +17,5 @@
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-03-29)\n\n@embroider/addon-blueprint 2.15.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#279](https://github.com/embroider-build/addon-blueprint/pull/279) Add ESLint rule to require that relative imports use full extensions ([@SergeAstapov](https://github.com/SergeAstapov))\n  * [#276](https://github.com/embroider-build/addon-blueprint/pull/276) Remove unnecessary verbatimModuleSyntax from tsconfig.json ([@SergeAstapov](https://github.com/SergeAstapov))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#277](https://github.com/embroider-build/addon-blueprint/pull/277)  Because TS addons need to emit declarations, we need to set noEmit to false ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#269](https://github.com/embroider-build/addon-blueprint/pull/269) Sort dependencies in root `package.json` file ([@bertdeblock](https://github.com/bertdeblock))\n\n#### Committers: 3\n- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-04-05)\n\n@embroider/addon-blueprint 2.16.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#280](https://github.com/embroider-build/addon-blueprint/pull/280) Make sure to use the correct package manager in concurrently scripts ([@bertdeblock](https://github.com/bertdeblock))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#278](https://github.com/embroider-build/addon-blueprint/pull/278) fix: update prepack hook to account for ts scenario ([@aklkv](https://github.com/aklkv))\n\n#### Committers: 2\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))\n"
 }
