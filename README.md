@@ -15,7 +15,7 @@ The blueprint contains a number of assumptions, e.g. using a monorepo using (`ya
 ## Usage
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --yarn
+ember addon my-addon -b @embroider/addon-blueprint --pnpm
 ```
 
 ### Options
@@ -26,27 +26,23 @@ For all these options, you'll see a warning printed from `ember-cli` about unsup
 #### `--pnpm`
 
 Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default package manager.
-Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
 
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --pnpm --skip-npm
+ember addon my-addon -b @embroider/addon-blueprint --pnpm
 cd my-addon
-pnpm install
 ```
 
 #### `--npm`
 
 Sets up the new addon with `npm` as a default.
-Note, that because `ember-cli` doesn't support this flag, you'll need to also add `--skip-npm` (which skips install).
 
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --npm --skip-npm
+ember addon my-addon -b @embroider/addon-blueprint --npm
 cd my-addon
-npm install
 ```
 
 #### `--yarn`
@@ -58,7 +54,6 @@ Example:
 ```bash
 ember addon my-addon -b @embroider/addon-blueprint --yarn
 cd my-addon
-yarn install
 ```
 
 #### `--addon-location`
