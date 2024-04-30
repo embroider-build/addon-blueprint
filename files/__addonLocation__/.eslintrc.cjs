@@ -2,51 +2,83 @@
 
 module.exports = {
   root: true,
-  parser: '<%= typescript ? '@typescript-eslint/parser' : '@babel/eslint-parser' %>',
-  parserOptions: {
-    ecmaVersion: 'latest',<% if (!typescript) { %>
-    sourceType: 'module',
-    babelOptions: {
-      root: __dirname,
-    },<% } %>
-  },
-  plugins: ['ember', 'import'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-  ],
-  env: {
-    browser: true,
-  },
-  rules: {},
+  // Only use overrides
+  // https://github.com/ember-cli/eslint-plugin-ember?tab=readme-ov-file#gtsgjs
   overrides: [
-<% if (typescript) { %>    // ts files
     {
-      files: ['**/*.ts', '**/*.gts'],
+      files: ['**/*.js'<%= typescript ? ", '**/*.ts'" : '' %>],
+      env: { browser: true },
+      parser: '<%= typescript ? '@typescript-eslint/parser' : '@babel/eslint-parser' %>',
+      parserOptions: {
+        ecmaVersion: 'latest',<% if (!typescript) { %>
+        sourceType: 'module',
+        babelOptions: {
+          root: __dirname,
+        },<% } %>
+      },
+      plugins: ['ember', 'import'],
       extends: [
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:@typescript-eslint/recommended',
+        'eslint:recommended',
+        'plugin:ember/recommended',
+        'plugin:prettier/recommended',
       ],
       rules: {
+        // require relative imports use full extensions
+        'import/extensions': ['error', 'always', { ignorePackages: true }],
         // Add any custom rules here
       },
     },
-    // require relative imports use full extensions
+<% if (typescript) { %>    // ts files
     {
-      files: ['src/**/*.{js,ts,gjs,gts}'],
+      files: ['**/*.ts'],
+      extends: [
+        'eslint:recommended',
+        'plugin:ember/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:prettier/recommended',
+      ],
       rules: {
+        // require relative imports use full extensions
         'import/extensions': ['error', 'always', { ignorePackages: true }],
+        // Add any custom rules here
       },
     },
-<% } else { %>    // require relative imports use full extensions
     {
-      files: ['src/**/*.{js,gjs}'],
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember', 'import'],
+      extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:ember/recommended',
+        'plugin:ember/recommended-gts',
+        'plugin:prettier/recommended',
+      ],
       rules: {
+        // require relative imports use full extensions
         'import/extensions': ['error', 'always', { ignorePackages: true }],
+        // Add any custom rules here
       },
     },
-<% } %>    // node files
+<% } %>    {
+      files: ['**/*.gjs'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember', 'import'],
+      extends: [
+        'eslint:recommended',
+        'plugin:ember/recommended',
+        'plugin:ember/recommended-gjs',
+        'plugin:prettier/recommended',
+      ],
+      rules: {
+        // require relative imports use full extensions
+        'import/extensions': ['error', 'always', { ignorePackages: true }],
+        // Add any custom rules here
+      },
+    },
+    // node files
     {
       files: [
         './.eslintrc.cjs',
@@ -62,7 +94,11 @@ module.exports = {
         node: true,
       },
       plugins: ['n'],
-      extends: ['plugin:n/recommended'],
+      extends: [
+        'eslint:recommended',
+        'plugin:n/recommended',
+        'plugin:prettier/recommended',
+      ],
     },
   ],
 };
