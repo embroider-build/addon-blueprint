@@ -191,7 +191,6 @@ module.exports = {
     await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), isPnpm(options)),
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
-      fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
 
     if (options.typescript) {
