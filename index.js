@@ -183,7 +183,6 @@ module.exports = {
       entity: { name: testAppInfo.name.raw },
       name: testAppInfo.name.raw,
       rawName: testAppInfo.name.raw,
-      ciProvider: 'travis', // we will delete this anyway below, as the CI config goes into the root folder
       welcome: false,
     };
 
