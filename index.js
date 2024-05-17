@@ -183,7 +183,6 @@ module.exports = {
       entity: { name: testAppInfo.name.raw },
       name: testAppInfo.name.raw,
       rawName: testAppInfo.name.raw,
-      ciProvider: 'travis', // we will delete this anyway below, as the CI config goes into the root folder
       welcome: false,
     };
 
@@ -192,7 +191,6 @@ module.exports = {
     await Promise.all([
       this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), isPnpm(options)),
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
-      fs.unlink(path.join(testAppPath, '.travis.yml')),
     ]);
 
     if (options.typescript) {
