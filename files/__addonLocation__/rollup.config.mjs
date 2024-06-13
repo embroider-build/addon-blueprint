@@ -82,9 +82,11 @@ export default {
          * but our consumers may not be using those, or have a new enough ember-source that provides them.
          */
         console.log("Building types");
-        let command = npm ? 'npm exec glint -- --declaration' : `${packageManager} glint --declaration`;
-
-        await $({ stdio: 'inherit' })`${command}`;
+        <% if (npm) { %>
+        await $({ stdio: 'inherit' })`npm exec glint -- --declaration`;
+        <% } else { %>
+        await $({ stdio: 'inherit' })`<%= packageManager %> glint --declaration`;
+        <% } %>
 
         /**
          * https://github.com/microsoft/TypeScript/issues/56571#
