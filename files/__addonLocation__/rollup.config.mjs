@@ -1,6 +1,10 @@
 import { babel } from '@rollup/plugin-babel';
 <% if (!isExistingMonorepo) { %>import copy from 'rollup-plugin-copy';
 <% } %>import { Addon } from '@embroider/addon-dev/rollup';
+<% if (typescript) { %>
+import { $ } from "execa";
+import { fixBadDeclarationOutput } from "fix-bad-declaration-output";
+<% } %>
 
 const addon = new Addon({
   srcDir: 'src',
@@ -67,5 +71,33 @@ export default {
 <% filesToCopyFromRootToAddon.forEach((file) => { %>        { src: '<%= pathFromAddonToRoot %>/<%= file %>', dest: '.' },
 <% }); %>      ],
     }),
-<% } %>  ],
+<% } %>
+
+<% if (typescript) { %>
+    {
+      name: "Build Declarations",
+      closeBundle: async () => {
+        /**
+         * Generate the types (these include /// <reference types="ember-source/types"
+         * but our consumers may not be using those, or have a new enough ember-source that provides them.
+         */
+        console.log("Building types");
+        await $({ stdio: 'inherit' })`./node_modules/.bin/glint --declaration`;
+
+        /**
+         * https://github.com/microsoft/TypeScript/issues/56571#
+         * README: https://github.com/NullVoxPopuli/fix-bad-declaration-output
+         */
+        console.log("Fixing types");
+        await fixBadDeclarationOutput("declarations/**/*.d.ts", [
+          // https://github.com/microsoft/TypeScript/issues/56571#issuecomment-1830436576
+          ["TypeScript#56571", { types: "all" }],
+          // https://github.com/typed-ember/glint/issues/628
+          "Glint#628",
+        ]);
+        console.log("⚠️ Dangerously (but neededly) fixed bad declaration output from typescript");
+      },
+    },
+<% } %>
+  ],
 };
