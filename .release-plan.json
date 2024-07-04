@@ -2,8 +2,8 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.15.0",
-      "newVersion": "2.16.0",
+      "oldVersion": "2.16.0",
+      "newVersion": "2.17.0",
       "constraints": [
         {
           "impact": "minor",
@@ -12,10 +12,14 @@
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-04-05)\n\n@embroider/addon-blueprint 2.16.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#280](https://github.com/embroider-build/addon-blueprint/pull/280) Make sure to use the correct package manager in concurrently scripts ([@bertdeblock](https://github.com/bertdeblock))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#278](https://github.com/embroider-build/addon-blueprint/pull/278) fix: update prepack hook to account for ts scenario ([@aklkv](https://github.com/aklkv))\n\n#### Committers: 2\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))\n"
+  "description": "## Release (2024-07-04)\n\n@embroider/addon-blueprint 2.17.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#293](https://github.com/embroider-build/addon-blueprint/pull/293) Bump decorator-transforms to v2 ([@SergeAstapov](https://github.com/SergeAstapov))\n  * [#286](https://github.com/embroider-build/addon-blueprint/pull/286) Bump ember-babel-plugin-ember-template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#284](https://github.com/embroider-build/addon-blueprint/pull/284) Update the linting packages and the eslint config ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#282](https://github.com/embroider-build/addon-blueprint/pull/282) Upgrade the build dependencies in the addon's package.json ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#290](https://github.com/embroider-build/addon-blueprint/pull/290) Remove default `ciProvider` in `appOptions` ([@mkszepp](https://github.com/mkszepp))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#285](https://github.com/embroider-build/addon-blueprint/pull/285) docs: update install instructions to use pnpm and remove `skip-npm` ([@IgnaceMaes](https://github.com/IgnaceMaes))\n\n#### Committers: 4\n- Ignace Maes ([@IgnaceMaes](https://github.com/IgnaceMaes))\n- Markus Sanin ([@mkszepp](https://github.com/mkszepp))\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
