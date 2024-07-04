@@ -1,5 +1,30 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-07-04)
+
+@embroider/addon-blueprint 2.17.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#293](https://github.com/embroider-build/addon-blueprint/pull/293) Bump decorator-transforms to v2 ([@SergeAstapov](https://github.com/SergeAstapov))
+  * [#286](https://github.com/embroider-build/addon-blueprint/pull/286) Bump ember-babel-plugin-ember-template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#284](https://github.com/embroider-build/addon-blueprint/pull/284) Update the linting packages and the eslint config ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#282](https://github.com/embroider-build/addon-blueprint/pull/282) Upgrade the build dependencies in the addon's package.json ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#290](https://github.com/embroider-build/addon-blueprint/pull/290) Remove default `ciProvider` in `appOptions` ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* `@embroider/addon-blueprint`
+  * [#285](https://github.com/embroider-build/addon-blueprint/pull/285) docs: update install instructions to use pnpm and remove `skip-npm` ([@IgnaceMaes](https://github.com/IgnaceMaes))
+
+#### Committers: 4
+- Ignace Maes ([@IgnaceMaes](https://github.com/IgnaceMaes))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-04-05)
 
 @embroider/addon-blueprint 2.16.0 (minor)
