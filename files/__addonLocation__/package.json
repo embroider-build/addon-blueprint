@@ -13,11 +13,8 @@
     "declarations",
     "dist"
   ],
-  "scripts": {<% if (typescript) { %>
-    "build": "concurrently '<%= packageManager %>:build:*'",
-    "build:js": "rollup --config",
-    "build:types": "glint --declaration",<% } else { %>
-    "build": "rollup --config",<% } %>
+  "scripts": {
+    "build": "rollup --config",
     "lint": "concurrently '<%= packageManager %>:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently '<%= packageManager %>:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
@@ -84,6 +81,8 @@
     "prettier-plugin-ember-template-tag": "^2.0.2",
     "rollup": "^4.16.4"<% if (!isExistingMonorepo) { %>,
     "rollup-plugin-copy": "^3.5.0"<% } %><% if (typescript) { %>,
+    "execa": "9.2.0",
+    "fix-bad-declaration-output": "1.1.4",
     "typescript": "^5.4.5"<% } %>
   },
   "publishConfig": {
