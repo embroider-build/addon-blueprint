@@ -2,24 +2,16 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "2.16.0",
-      "newVersion": "2.17.0",
+      "oldVersion": "2.17.0",
+      "newVersion": "2.18.0",
       "constraints": [
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-07-04)\n\n@embroider/addon-blueprint 2.17.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#293](https://github.com/embroider-build/addon-blueprint/pull/293) Bump decorator-transforms to v2 ([@SergeAstapov](https://github.com/SergeAstapov))\n  * [#286](https://github.com/embroider-build/addon-blueprint/pull/286) Bump ember-babel-plugin-ember-template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#284](https://github.com/embroider-build/addon-blueprint/pull/284) Update the linting packages and the eslint config ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#282](https://github.com/embroider-build/addon-blueprint/pull/282) Upgrade the build dependencies in the addon's package.json ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#290](https://github.com/embroider-build/addon-blueprint/pull/290) Remove default `ciProvider` in `appOptions` ([@mkszepp](https://github.com/mkszepp))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#285](https://github.com/embroider-build/addon-blueprint/pull/285) docs: update install instructions to use pnpm and remove `skip-npm` ([@IgnaceMaes](https://github.com/IgnaceMaes))\n\n#### Committers: 4\n- Ignace Maes ([@IgnaceMaes](https://github.com/IgnaceMaes))\n- Markus Sanin ([@mkszepp](https://github.com/mkszepp))\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-08-23)\n\n@embroider/addon-blueprint 2.18.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#295](https://github.com/embroider-build/addon-blueprint/pull/295) Match prettier-plugin-ember-template-tag with version in addon/package.json ([@BoussonKarel](https://github.com/BoussonKarel))\n\n#### Committers: 1\n- [@BoussonKarel](https://github.com/BoussonKarel)\n"
 }
