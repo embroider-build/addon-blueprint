@@ -1,5 +1,16 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-08-23)
+
+@embroider/addon-blueprint 2.18.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#295](https://github.com/embroider-build/addon-blueprint/pull/295) Match prettier-plugin-ember-template-tag with version in addon/package.json ([@BoussonKarel](https://github.com/BoussonKarel))
+
+#### Committers: 1
+- [@BoussonKarel](https://github.com/BoussonKarel)
+
 ## Release (2024-07-04)
 
 @embroider/addon-blueprint 2.17.0 (minor)
