@@ -43,11 +43,6 @@ const filesToCopyFromRootToAddonInAddonOnlyMode = [
   'README.md',
 ];
 
-const dependenciesToKeepInSync = [
-  '@typescript-eslint/eslint-plugin',
-  '@typescript-eslint/parser',
-];
-
 module.exports = {
   description,
 
@@ -224,12 +219,10 @@ module.exports = {
 
     const addonDependencies = json.devDependencies;
     
-    for (const dep of dependenciesToKeepInSync) {
-      if (!addonDependencies[dep]) {
-        continue;
+    for (const [dep, version] of Object.entries(addonDependencies)) {
+      if (dep in additions) {
+        additions[dep] = version;
       }
-
-      additions[dep] = addonDependencies[dep];
     }
 
     merge(pkg, additions);
