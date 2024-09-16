@@ -43,6 +43,11 @@ const filesToCopyFromRootToAddonInAddonOnlyMode = [
   'README.md',
 ];
 
+const dependenciesToKeepInSync = [
+  '@typescript-eslint/eslint-plugin',
+  '@typescript-eslint/parser',
+];
+
 module.exports = {
   description,
 
@@ -213,6 +218,19 @@ module.exports = {
   async updateTestAppPackageJson(packageJsonPath, useWorkspaceProtocol) {
     const pkg = await fs.readJSON(packageJsonPath);
     const additions = require('./additional-test-app-package.json');
+
+    let addonPackageJson = path.join(this.locals(this.options).addonInfo.location, 'package.json');
+    let json = await fs.readJSON(addonPackageJson);
+
+    const addonDependencies = json.devDependencies;
+    
+    for (const dep of dependenciesToKeepInSync) {
+      if (!addonDependencies[dep]) {
+        continue;
+      }
+
+      additions[dep] = addonDependencies[dep];
+    }
 
     merge(pkg, additions);
 
