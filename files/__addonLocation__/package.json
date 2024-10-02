@@ -86,9 +86,6 @@
     "rollup-plugin-copy": "^3.5.0"<% } %><% if (typescript) { %>,
     "typescript": "^5.4.5"<% } %>
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
   "ember": {
     "edition": "octane"
   },
