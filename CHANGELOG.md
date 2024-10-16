@@ -1,5 +1,16 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-10-16)
+
+@embroider/addon-blueprint 2.19.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#300](https://github.com/embroider-build/addon-blueprint/pull/300) remove publishConfig from addon package.json ([@jamescdavis](https://github.com/jamescdavis))
+
+#### Committers: 1
+- James C. Davis ([@jamescdavis](https://github.com/jamescdavis))
+
 ## Release (2024-08-23)
 
 @embroider/addon-blueprint 2.18.0 (minor)
