@@ -40,7 +40,7 @@
     "@babel/core": "^7.24.4",
     <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.24.4"<% } else { %>"@babel/eslint-parser": "^7.24.1"<% } %>,
     "@babel/runtime": "^7.24.4",
-    "@embroider/addon-dev": "^4.3.1",<% if (typescript) { %>
+    "@embroider/addon-dev": "^6.0.1",<% if (typescript) { %>
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/environment-ember-template-imports": "^1.4.0",
