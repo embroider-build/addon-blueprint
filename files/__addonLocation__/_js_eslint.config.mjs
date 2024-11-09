@@ -38,7 +38,6 @@ export default [
   prettier,
   ember.configs.base,
   ember.configs.gjs,
-  imports.flatConfigs.recommended,
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
@@ -71,6 +70,9 @@ export default [
   },
   {
     files: ['**/*.{js,gjs,ts,gts}'],
+    plugins: {
+      import: imports,
+    },
     rules: {
       'import/extensions': ['error', 'always', { ignorePackages: true }],
     },
