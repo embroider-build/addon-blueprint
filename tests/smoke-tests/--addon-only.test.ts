@@ -23,7 +23,7 @@ describe('--addon-only', () => {
     await matchesFixture('.npmrc', { cwd: helper.projectRoot, scenario: 'pnpm-addon-only' });
 
     expect(rootContents).to.include('.editorconfig');
-    expect(rootContents).to.include('eslint.config.js');
+    expect(rootContents).to.include('eslint.config.mjs');
     expect(rootContents).to.include('.gitignore');
     expect(rootContents).to.include('.npmrc');
     expect(rootContents).to.include('.prettierignore');
