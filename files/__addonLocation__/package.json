@@ -36,6 +36,9 @@
     "@embroider/addon-shim": "^1.8.7",
     "decorator-transforms": "^2.0.0"
   },
+  "peerDependencies": {
+    "ember-source": ">= 4.12.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.24.4",
     <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.24.4"<% } else { %>"@babel/eslint-parser": "^7.24.1"<% } %>,
@@ -72,6 +75,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^8.2.2",
+    "ember-source": "^5.4.0",
     "ember-template-lint": "^6.0.0",<% if (packageManager === 'npm') { %>
     "ember-eslint-parser": "^0.4.2",
     <% } %>"eslint": "^8.56.0",

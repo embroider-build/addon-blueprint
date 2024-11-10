@@ -309,7 +309,11 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (options.addonOnly) {
-      files = files.filter((filename) => filename.includes('__addonLocation__') || filesToCopyFromRootToAddonInAddonOnlyMode.includes(filename));
+      files = files.filter(
+        (filename) =>
+          filename.includes('__addonLocation__') ||
+          filesToCopyFromRootToAddonInAddonOnlyMode.includes(filename),
+      );
     } else {
       // filter out the addon-specific npmrc, as it
       // is only applicable during --addon-only
@@ -386,4 +390,3 @@ function isYarn(options) {
 function isNpm(options) {
   return options.packageManager === 'npm' || options.npm;
 }
-
