@@ -286,7 +286,6 @@ module.exports = {
       pnpm: isPnpm(options),
       npm: isNpm(options),
       typescript: options.typescript,
-      latestEmberSource: '5.12.0',
       ext: options.typescript ? 'ts' : 'js',
       blueprint: 'addon',
       blueprintOptions: buildBlueprintOptions({
