@@ -51,7 +51,7 @@
     "allowImportingTsExtensions": true,
 
     "types": [
-      "./node_modules/ember-source/types/stable"
+      "ember-source/types"
     ]
   }
 }
