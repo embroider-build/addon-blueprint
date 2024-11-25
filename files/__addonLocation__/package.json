@@ -14,18 +14,18 @@
     "dist"
   ],
   "scripts": {<% if (typescript) { %>
-    "build": "concurrently '<%= packageManager %>:build:*'",
+    "build": "concurrently \"<%= packageManager %>:build:*\"",
     "build:js": "rollup --config",
     "build:types": "glint --declaration",<% } else { %>
     "build": "rollup --config",<% } %>
-    "lint": "concurrently '<%= packageManager %>:lint:*(!fix)' --names 'lint:'",
-    "lint:fix": "concurrently '<%= packageManager %>:lint:*:fix' --names 'fix:'",
+    "lint": "concurrently \"<%= packageManager %>:lint:*(!fix)\" --names \"lint:\"",
+    "lint:fix": "concurrently \"<%= packageManager %>:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",<% if (typescript) { %>
     "lint:types": "glint",
-    "start": "concurrently '<%= packageManager %>:start:*'",
+    "start": "concurrently \"<%= packageManager %>:start:*\"",
     "start:js": "rollup --config --watch --no-watch.clearScreen",
     "start:types": "glint --declaration --watch",<% } else { %>
     "start": "rollup --config --watch",<% } %>
