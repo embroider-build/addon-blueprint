@@ -29,8 +29,8 @@
     "start:js": "rollup --config --watch --no-watch.clearScreen",
     "start:types": "glint --declaration --watch",<% } else { %>
     "start": "rollup --config --watch",<% } %>
-    "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
-    "prepack": <% if (typescript) { %>"concurrently '<%= packageManager %>:build:*'"<% } else { %>"rollup --config"<% } %>
+    "test": "echo \"A v2 addon does not have tests, run tests in test-app\"",
+    "prepack": <% if (typescript) { %>"concurrently \"<%= packageManager %>:build:*\""<% } else { %>"rollup --config"<% } %>
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.9",
