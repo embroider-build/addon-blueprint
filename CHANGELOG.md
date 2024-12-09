@@ -1,5 +1,30 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-12-09)
+
+@embroider/addon-blueprint 3.0.0 (major)
+
+#### :boom: Breaking Change
+* `@embroider/addon-blueprint`
+  * [#314](https://github.com/embroider-build/addon-blueprint/pull/314) Require node 18+ ([@simonihmig](https://github.com/simonihmig))
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#307](https://github.com/embroider-build/addon-blueprint/pull/307) Upgrade @typescript-eslint/* ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#299](https://github.com/embroider-build/addon-blueprint/pull/299) Update addon dependencies ([@simonihmig](https://github.com/simonihmig))
+  * [#300](https://github.com/embroider-build/addon-blueprint/pull/300) remove publishConfig from addon package.json ([@jamescdavis](https://github.com/jamescdavis))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#312](https://github.com/embroider-build/addon-blueprint/pull/312) bring v2 addon bp in line with scripts from ember addon ([@void-mAlex](https://github.com/void-mAlex))
+  * [#306](https://github.com/embroider-build/addon-blueprint/pull/306) ember-source is required for babel-plugin-ember-template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 4
+- Alex ([@void-mAlex](https://github.com/void-mAlex))
+- James C. Davis ([@jamescdavis](https://github.com/jamescdavis))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-08-23)
 
 @embroider/addon-blueprint 2.18.0 (minor)

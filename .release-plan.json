@@ -1,17 +1,25 @@
 {
   "solution": {
     "@embroider/addon-blueprint": {
-      "impact": "minor",
-      "oldVersion": "2.17.0",
-      "newVersion": "2.18.0",
+      "impact": "major",
+      "oldVersion": "2.18.0",
+      "newVersion": "3.0.0",
       "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-08-23)\n\n@embroider/addon-blueprint 2.18.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#295](https://github.com/embroider-build/addon-blueprint/pull/295) Match prettier-plugin-ember-template-tag with version in addon/package.json ([@BoussonKarel](https://github.com/BoussonKarel))\n\n#### Committers: 1\n- [@BoussonKarel](https://github.com/BoussonKarel)\n"
+  "description": "## Release (2024-12-09)\n\n@embroider/addon-blueprint 3.0.0 (major)\n\n#### :boom: Breaking Change\n* `@embroider/addon-blueprint`\n  * [#314](https://github.com/embroider-build/addon-blueprint/pull/314) Require node 18+ ([@simonihmig](https://github.com/simonihmig))\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#307](https://github.com/embroider-build/addon-blueprint/pull/307) Upgrade @typescript-eslint/* ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#299](https://github.com/embroider-build/addon-blueprint/pull/299) Update addon dependencies ([@simonihmig](https://github.com/simonihmig))\n  * [#300](https://github.com/embroider-build/addon-blueprint/pull/300) remove publishConfig from addon package.json ([@jamescdavis](https://github.com/jamescdavis))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#312](https://github.com/embroider-build/addon-blueprint/pull/312) bring v2 addon bp in line with scripts from ember addon ([@void-mAlex](https://github.com/void-mAlex))\n  * [#306](https://github.com/embroider-build/addon-blueprint/pull/306) ember-source is required for babel-plugin-ember-template-compilation ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 4\n- Alex ([@void-mAlex](https://github.com/void-mAlex))\n- James C. Davis ([@jamescdavis](https://github.com/jamescdavis))\n- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
