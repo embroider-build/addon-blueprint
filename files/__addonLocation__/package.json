@@ -13,22 +13,16 @@
     "declarations",
     "dist"
   ],
-  "scripts": {<% if (typescript) { %>
-    "build": "concurrently \"<%= packageManager %>:build:*\"",
-    "build:js": "rollup --config",
-    "build:types": "glint --declaration",<% } else { %>
-    "build": "rollup --config",<% } %>
+  "scripts": {
+    "build": "rollup --config",
     "lint": "concurrently \"<%= packageManager %>:lint:*(!fix)\" --names \"lint:\"",
     "lint:fix": "concurrently \"<%= packageManager %>:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",<% if (typescript) { %>
-    "lint:types": "glint",
-    "start": "concurrently \"<%= packageManager %>:start:*\"",
-    "start:js": "rollup --config --watch --no-watch.clearScreen",
-    "start:types": "glint --declaration --watch",<% } else { %>
-    "start": "rollup --config --watch",<% } %>
+    "lint:types": "glint",<% } %>
+    "start": "rollup --config --watch",
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'",
     "prepack": <% if (typescript) { %>"concurrently '<%= packageManager %>:build:*'"<% } else { %>"rollup --config"<% } %>
   },
@@ -43,7 +37,7 @@
     "@babel/core": "^7.25.2",
     <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.25.2"<% } else { %>"@babel/eslint-parser": "^7.25.1"<% } %>,
     "@babel/runtime": "^7.25.6",
-    "@embroider/addon-dev": "^6.0.1",<% if (typescript) { %>
+    "@embroider/addon-dev": "^7.1.0",<% if (typescript) { %>
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/environment-ember-template-imports": "^1.4.0",
