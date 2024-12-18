@@ -1,5 +1,18 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2024-12-18)
+
+@embroider/addon-blueprint 3.1.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#308](https://github.com/embroider-build/addon-blueprint/pull/308) Use native ember types ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#315](https://github.com/embroider-build/addon-blueprint/pull/315) Use addon-dev declarations plugin for d.ts output ([@simonihmig](https://github.com/simonihmig))
+
+#### Committers: 2
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2024-12-09)
 
 @embroider/addon-blueprint 3.0.0 (major)
