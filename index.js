@@ -80,13 +80,6 @@ module.exports = {
 
           if (options.packageManager === 'pnpm' || options.pnpm) {
             delete json.workspaces;
-
-            json.pnpm = {
-              // TODO: update the blueprint's output to ESLint 8
-              overrides: {
-                '@types/eslint': '^7.0.0',
-              },
-            };
           }
 
           await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
