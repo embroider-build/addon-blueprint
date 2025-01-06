@@ -18,7 +18,6 @@ import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import ember from 'eslint-plugin-ember/recommended';
 import prettier from 'eslint-config-prettier';
-import qunit from 'eslint-plugin-qunit';
 import n from 'eslint-plugin-n';
 
 import babelParser from '@babel/eslint-parser';
@@ -65,6 +64,9 @@ export default [
   },
   {
     files: ['src/**/*'],
+    plugins: {
+      'import': importPlugin,
+    },
     rules: {
       // require relative imports use full extensions
       'import/extensions': ['error', 'always', { ignorePackages: true }],
