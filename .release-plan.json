@@ -2,8 +2,8 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "minor",
-      "oldVersion": "3.0.0",
-      "newVersion": "3.1.0",
+      "oldVersion": "3.1.0",
+      "newVersion": "3.2.0",
       "constraints": [
         {
           "impact": "minor",
@@ -13,5 +13,5 @@
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-12-18)\n\n@embroider/addon-blueprint 3.1.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#308](https://github.com/embroider-build/addon-blueprint/pull/308) Use native ember types ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#315](https://github.com/embroider-build/addon-blueprint/pull/315) Use addon-dev declarations plugin for d.ts output ([@simonihmig](https://github.com/simonihmig))\n\n#### Committers: 2\n- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-01-06)\n\n@embroider/addon-blueprint 3.2.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#313](https://github.com/embroider-build/addon-blueprint/pull/313) Bump pnpm/action-setup to v4 ([@SergeAstapov](https://github.com/SergeAstapov))\n\n#### Committers: 1\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n"
 }

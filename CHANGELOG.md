@@ -1,5 +1,16 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2025-01-06)
+
+@embroider/addon-blueprint 3.2.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#313](https://github.com/embroider-build/addon-blueprint/pull/313) Bump pnpm/action-setup to v4 ([@SergeAstapov](https://github.com/SergeAstapov))
+
+#### Committers: 1
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+
 ## Release (2024-12-18)
 
 @embroider/addon-blueprint 3.1.0 (minor)
