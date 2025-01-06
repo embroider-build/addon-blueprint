@@ -116,7 +116,9 @@ export async function createAddon({
     console.debug(`\tember ${emberCliArgs.join(' ')}`);
   }
 
-  let result = await execa('ember', emberCliArgs, {
+  let localEmberCli = require.resolve('ember-cli/bin/ember');
+
+  let result = await execa(localEmberCli, emberCliArgs, {
     ...options,
     preferLocal: true,
   });
