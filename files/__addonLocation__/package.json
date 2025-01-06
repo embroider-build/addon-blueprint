@@ -27,7 +27,9 @@
     "prepack": <% if (typescript) { %>"concurrently '<%= packageManager %>:build:*'"<% } else { %>"rollup --config"<% } %>
   },
   "dependencies": {
+    "@ember/test-waiters": "^4.0.0",
     "@embroider/addon-shim": "^1.8.9",
+    "@glimmer/component": "^2.0.0",
     "decorator-transforms": "^2.2.2"
   },
   "peerDependencies": {
