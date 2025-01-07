@@ -1,6 +1,6 @@
 {
   "plugins": [
-<% if (typescript) { %>  [
+<% if (typescript) { %>    [
       "@babel/plugin-transform-typescript",
       {
         "allExtensions": true,

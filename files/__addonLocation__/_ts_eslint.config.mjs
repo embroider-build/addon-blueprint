@@ -86,7 +86,7 @@ export default ts.config(
     rules: {
       // require relative imports use full extensions
       'import/extensions': ['error', 'always', { ignorePackages: true }],
-    }
+    },
   },
   /**
    * CJS node files
