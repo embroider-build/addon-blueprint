@@ -15,7 +15,7 @@ The blueprint contains a number of assumptions, e.g. using a monorepo using (`ya
 ## Usage
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --pnpm
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --pnpm
 ```
 
 ### Options
@@ -30,7 +30,7 @@ Sets up the new addon with [`pnpm`](https://pnpm.io/) as a default package manag
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --pnpm
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --pnpm
 cd my-addon
 ```
 
@@ -41,7 +41,7 @@ Sets up the new addon with `npm` as a default.
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --npm
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --npm
 cd my-addon
 ```
 
@@ -52,7 +52,7 @@ Sets up the new addon with `yarn` as a default.
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --yarn
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --yarn
 cd my-addon
 ```
 
@@ -75,7 +75,7 @@ The location / folder name of the addon can be customized via `--test-app-locati
 Examples:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --test-app-location=test-app
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --test-app-location=test-app
 # generates
 #   my-addon/test-app
 ```
@@ -89,7 +89,7 @@ The name of the test-app can be customized via `--test-app-name`.
 Examples:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-my-addon
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --test-app-name=test-app-for-my-addon
 # generates
 #   my-addon/test-app-for-my-addon
 ```
@@ -104,7 +104,7 @@ This is useful for incremental migrations of v1 addons to v2 addons where the pr
 guide.
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --addon-only
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --addon-only
 # generates non-monorepo:
 #   my-addon/
 #     .git
@@ -119,7 +119,7 @@ If you want release-it behavior, (specifically provided by `create-rwjblue-relea
 use the `--release-it` flag
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --yarn --release-it
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --yarn --release-it
 ```
 
 #### `--typescript`
@@ -129,7 +129,7 @@ Sets up the new addon with [`typescript`](https://www.typescriptlang.org/) suppo
 Example:
 
 ```bash
-ember addon my-addon -b @embroider/addon-blueprint --typescript
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --typescript
 ```
 
 ### Updating the addon
@@ -174,7 +174,7 @@ To generate this run:
 
 ```bash
 cd project-monorepo
-ember addon my-addon -b @embroider/addon-blueprint \
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint \
   --skip-git \
   --skip-npm \
   --addon-location="addons/my-addon/package" \
@@ -202,7 +202,7 @@ To generate this run:
 
 ```bash
 cd project-monorepo
-ember addon my-addon -b @embroider/addon-blueprint \
+npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint \
   --skip-git \
   --skip-npm \
   --addon-location="addons/my-addon" \
