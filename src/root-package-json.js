@@ -50,7 +50,7 @@ let scripts = {
       lint: 'npm run lint --workspaces --if-present',
       'lint:fix': 'npm run lint:fix --workspaces --if-present',
       prepare: 'npm run build',
-      start: "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+      start: "concurrently 'npm:start:*' --restart-after 5000 --prefixColors auto",
       'start:addon': `npm start --workspace ${addonName} -- --no-watch.clearScreen`,
       'start:test-app': `npm start --workspace ${testAppName}`,
       test: 'npm run test --workspaces --if-present',
@@ -73,7 +73,7 @@ let scripts = {
       lint: 'yarn workspaces run lint',
       'lint:fix': 'yarn workspaces run lint:fix',
       prepare: 'yarn build',
-      start: "concurrently 'yarn:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+      start: "concurrently 'yarn:start:*' --restart-after 5000 --prefixColors auto",
       'start:addon': `yarn workspace ${addonName} run start`,
       'start:test-app': `yarn workspace ${testAppName} run start`,
       test: 'yarn workspaces run test',
@@ -110,7 +110,7 @@ let scripts = {
        *
        * Colors are customizable
        */
-      start: "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+      start: "concurrently 'pnpm:start:*' --restart-after 5000 --prefixColors auto",
       'start:addon': `pnpm --filter ${addonName} start --no-watch.clearScreen`,
       'start:test-app': `pnpm --filter ${testAppName} start`,
       /**

@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.25.2"<% } %>
+    <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.25.2",<% } %>
     "@babel/eslint-parser": "^7.25.1",
     "@babel/runtime": "^7.25.6",
     "@eslint/js": "^9.17.0",

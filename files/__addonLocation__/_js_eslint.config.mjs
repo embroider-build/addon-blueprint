@@ -12,15 +12,13 @@
  *     npx eslint --inspect-config
  *
  */
-import globals from 'globals';
-import js from '@eslint/js';
-
-import importPlugin from 'eslint-plugin-import';
-import ember from 'eslint-plugin-ember/recommended';
-import prettier from 'eslint-config-prettier';
-import n from 'eslint-plugin-n';
-
 import babelParser from '@babel/eslint-parser';
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import ember from 'eslint-plugin-ember/recommended';
+import importPlugin from 'eslint-plugin-import';
+import n from 'eslint-plugin-n';
+import globals from 'globals';
 
 const esmParserOptions = {
   ecmaFeatures: { modules: true },
@@ -65,12 +63,12 @@ export default [
   {
     files: ['src/**/*'],
     plugins: {
-      'import': importPlugin,
+      import: importPlugin,
     },
     rules: {
       // require relative imports use full extensions
       'import/extensions': ['error', 'always', { ignorePackages: true }],
-    }
+    },
   },
   /**
    * CJS node files
@@ -82,7 +80,6 @@ export default [
       '.stylelintrc.js',
       '.template-lintrc.js',
       'addon-main.cjs',
-
     ],
     plugins: {
       n,
