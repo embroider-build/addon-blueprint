@@ -23,8 +23,7 @@ describe('--addon-only', () => {
     await matchesFixture('.npmrc', { cwd: helper.projectRoot, scenario: 'pnpm-addon-only' });
 
     expect(rootContents).to.include('.editorconfig');
-    expect(rootContents).to.include('.eslintignore');
-    expect(rootContents).to.include('.eslintrc.cjs');
+    expect(rootContents).to.include('eslint.config.mjs');
     expect(rootContents).to.include('.gitignore');
     expect(rootContents).to.include('.npmrc');
     expect(rootContents).to.include('.prettierignore');
@@ -49,7 +48,7 @@ describe('--addon-only', () => {
 
   it('is not a monorepo', async () => {
     let hasPnpmWorkspace = await fse.pathExists(
-      path.join(helper.projectRoot, 'pnpm-workspace.yaml')
+      path.join(helper.projectRoot, 'pnpm-workspace.yaml'),
     );
     let packageJson = await fse.readJson(path.join(helper.projectRoot, 'package.json'));
 
