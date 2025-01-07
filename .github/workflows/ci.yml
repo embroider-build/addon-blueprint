@@ -115,6 +115,7 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
+      - run: yarn set version 4.1.0
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
@@ -140,6 +141,7 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
+      - run: yarn set version 4.1.0
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - run: pnpm vitest --testNamePattern "${{ matrix.slow-test }}"
