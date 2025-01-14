@@ -273,6 +273,12 @@ module.exports = {
       .map(() => '..')
       .join('/');
 
+    if (isYarn(options)) {
+      throw new Error(
+        `Please do not generate this project with --yarn. Omit '--yarn' when generating this blueprint'`,
+      );
+    }
+
     return {
       rootDirectory: directoryForPackageName(addonInfo.name.raw),
       addonInfo,
@@ -282,7 +288,7 @@ module.exports = {
       blueprintVersion: require('./package.json').version,
       year: date.getFullYear(),
       packageManager: options.packageManager,
-      yarn: isYarn(options),
+      yarn: false,
       pnpm: isPnpm(options),
       npm: isNpm(options),
       typescript: options.typescript,
@@ -292,11 +298,11 @@ module.exports = {
         [`--addon-location=${options.addonLocation}`]: options.addonLocation,
         [`--ci-provider=${options.ciProvider}`]: options.ciProvider,
         '--pnpm': isPnpm(options),
+        '--npm': isNpm(options),
         '--release-it': options.releaseIt,
         [`--test-app-location=${options.testAppLocation}`]: options.testAppLocation,
         [`--test-app-name=${options.testAppName}`]: options.testAppName,
         '--typescript': options.typescript,
-        '--yarn': isYarn(options),
       }),
       ciProvider: options.ciProvider,
       pathFromAddonToRoot,

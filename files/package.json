@@ -4,6 +4,7 @@
   "license": "MIT",
   "author": "",
   "scripts": {},
+  "packageManager": "<%= pnpm ? 'pnpm@10.0.0' : 'npm@11.0.0' %>",
   "devDependencies": {<% if (typescript) { %>
     "@glint/core": "^1.2.1",<% } %>
     "concurrently": "^8.2.0",
