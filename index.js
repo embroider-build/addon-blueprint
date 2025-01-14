@@ -7,7 +7,6 @@ const fs = require('fs-extra');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
-const execa = require('execa');
 const { merge } = require('lodash');
 const { lt } = require('semver');
 
