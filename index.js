@@ -273,6 +273,12 @@ module.exports = {
       .map(() => '..')
       .join('/');
 
+    if (isYarn(options)) {
+      throw new Error(
+        `Please do not generate this project with --yarn. Omit '--yarn' when generating this blueprint'`,
+      );
+    }
+
     return {
       rootDirectory: directoryForPackageName(addonInfo.name.raw),
       addonInfo,

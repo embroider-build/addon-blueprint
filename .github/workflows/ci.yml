@@ -73,7 +73,6 @@ jobs:
 
           # existing monorepo
           - monorepo with npm
-          - monorepo with yarn
           - monorepo with pnpm
 
           # build-only tests for testing if the rollup config works at all
@@ -104,7 +103,6 @@ jobs:
       matrix:
         slow-test:
           - defaults with npm
-          - defaults with yarn
           - defaults with pnpm
     steps:
       - uses: actions/checkout@v4
