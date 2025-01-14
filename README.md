@@ -113,15 +113,6 @@ npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --addon-only
 
 For incremental migration in monorepos, you'll want to also supply the `--skip-git` flag.
 
-#### `--release-it`
-
-If you want release-it behavior, (specifically provided by `create-rwjblue-release-it-setup`),
-use the `--release-it` flag
-
-```bash
-npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint --yarn --release-it
-```
-
 #### `--typescript`
 
 Sets up the new addon with [`typescript`](https://www.typescriptlang.org/) support.

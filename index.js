@@ -7,7 +7,6 @@ const fs = require('fs-extra');
 const SilentError = require('silent-error');
 const sortPackageJson = require('sort-package-json');
 const normalizeEntityName = require('ember-cli-normalize-entity-name');
-const execa = require('execa');
 const { merge } = require('lodash');
 const { lt } = require('semver');
 
@@ -96,10 +95,6 @@ module.exports = {
 
       if (isPnpm(options)) {
         tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
-      }
-
-      if (options.releaseIt) {
-        tasks.push(this.setupReleaseIt(options.target));
       }
     }
 
@@ -239,14 +234,6 @@ module.exports = {
     await fs.remove(overridesPath);
   },
 
-  async setupReleaseIt(rootPath) {
-    await execa('create-rwjblue-release-it-setup', ['--no-install'], {
-      cwd: rootPath,
-      preferLocal: true,
-      localDir: __dirname,
-    });
-  },
-
   fileMapTokens(options) {
     let { addonInfo, testAppInfo, ext } = options.locals;
 
@@ -299,7 +286,6 @@ module.exports = {
         [`--ci-provider=${options.ciProvider}`]: options.ciProvider,
         '--pnpm': isPnpm(options),
         '--npm': isNpm(options),
-        '--release-it': options.releaseIt,
         [`--test-app-location=${options.testAppLocation}`]: options.testAppLocation,
         [`--test-app-name=${options.testAppName}`]: options.testAppName,
         '--typescript': options.typescript,
