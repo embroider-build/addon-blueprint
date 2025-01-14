@@ -1,7 +1,7 @@
 // @ts-check;
 const stringUtil = require('ember-cli-string-utils');
 
-const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName', 'releaseIt'];
+const ADDON_OPTIONS = ['addonLocation', 'testAppLocation', 'testAppName'];
 
 /**
  * Custom info derived from CLI options for use within this blueprint.

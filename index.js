@@ -97,10 +97,6 @@ module.exports = {
       if (isPnpm(options)) {
         tasks.push(pnpm.createWorkspacesFile(options.target, addonInfo, testAppInfo));
       }
-
-      if (options.releaseIt) {
-        tasks.push(this.setupReleaseIt(options.target));
-      }
     }
 
     await Promise.all(tasks);
@@ -239,14 +235,6 @@ module.exports = {
     await fs.remove(overridesPath);
   },
 
-  async setupReleaseIt(rootPath) {
-    await execa('create-rwjblue-release-it-setup', ['--no-install'], {
-      cwd: rootPath,
-      preferLocal: true,
-      localDir: __dirname,
-    });
-  },
-
   fileMapTokens(options) {
     let { addonInfo, testAppInfo, ext } = options.locals;
 
@@ -299,7 +287,6 @@ module.exports = {
         [`--ci-provider=${options.ciProvider}`]: options.ciProvider,
         '--pnpm': isPnpm(options),
         '--npm': isNpm(options),
-        '--release-it': options.releaseIt,
         [`--test-app-location=${options.testAppLocation}`]: options.testAppLocation,
         [`--test-app-name=${options.testAppName}`]: options.testAppName,
         '--typescript': options.typescript,
