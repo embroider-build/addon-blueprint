@@ -80,13 +80,6 @@ module.exports = {
 
           if (options.packageManager === 'pnpm' || options.pnpm) {
             delete json.workspaces;
-
-            json.pnpm = {
-              // TODO: update the blueprint's output to ESLint 8
-              overrides: {
-                '@types/eslint': '^7.0.0',
-              },
-            };
           }
 
           await fs.writeFile(packageJson, JSON.stringify(json, null, 2));
@@ -348,6 +341,51 @@ module.exports = {
     }
 
     return entityName;
+  },
+
+  /**
+   * @override
+   *
+   * This modification of buildFileInfo allows our differing
+   * input files to output to a single file, depending on the options.
+   * For example:
+   *
+   *   for javascript,
+   *     _ts_eslint.config.mjs is deleted
+   *     _js_eslint.config.mjs is renamed to eslint.config.mjs
+   *
+   *   for typescript,
+   *     _js_eslint.config.mjs is deleted
+   *     _ts_eslint.config.mjs is renamed to eslint.config.mjs
+   */
+  buildFileInfo(intoDir, templateVariables, file, options) {
+    let fileInfo = this._super.buildFileInfo.apply(this, arguments);
+
+    if (file.includes('_js_')) {
+      if (options.typescript) {
+        return null;
+      }
+
+      fileInfo.outputBasePath = fileInfo.outputPath.replace('_js_', '');
+      fileInfo.outputPath = fileInfo.outputPath.replace('_js_', '');
+      fileInfo.displayPath = fileInfo.outputPath.replace('_js_', '');
+
+      return fileInfo;
+    }
+
+    if (file.includes('_ts_')) {
+      if (!options.typescript) {
+        return null;
+      }
+
+      fileInfo.outputBasePath = fileInfo.outputPath.replace('_ts_', '');
+      fileInfo.outputPath = fileInfo.outputPath.replace('_ts_', '');
+      fileInfo.displayPath = fileInfo.outputPath.replace('_ts_', '');
+
+      return fileInfo;
+    }
+
+    return fileInfo;
   },
 };
 

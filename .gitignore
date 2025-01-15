@@ -17,3 +17,5 @@ node_modules/
 
 # Test artifacts
 coverage/
+tests/my-addon/
+tests/test-app/
