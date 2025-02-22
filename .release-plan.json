@@ -1,14 +1,10 @@
 {
   "solution": {
     "@embroider/addon-blueprint": {
-      "impact": "major",
-      "oldVersion": "3.2.0",
-      "newVersion": "4.0.0",
+      "impact": "minor",
+      "oldVersion": "4.0.0",
+      "newVersion": "4.1.0",
       "constraints": [
-        {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
@@ -16,14 +12,10 @@
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :memo: Documentation"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2025-01-15)\n\n@embroider/addon-blueprint 4.0.0 (major)\n\n#### :boom: Breaking Change\n* `@embroider/addon-blueprint`\n  * [#323](https://github.com/embroider-build/addon-blueprint/pull/323) Remove release-it ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#322](https://github.com/embroider-build/addon-blueprint/pull/322) Drop support for yarn@1, set packageManager field in package.json (pnpm 10.x, npm 11.x) ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#320](https://github.com/embroider-build/addon-blueprint/pull/320) ember-cli 6.1, eslint 9, eslint flat config, RFC#1055 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#324](https://github.com/embroider-build/addon-blueprint/pull/324) Sync addon prettier config with ember-cli ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#319](https://github.com/embroider-build/addon-blueprint/pull/319) Never suggest to use global ember-cli ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#320](https://github.com/embroider-build/addon-blueprint/pull/320) ember-cli 6.1, eslint 9, eslint flat config, RFC#1055 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#319](https://github.com/embroider-build/addon-blueprint/pull/319) Never suggest to use global ember-cli ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 1\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2025-02-22)\n\n@embroider/addon-blueprint 4.1.0 (minor)\n\n#### :rocket: Enhancement\n* `@embroider/addon-blueprint`\n  * [#325](https://github.com/embroider-build/addon-blueprint/pull/325) Sync `concurrently` with cli / blueprint ([@mkszepp](https://github.com/mkszepp))\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#328](https://github.com/embroider-build/addon-blueprint/pull/328) Remove pnpm version from pnpm/action-setup ([@nickschot](https://github.com/nickschot))\n\n#### Committers: 2\n- Markus Sanin ([@mkszepp](https://github.com/mkszepp))\n- Nick Schot ([@nickschot](https://github.com/nickschot))\n"
 }

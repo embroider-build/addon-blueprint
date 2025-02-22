@@ -1,5 +1,21 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2025-02-22)
+
+@embroider/addon-blueprint 4.1.0 (minor)
+
+#### :rocket: Enhancement
+* `@embroider/addon-blueprint`
+  * [#325](https://github.com/embroider-build/addon-blueprint/pull/325) Sync `concurrently` with cli / blueprint ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#328](https://github.com/embroider-build/addon-blueprint/pull/328) Remove pnpm version from pnpm/action-setup ([@nickschot](https://github.com/nickschot))
+
+#### Committers: 2
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+- Nick Schot ([@nickschot](https://github.com/nickschot))
+
 ## Release (2025-01-15)
 
 @embroider/addon-blueprint 4.0.0 (major)
