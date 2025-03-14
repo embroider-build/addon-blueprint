@@ -1,5 +1,16 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2025-03-14)
+
+@embroider/addon-blueprint 4.1.1 (patch)
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#331](https://github.com/embroider-build/addon-blueprint/pull/331) Remove remaining pnpm version from pnpm/action-setup ([@nickschot](https://github.com/nickschot))
+
+#### Committers: 1
+- Nick Schot ([@nickschot](https://github.com/nickschot))
+
 ## Release (2025-02-22)
 
 @embroider/addon-blueprint 4.1.0 (minor)
