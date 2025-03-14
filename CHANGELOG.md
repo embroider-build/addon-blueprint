@@ -2,6 +2,17 @@
 
 ## Release (2025-03-14)
 
+@embroider/addon-blueprint 4.1.2 (patch)
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#333](https://github.com/embroider-build/addon-blueprint/pull/333) Add permissions to the push-dist workflow ([@kategengler](https://github.com/kategengler))
+
+#### Committers: 1
+- Katie Gengler ([@kategengler](https://github.com/kategengler))
+
+## Release (2025-03-14)
+
 @embroider/addon-blueprint 4.1.1 (patch)
 
 #### :bug: Bug Fix
