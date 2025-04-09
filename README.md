@@ -1,5 +1,9 @@
 # @embroider/addon-blueprint
 
+> This blueprint is a preview of the [v2 app blueprint](https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/) and was intended to an experiment to see what was needed to ship v2 addons. While the blueprint was successful in its aims, this blueprint will never become the default for newly generated Ember addons. The DX hit of forcing every Ember developer to maintain a monorepo was too high a bar and the Ember Core Tooling team decided it didn't match the expectations of the Ember community. We are currently developing a non-monorepo version of the addon blueprint that is still work in progress but you can try it out now: https://github.com/ember-cli/ember-addon-blueprint
+>
+> Anyone considering a new migration of a v1 addon to v2 should use the new `@ember/addon-blueprint` and not this one 👍
+
 Blueprint for scaffolding ember v2 addons
 
 For migrating a v1 addon to a v2 addon, you may follow _[Porting Addons to V2](https://github.com/embroider-build/embroider/blob/main/PORTING-ADDONS-TO-V2.md)_ and
