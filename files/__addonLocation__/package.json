@@ -32,9 +32,6 @@
     "@embroider/addon-shim": "^1.8.9",
     "decorator-transforms": "^2.2.2"
   },
-  "peerDependencies": {
-    "ember-source": ">= 4.12.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     <% if (typescript) { %>"@babel/plugin-transform-typescript": "^7.25.2",<% } %>
