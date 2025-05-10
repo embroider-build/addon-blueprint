@@ -1,5 +1,24 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2025-05-10)
+
+@embroider/addon-blueprint 4.1.2 (patch)
+
+#### :bug: Bug Fix
+* `@embroider/addon-blueprint`
+  * [#339](https://github.com/embroider-build/addon-blueprint/pull/339) Remove ember-source as a peerDependency ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#340](https://github.com/embroider-build/addon-blueprint/pull/340) Move off @tsconfig/ember ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+  * [#333](https://github.com/embroider-build/addon-blueprint/pull/333) Add permissions to the push-dist workflow ([@kategengler](https://github.com/kategengler))
+
+#### :memo: Documentation
+* `@embroider/addon-blueprint`
+  * [#338](https://github.com/embroider-build/addon-blueprint/pull/338) add warning to readme ([@mansona](https://github.com/mansona))
+
+#### Committers: 3
+- Chris Manson ([@mansona](https://github.com/mansona))
+- Katie Gengler ([@kategengler](https://github.com/kategengler))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## Release (2025-03-14)
 
 @embroider/addon-blueprint 4.1.1 (patch)

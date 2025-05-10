@@ -2,16 +2,20 @@
   "solution": {
     "@embroider/addon-blueprint": {
       "impact": "patch",
-      "oldVersion": "4.1.0",
-      "newVersion": "4.1.1",
+      "oldVersion": "4.1.1",
+      "newVersion": "4.1.2",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :memo: Documentation"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2025-03-14)\n\n@embroider/addon-blueprint 4.1.1 (patch)\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#331](https://github.com/embroider-build/addon-blueprint/pull/331) Remove remaining pnpm version from pnpm/action-setup ([@nickschot](https://github.com/nickschot))\n\n#### Committers: 1\n- Nick Schot ([@nickschot](https://github.com/nickschot))\n"
+  "description": "## Release (2025-05-10)\n\n@embroider/addon-blueprint 4.1.2 (patch)\n\n#### :bug: Bug Fix\n* `@embroider/addon-blueprint`\n  * [#339](https://github.com/embroider-build/addon-blueprint/pull/339) Remove ember-source as a peerDependency ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#340](https://github.com/embroider-build/addon-blueprint/pull/340) Move off @tsconfig/ember ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n  * [#333](https://github.com/embroider-build/addon-blueprint/pull/333) Add permissions to the push-dist workflow ([@kategengler](https://github.com/kategengler))\n\n#### :memo: Documentation\n* `@embroider/addon-blueprint`\n  * [#338](https://github.com/embroider-build/addon-blueprint/pull/338) add warning to readme ([@mansona](https://github.com/mansona))\n\n#### Committers: 3\n- Chris Manson ([@mansona](https://github.com/mansona))\n- Katie Gengler ([@kategengler](https://github.com/kategengler))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }
