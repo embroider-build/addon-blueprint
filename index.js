@@ -207,11 +207,6 @@ module.exports = {
 
     pkg.description = `Test app for ${this.locals(this.options).addonName} addon`;
 
-    if (options.typescript) {
-      delete pkg.devDependencies['@tsconfig/ember'];
-      pkg.devDependencies['@ember/app-tsconfig'] = '^1.0.3';
-    }
-
     // we must explicitly add our own v2 addon here, the implicit magic of the legacy dummy app does not work
     if (useWorkspaceProtocol) {
       // https://pnpm.io/workspaces#workspace-protocol-workspace
