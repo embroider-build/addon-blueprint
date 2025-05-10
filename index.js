@@ -177,7 +177,7 @@ module.exports = {
     await appBlueprint.install(appOptions);
 
     await Promise.all([
-      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), isPnpm(options)),
+      this.updateTestAppPackageJson(path.join(testAppPath, 'package.json'), options),
       this.overrideTestAppFiles(testAppPath, path.join(options.target, 'test-app-overrides')),
     ]);
 
@@ -198,7 +198,8 @@ module.exports = {
     }
   },
 
-  async updateTestAppPackageJson(packageJsonPath, useWorkspaceProtocol) {
+  async updateTestAppPackageJson(packageJsonPath, options) {
+    const useWorkspaceProtocol = isPnpm(options);
     const pkg = await fs.readJSON(packageJsonPath);
     const additions = require('./additional-test-app-package.json');
 
