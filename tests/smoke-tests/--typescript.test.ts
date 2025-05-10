@@ -94,8 +94,10 @@ for (let packageManager of SUPPORTED_PACKAGE_MANAGERS) {
         [
           "components",
           "index.d.ts",
+          "index.d.ts.map",
           "services",
           "template-registry.d.ts",
+          "template-registry.d.ts.map",
         ]
       `);
 
