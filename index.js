@@ -203,6 +203,17 @@ module.exports = {
     const pkg = await fs.readJSON(packageJsonPath);
     const additions = require('./additional-test-app-package.json');
 
+    let addonPackageJson = path.join(this.locals(this.options).addonInfo.location, 'package.json');
+    let json = await fs.readJSON(addonPackageJson);
+
+    const addonDependencies = json.devDependencies;
+    
+    for (const [dep, version] of Object.entries(addonDependencies)) {
+      if (dep in additions) {
+        additions[dep] = version;
+      }
+    }
+
     merge(pkg, additions);
 
     pkg.description = `Test app for ${this.locals(this.options).addonName} addon`;
