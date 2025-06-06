@@ -47,6 +47,7 @@ let scripts = {
 
     return {
       build: `npm run build --workspace ${addonName}`,
+      format: `npm run format --workspaces --if-present`,
       lint: 'npm run lint --workspaces --if-present',
       'lint:fix': 'npm run lint:fix --workspaces --if-present',
       prepare: 'npm run build',
@@ -70,6 +71,7 @@ let scripts = {
 
     return {
       build: `yarn workspace ${addonName} run build`,
+      format: `yarn workspaces run format`,
       lint: 'yarn workspaces run lint',
       'lint:fix': 'yarn workspaces run lint:fix',
       prepare: 'yarn build',
@@ -94,6 +96,7 @@ let scripts = {
 
     return {
       build: `pnpm --filter ${addonName} build`,
+      format: "pnpm --filter '*' format",
       lint: "pnpm --filter '*' lint",
       'lint:fix': "pnpm --filter '*' lint:fix",
       /**
