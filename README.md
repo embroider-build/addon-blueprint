@@ -1,3 +1,9 @@
+> [!IMPORTANT]
+> This has been replaced by the addon blueprint, [@ember/addon-blueprint](https://github.com/ember-cli/ember-addon-blueprint).
+
+<details>
+<summary>View the outdated README</summary>
+
 # @embroider/addon-blueprint
 
 > This blueprint is a preview of the [v2 app blueprint](https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/) and was intended to an experiment to see what was needed to ship v2 addons. While the blueprint was successful in its aims, this blueprint will never become the default for newly generated Ember addons. The DX hit of forcing every Ember developer to maintain a monorepo was too high a bar and the Ember Core Tooling team decided it didn't match the expectations of the Ember community. We are currently developing a non-monorepo version of the addon blueprint that is still work in progress but you can try it out now: https://github.com/ember-cli/ember-addon-blueprint
@@ -208,3 +214,6 @@ npx ember-cli@latest addon my-addon -b @embroider/addon-blueprint \
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
+
+</details>
+
