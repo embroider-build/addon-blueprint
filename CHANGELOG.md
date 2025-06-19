@@ -1,5 +1,16 @@
 # @embroider/addon-blueprint Changelog
 
+## Release (2025-06-19)
+
+@embroider/addon-blueprint 4.1.3 (patch)
+
+#### :memo: Documentation
+* `@embroider/addon-blueprint`
+  * [#341](https://github.com/embroider-build/addon-blueprint/pull/341) Point users to @ember/addon-blueprint ([@tcjr](https://github.com/tcjr))
+
+#### Committers: 1
+- Tom Carter ([@tcjr](https://github.com/tcjr))
+
 ## Release (2025-05-10)
 
 @embroider/addon-blueprint 4.1.2 (patch)
